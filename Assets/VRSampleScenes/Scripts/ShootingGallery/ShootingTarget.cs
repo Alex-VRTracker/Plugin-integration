@@ -34,7 +34,7 @@ namespace VRStandardAssets.ShootingGallery
         private void Awake()
         {
             // Setup the references.
-            m_CameraTransform = Camera.main.transform;
+            //m_CameraTransform = Camera.main.transform;
             m_Audio = GetComponent<AudioSource> ();
             m_InteractiveItem = GetComponent<VRInteractiveItem>();
             m_Renderer = GetComponent<Renderer>();
@@ -167,5 +167,34 @@ namespace VRStandardAssets.ShootingGallery
             if (OnRemove != null)
                 OnRemove(this);
         }
+
+        public void ImReady()
+        {
+
+            // Otherwise this is ending the target's lifetime.
+            m_IsEnding = true;
+
+            // Turn off the visual and physical aspects.
+            m_Renderer.enabled = false;
+            m_Collider.enabled = false;
+
+            // Play the clip of the target being missed.
+            m_Audio.clip = m_MissedClip;
+            m_Audio.Play();
+
+            // Instantiate the shattered target prefab in place of this target.
+            GameObject destroyedTarget = Instantiate(m_DestroyPrefab, transform.position, transform.rotation) as GameObject;
+
+            // Destroy the shattered target after it's time out duration.
+            Destroy(destroyedTarget, m_DestroyTimeOutDuration);
+
+            // Tell subscribers that this target is ready to be removed.
+            if (OnRemove != null)
+                OnRemove(this);
+
+            PlayerManager.instance.startGame = true;
+            transform.gameObject.active = false;
+        }
+
     }
 }

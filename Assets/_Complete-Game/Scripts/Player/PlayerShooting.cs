@@ -111,19 +111,37 @@ namespace CompleteProject
             // Perform the raycast against gameobjects on the shootable layer and if it hits something...
             if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
             {
-                // Try and find an EnemyHealth script on the gameobject hit.
-                EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
-
-                // If the EnemyHealth component exist...
-                if(enemyHealth != null)
+                if (PlayerManager.instance.startGame)
                 {
-                    // ... the enemy should take damage.
-                    enemyHealth.TakeDamage (damagePerShot, shootHit.point);
+                    // Try and find an EnemyHealth script on the gameobject hit.
+                    EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
+
+                    // If the EnemyHealth component exist...
+                    if (enemyHealth != null)
+                    {
+                        // ... the enemy should take damage.
+                        enemyHealth.TakeDamage(damagePerShot, shootHit.point);
+                    }
+                    else
+                    {
+                        Debug.Log("No ennemy");
+                    }
                 }
                 else
                 {
-                    Debug.Log("No ennemy");
+                    VRStandardAssets.ShootingGallery.ShootingTarget shootingTarget = shootHit.collider.GetComponent<VRStandardAssets.ShootingGallery.ShootingTarget>();
+                    // If the EnemyHealth component exist...
+                    if (shootingTarget != null)
+                    {
+                        // ... the enemy should take damage.
+                        shootingTarget.ImReady();
+                    }
+                    else
+                    {
+                        Debug.Log("No ennemy");
+                    }
                 }
+                
 
                 // Set the second position of the line renderer to the point the raycast hit.
                 gunLine.SetPosition (1, shootHit.point);
