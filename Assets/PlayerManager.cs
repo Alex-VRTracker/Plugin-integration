@@ -29,12 +29,19 @@ public class PlayerManager : NetworkBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        if (startGame)
-        {
-            WaveManager.instance.StartGame();
-            startGame = false;
-        }
+       
 	}
+
+    public void SetPlayerReady()
+    {
+        isPlayersReady = true;
+        if (isPlayersReady)
+        {
+            startGame = true;
+            WaveManager.instance.StartGame();
+            //startGame = false;
+        }
+    }
 
     
 }

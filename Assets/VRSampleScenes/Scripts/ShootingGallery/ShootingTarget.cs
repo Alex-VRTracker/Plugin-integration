@@ -192,7 +192,7 @@ namespace VRStandardAssets.ShootingGallery
             if (OnRemove != null)
                 OnRemove(this);
 
-            PlayerManager.instance.startGame = true;
+            PlayerManager.instance.SetPlayerReady();
             transform.gameObject.active = false;
         }
 
