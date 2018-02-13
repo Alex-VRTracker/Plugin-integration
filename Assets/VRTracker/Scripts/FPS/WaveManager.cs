@@ -199,7 +199,7 @@ public class WaveManager : NetworkBehaviour
     /// <returns></returns>
     private bool AliveEnemy()
     {
-        if (!ESpawner.isSpawning && GameObject.FindWithTag("Enemy") == null && waveInProgress  && PlayerManager.instance.startGame)
+        if (!ESpawner.isSpawning && GameObject.FindWithTag("Enemy") == null && waveInProgress  && !PlayerManager.instance.startGame)
         {
             return false;
         }
@@ -215,7 +215,7 @@ public class WaveManager : NetworkBehaviour
     /// <returns></returns>
     private bool VerifyTimer()
     {
-        if(time == 0 && PlayerManager.instance.startGame && waveInProgress)
+        if(time == 0 && !PlayerManager.instance.startGame && waveInProgress)
         {
             Debug.Log("Stop wave");
             ESpawner.ClearEnemies();

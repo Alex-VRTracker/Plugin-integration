@@ -32,6 +32,7 @@ public class PlayerManager : NetworkBehaviour
         if (startGame)
         {
             WaveManager.instance.StartGame();
+            startGame = false;
         }
 	}
 
