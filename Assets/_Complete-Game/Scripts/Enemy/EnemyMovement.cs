@@ -21,7 +21,8 @@ namespace CompleteProject
         void Awake ()
         {
             // Set up the references.
-            player = GameObject.FindGameObjectWithTag ("Player").transform;
+            //player = GameObject.FindGameObjectWithTag ("Player").transform;
+            player = VRTracker.instance.GetLocalPlayer().transform;
             playerHealth = player.GetComponent <PlayerHealth> ();
             enemyHealth = GetComponent <EnemyHealth> ();
             nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();

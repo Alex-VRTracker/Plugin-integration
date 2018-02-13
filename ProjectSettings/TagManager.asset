@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Damage
   - Announcer
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

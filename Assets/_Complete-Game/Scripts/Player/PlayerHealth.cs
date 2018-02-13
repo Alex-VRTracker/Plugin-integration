@@ -107,7 +107,7 @@ namespace CompleteProject
             // Turn off the movement and shooting scripts.
             playerMovement.enabled = false;
             //playerShooting.enabled = false;
-            EnableDeathView();
+            DeathView(true);
         }
 
 
@@ -122,9 +122,9 @@ namespace CompleteProject
             healthSlider.value = currentHealth;
         }
 
-        private void EnableDeathView()
+        private void DeathView(bool dead)
         {
-            if (isDead)
+            if (dead)
             {
                 //GetComponent<ScoreScript>().setScore(0);
                 Camera cam = GetComponentInChildren<Camera>();
@@ -132,7 +132,15 @@ namespace CompleteProject
                 {
                     cam.GetComponent<GrayscaleEffect>().enabled = true;
                 }
+                GetComponent<Respawner>().SetActiveSpawnPoint(true);
             }
+        }
+
+        public void Respawn()
+        {
+            //TODO inform the master
+            DeathView(false);
+            currentHealth = startingHealth;
         }
     }
 }
