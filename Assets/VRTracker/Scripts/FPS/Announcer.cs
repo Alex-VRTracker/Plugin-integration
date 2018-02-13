@@ -12,7 +12,7 @@ public class Announcer : NetworkBehaviour
     public GameObject textTemplate;
     public bool hasMessage = false;
 
-    private GameObject currentText;
+    private Text currentText;
     private List<string> messageList;
     private GameObject cam;
     private bool isWaiting = false;
@@ -32,7 +32,9 @@ public class Announcer : NetworkBehaviour
 
     private void Start()
     {
-        //cam = Camera.main.gameObject;
+        //cam = Camera.main.gameObject
+        currentText = VRTracker.instance.GetLocalPlayer().transform.Find("Player").GetComponentInChildren<Text>();
+
     }
 
     private void Update()
@@ -49,31 +51,25 @@ public class Announcer : NetworkBehaviour
     {
         if (!VRTracker.instance.isSpectator)
         {
-            if (cam == null)
-            {
-                //cam = Camera.main.gameObject;
-            }
             messageList.Add(message);
             hasMessage = true;
         }
     }
 
-    public void updateMessage(string message)
+    public void UpdateMessage(string message)
     {
         if (!VRTracker.instance.isSpectator)
         {
             messageList[0] = message;
-            //currentText.GetComponent<Text>().text = message;
+            currentText.text = message;
         }
     }
 
     private void ShowMessage(string message)
     {
-        if (!VRTracker.instance.isSpectator)
+        if (!VRTracker.instance.isSpectator && currentText != null)
         {
-            /*cam = Camera.main.gameObject;
-            currentText = Instantiate(textTemplate, cam.transform.Find("HUD"));
-            currentText.GetComponent<Text>().text = message;*/
+            currentText.text = message;
         }
     }
 
@@ -82,7 +78,7 @@ public class Announcer : NetworkBehaviour
         if (!VRTracker.instance.isSpectator)
         {
             messageList.Remove(messageList[0]);
-            //currentText.GetComponent<TextFader>().DestroyText();
+            currentText.text = "";
             if (messageList.Count == 0)
             {
                 hasMessage = false;

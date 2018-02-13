@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class VRTrackerNetwork : NetworkManager
 {
@@ -37,7 +38,12 @@ public class VRTrackerNetwork : NetworkManager
 
         base.OnServerAddPlayer(conn, playerControllerId);
         var newPlayer = conn.playerControllers[0].gameObject;
-
+        if (newPlayer.GetComponent<NetworkIdentity>().isLocalPlayer)
+        {
+            Debug.LogWarning("Setting local player");
+            VRTracker.instance.SetLocalPlayer(newPlayer);
+            //Announcer.instance.SetAnnouncer(newPlayer.transform.Find("Announcer").GetComponentInChildren<Text>());
+        }
         players.Add(newPlayer);
     }
 

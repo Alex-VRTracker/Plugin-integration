@@ -8,6 +8,7 @@ TagManager:
   - RoomObject
   - Enemy
   - Damage
+  - Announcer
   layers:
   - Default
   - TransparentFX

@@ -111,9 +111,12 @@ public class VRTrackerTag : MonoBehaviour {
 			return;
 		} else {
 			Debug.Log ("TAG " +UID +" IS local player");
-		}
-		
-		startTimestamp = System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
+            VRTracker.instance.SetLocalPlayer(transform.parent.gameObject);
+            Debug.Log(transform.parent.gameObject);
+
+        }
+
+        startTimestamp = System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
 		lastLateUpateTimestamp = startTimestamp;
 
 		//enablePrediction = true;
