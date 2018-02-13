@@ -293,8 +293,8 @@ MonoBehaviour:
   - quantity: 10
     duration: 60
     spawnRate: 5
-  countdownTime: 5
-  intermissionTime: 10
+  countdownTime: 1
+  intermissionTime: 1
   time: 0
 --- !u!114 &14871717
 MonoBehaviour:
@@ -309,6 +309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startGame: 0
   isPlayersReady: 0
+  target: {fileID: 267955590}
 --- !u!1001 &267955589
 Prefab:
   m_ObjectHideFlags: 0
@@ -351,6 +352,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bc687dc68c3f6024fb834a2d4d8fec43, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &267955590 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114131538395826532, guid: bc687dc68c3f6024fb834a2d4d8fec43,
+    type: 2}
+  m_PrefabInternal: {fileID: 267955589}
+  m_Script: {fileID: 11500000, guid: 92ac02b8408a9fe4190b334e8066e085, type: 3}
 --- !u!1 &345275348
 GameObject:
   m_ObjectHideFlags: 0

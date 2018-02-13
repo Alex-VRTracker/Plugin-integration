@@ -61,8 +61,10 @@ namespace VRStandardAssets.ShootingGallery
         }
         
 
-        public void Restart (float gameTimeRemaining)
+        public void Restart ()
         {
+            transform.gameObject.active = true;
+
             // When the target is spawned turn the visual and physical aspects on.
             m_Renderer.enabled = true;
             m_Collider.enabled = true;
@@ -74,17 +76,19 @@ namespace VRStandardAssets.ShootingGallery
             m_Audio.clip = m_SpawnClip;
             m_Audio.Play();
 
+            m_IsEnding = false;
+
             // Make sure the target is facing the camera.
-            transform.LookAt(m_CameraTransform);
+            //transform.LookAt(m_CameraTransform);
 
             // Start the time out for when the target would naturally despawn.
-            StartCoroutine (MissTarget());
+            //StartCoroutine (MissTarget());
 
             // Start the time out for when the game ends.
             // Note this will only come into effect if the game time remaining is less than the time out duration.
-            StartCoroutine (GameOver (gameTimeRemaining));
+            //StartCoroutine (GameOver (gameTimeRemaining));
         }
-        
+
 
         private IEnumerator MissTarget()
         {
@@ -194,6 +198,11 @@ namespace VRStandardAssets.ShootingGallery
 
             PlayerManager.instance.SetPlayerReady();
             transform.gameObject.active = false;
+        }
+
+        public void ResetTarget()
+        {
+            Restart();
         }
 
     }

@@ -190,7 +190,12 @@ public class WaveManager : NetworkBehaviour
 		ESpawner.SetWave (currentWave);
         //Increment the current wave index
         currentWave++;
-       
+        if(currentWave == waveList.Count)
+        {
+            //restart game
+            currentWave = 0;
+            PlayerManager.instance.RestartGame();
+        }
     }
 
     /// <summary>

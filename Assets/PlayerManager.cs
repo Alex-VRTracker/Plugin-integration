@@ -9,7 +9,7 @@ public class PlayerManager : NetworkBehaviour
     public bool startGame = false;
     public bool isPlayersReady = false;
     public static PlayerManager instance;
-
+    public VRStandardAssets.ShootingGallery.ShootingTarget target;
     private void Awake()
     {
         if (instance != null)
@@ -43,5 +43,9 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    
+    public void RestartGame()
+    {
+        isPlayersReady = false;
+        target.ResetTarget();
+    }
 }
