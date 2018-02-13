@@ -154,13 +154,23 @@ Prefab:
     - target: {fileID: 224860938833182056, guid: df0359d714a905142abf2a73511d3560,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -55
       objectReference: {fileID: 0}
     - target: {fileID: 224860938833182056, guid: df0359d714a905142abf2a73511d3560,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
+    - target: {fileID: 114589719917568362, guid: df0359d714a905142abf2a73511d3560,
+        type: 2}
+      propertyPath: healthSlider
+      value: 
+      objectReference: {fileID: 978876521}
+    - target: {fileID: 114589719917568362, guid: df0359d714a905142abf2a73511d3560,
+        type: 2}
+      propertyPath: damageImage
+      value: 
+      objectReference: {fileID: 337256570}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df0359d714a905142abf2a73511d3560, type: 2}
   m_IsPrefabParent: 0
@@ -1474,6 +1484,12 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 335707052}
+--- !u!114 &337256570 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114120534165995904, guid: df0359d714a905142abf2a73511d3560,
+    type: 2}
+  m_PrefabInternal: {fileID: 37938509}
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1001 &344495837
 Prefab:
   m_ObjectHideFlags: 0
@@ -4052,6 +4068,12 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 5
+--- !u!114 &978876521 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114560965122031718, guid: df0359d714a905142abf2a73511d3560,
+    type: 2}
+  m_PrefabInternal: {fileID: 37938509}
+  m_Script: {fileID: -113659843, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &1000832850
 GameObject:
   m_ObjectHideFlags: 0
