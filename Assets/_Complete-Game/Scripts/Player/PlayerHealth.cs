@@ -107,6 +107,7 @@ namespace CompleteProject
             // Turn off the movement and shooting scripts.
             playerMovement.enabled = false;
             //playerShooting.enabled = false;
+            EnableDeathView();
         }
 
 
@@ -119,6 +120,19 @@ namespace CompleteProject
         void OnChangeHealth(int currentHealth)
         {
             healthSlider.value = currentHealth;
+        }
+
+        private void EnableDeathView()
+        {
+            if (isDead)
+            {
+                //GetComponent<ScoreScript>().setScore(0);
+                Camera cam = GetComponentInChildren<Camera>();
+                if(cam != null)
+                {
+                    cam.GetComponent<GrayscaleEffect>().enabled = true;
+                }
+            }
         }
     }
 }
