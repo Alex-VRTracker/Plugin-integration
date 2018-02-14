@@ -105,6 +105,7 @@ public class NetworkShoot : NetworkBehaviour {
     public void TargetReady(NetworkConnection target)
     {
         GameObject t = GameObject.FindGameObjectWithTag("Ready");
+		Debug.Log ("Connection is ready " + target.address);
         if(t != null)
         {
             VRStandardAssets.ShootingGallery.ShootingTarget shootingTarget = GetComponent<VRStandardAssets.ShootingGallery.ShootingTarget>();
