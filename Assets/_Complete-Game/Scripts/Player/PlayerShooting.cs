@@ -49,11 +49,11 @@ namespace CompleteProject
 
 #if !MOBILE_INPUT
             // If the Fire1 button is being press and it's time to fire...
-			if((Input.GetButton ("Fire1")) && timer >= timeBetweenBullets && Time.timeScale != 0)
+			/*if((Input.GetButton ("Fire1")) && timer >= timeBetweenBullets && Time.timeScale != 0)
             {
                 // ... shoot the gun.
                 Shoot (transform.position, transform.forward);
-            }
+            }*/
 #else
             // If there is input on the shoot direction stick and it's time to fire...
             if ((CrossPlatformInputManager.GetAxisRaw("Mouse X") != 0 || CrossPlatformInputManager.GetAxisRaw("Mouse Y") != 0) && timer >= timeBetweenBullets)
