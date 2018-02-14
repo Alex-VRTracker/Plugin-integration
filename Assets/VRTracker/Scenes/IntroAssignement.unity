@@ -2482,11 +2482,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!4 &657100808 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4677655841176700, guid: df0359d714a905142abf2a73511d3560,
-    type: 2}
-  m_PrefabInternal: {fileID: 1578891520}
 --- !u!1 &664580078
 GameObject:
   m_ObjectHideFlags: 0
@@ -6045,21 +6040,18 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 224860938833182056, guid: df0359d714a905142abf2a73511d3560,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -55
+    - target: {fileID: 1839000500454548, guid: df0359d714a905142abf2a73511d3560, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 224860938833182056, guid: df0359d714a905142abf2a73511d3560,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -5
+    - target: {fileID: 1839000500454548, guid: df0359d714a905142abf2a73511d3560, type: 2}
+      propertyPath: m_TagString
+      value: PlayerUI
       objectReference: {fileID: 0}
-    - target: {fileID: 114314505244143392, guid: df0359d714a905142abf2a73511d3560,
-        type: 2}
-      propertyPath: m_Target
-      value: 
-      objectReference: {fileID: 657100808}
+    - target: {fileID: 1096984643301502, guid: df0359d714a905142abf2a73511d3560, type: 2}
+      propertyPath: m_TagString
+      value: PlayerUI
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df0359d714a905142abf2a73511d3560, type: 2}
   m_IsPrefabParent: 0
