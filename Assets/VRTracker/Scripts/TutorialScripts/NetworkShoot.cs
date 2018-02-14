@@ -37,7 +37,7 @@ public class NetworkShoot : NetworkBehaviour {
     void CmdShoot()
     {
         // Execute functions linked to this action
-        if(!playerHealth.isDead)
+        if(!playerHealth.isDead && isServer)
             RpcShoot();
     }
 
