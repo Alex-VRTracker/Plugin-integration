@@ -795,7 +795,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: Infinity
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
@@ -1890,6 +1890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vrGun: {fileID: 114974073278683688}
   text: {fileID: 114730972432357228}
+  ready: 0
 --- !u!114 &114900105865174212
 MonoBehaviour:
   m_ObjectHideFlags: 1
