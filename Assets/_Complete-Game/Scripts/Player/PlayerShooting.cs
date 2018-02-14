@@ -21,7 +21,6 @@ namespace CompleteProject
 		public Light faceLight;								// Duh
         float effectsDisplayTime = 0.2f;                // The proportion of the timeBetweenBullets that the effects will display for.
 
-
         void Awake ()
         {
             // Create a layer mask for the Shootable layer.
@@ -81,7 +80,7 @@ namespace CompleteProject
         }
 
 
-        public void Shoot ()
+        public void Shoot (Vector3 origin, Vector3 direction)
         {
             Debug.Log("Shooting");
 
@@ -101,11 +100,11 @@ namespace CompleteProject
 
             // Enable the line renderer and set it's first position to be the end of the gun.
             gunLine.enabled = true;
-            gunLine.SetPosition (0, transform.position);
+            gunLine.SetPosition (0, origin);
 
             // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
-            shootRay.origin = transform.position;
-            shootRay.direction = transform.forward;
+            shootRay.origin = origin;
+            shootRay.direction = direction;
             
 
             // Perform the raycast against gameobjects on the shootable layer and if it hits something...
@@ -156,7 +155,7 @@ namespace CompleteProject
             }
         }
 
-        public void ShootEffects()
+        public void ShootEffects(Vector3 origin, Vector3 direction)
         {
             Debug.Log("Shooting");
 
@@ -176,11 +175,11 @@ namespace CompleteProject
 
             // Enable the line renderer and set it's first position to be the end of the gun.
             gunLine.enabled = true;
-            gunLine.SetPosition(0, transform.position);
+            gunLine.SetPosition(0, origin   );
 
             // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
-            shootRay.origin = transform.position;
-            shootRay.direction = transform.forward;
+            shootRay.origin = origin;
+            shootRay.direction = direction;
 
         }
     }

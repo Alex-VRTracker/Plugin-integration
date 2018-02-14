@@ -21,7 +21,7 @@ public class NetworkShoot : NetworkBehaviour {
         }*/
         if(vrGun != null)
         {
-            vrGun.OnDown += CmdShoot;
+            vrGun.OnDown += FireShot;
 
         }
 
@@ -34,18 +34,25 @@ public class NetworkShoot : NetworkBehaviour {
 
     // Execute the shoot on server
     [Command]
-    void CmdShoot()
+    void CmdShoot(Vector3 origin, Vector3 directions)
     {
-        shootingScript.Shoot();
+        shootingScript.Shoot(origin, directions);
         // Execute functions linked to this action
-        if (!playerHealth.isDead && isServer)
-            RpcShoot();
+        RpcShoot(origin, directions);
+
+    }
+
+    
+    void FireShot()
+    {
+        if (!playerHealth.isDead)
+            CmdShoot(shootingScript.transform.position, shootingScript.transform.forward);
     }
 
     [ClientRpc]
-    void RpcShoot()
+    void RpcShoot(Vector3 origin, Vector3 directions)
     {
-        shootingScript.ShootEffects();
+        shootingScript.ShootEffects(origin, directions);
     }
     
 }
