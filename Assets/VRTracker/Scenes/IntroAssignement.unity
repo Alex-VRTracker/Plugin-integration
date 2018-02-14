@@ -1843,6 +1843,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114849337856739472, guid: 71adf1c14cccb4819b3d892f30609c2c,
+        type: 2}
+      propertyPath: m_NetworkPort
+      value: 7700
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71adf1c14cccb4819b3d892f30609c2c, type: 2}
   m_IsPrefabParent: 0
@@ -6039,18 +6044,6 @@ Prefab:
         type: 2}
       propertyPath: m_LocalPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1839000500454548, guid: df0359d714a905142abf2a73511d3560, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1839000500454548, guid: df0359d714a905142abf2a73511d3560, type: 2}
-      propertyPath: m_TagString
-      value: PlayerUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 1096984643301502, guid: df0359d714a905142abf2a73511d3560, type: 2}
-      propertyPath: m_TagString
-      value: PlayerUI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df0359d714a905142abf2a73511d3560, type: 2}
