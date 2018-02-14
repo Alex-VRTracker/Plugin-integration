@@ -48,6 +48,7 @@ public class PlayerManager : NetworkBehaviour
         WaveManager.instance.EndGame();
         isPlayersReady = false;
         target.ResetTarget();
+        startGame = false;
 
     }
 }
