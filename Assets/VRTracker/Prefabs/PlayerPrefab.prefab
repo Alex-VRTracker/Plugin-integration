@@ -426,7 +426,6 @@ GameObject:
   - component: {fileID: 95739952580761500}
   - component: {fileID: 114835725866142004}
   - component: {fileID: 114006338675136936}
-  - component: {fileID: 114926248696663810}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -889,7 +888,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1918,18 +1917,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114926248696663810
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1764823701623966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4f43bf66218c874d871d02802b6a2db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 114730972432357228}
 --- !u!114 &114934523296356032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2300,7 +2287,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 372198226
+  randomSeed: 1728055378
   InitialModule:
     serializedVersion: 3
     enabled: 1

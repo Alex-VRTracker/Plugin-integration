@@ -13,11 +13,14 @@ public class NetworkShoot : NetworkBehaviour {
     [SyncVar(hook = "OnScoreChanged")]
     int score;
     public Text text;                      // Reference to the Text component.
+    [SyncVar(hook = "OnReady")]
+    public bool ready;
 
     void Awake()
     {
         // Reset the score.
         score = 0;
+        ready = false;
     }
 
     // Use this for initialization
@@ -49,8 +52,18 @@ public class NetworkShoot : NetworkBehaviour {
         int scoreObtained = shootingScript.Shoot(origin, directions);
         if (scoreObtained > 0)
         {
-            score += scoreObtained; 
-        } 
+            score += scoreObtained;
+        }
+        else
+        {
+            if(scoreObtained == -1)
+            {
+                ready = true;
+                //Set player ready
+                PlayerManager.instance.SetPlayerReady(connectionToClient.address);
+                Debug.Log("PLayer ready " + connectionToClient.address);
+            }
+        }
         // Execute functions linked to this action
         RpcShoot(origin, directions);
 
@@ -74,6 +87,11 @@ public class NetworkShoot : NetworkBehaviour {
         score = value;
         if (isLocalPlayer)
             text.text = "Score: " + score;
+    }
+
+    void OnReady(bool state)
+    {
+        ready = state;
     }
 
 }

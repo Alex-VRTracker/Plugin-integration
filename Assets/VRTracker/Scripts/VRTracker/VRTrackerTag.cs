@@ -206,7 +206,6 @@ public class VRTrackerTag : MonoBehaviour {
 					{
 						Debug.LogWarning("Tag " + UID + " asks for orientation");
 					}
-					Debug.LogWarning("Tag " + UID + " asks for orientation");
 					VRTracker.instance.TagOrientation (UID, true);
 				}
 				counter++;

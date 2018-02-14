@@ -7,9 +7,12 @@ public class PlayerManager : NetworkBehaviour
 {
 
     public bool startGame = false;
-    public bool isPlayersReady = false;
+    public bool arePlayersReady = false;
     public static PlayerManager instance;
     public VRStandardAssets.ShootingGallery.ShootingTarget target;
+    Dictionary<string, bool> playerReadyState;
+    private int playerNumber = 0;
+    private int playersReady = 0;
 
     private void Awake()
     {
@@ -21,35 +24,73 @@ public class PlayerManager : NetworkBehaviour
         {
             instance = this;
         }
+        playerReadyState = new Dictionary<string, bool>();
     }
 
     // Use this for initialization
     void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    }
+
+    // Update is called once per frame
+    void Update () {
        
 	}
 
-    public void SetPlayerReady()
+    public void SetPlayerReady(string ip)
     {
-        isPlayersReady = true;
-        if (isPlayersReady)
+        //arePlayersReady = true;
+        //Set the player ready state
+        if (!playerReadyState[ip])
         {
-            startGame = true;
-            WaveManager.instance.StartGame();
-            //startGame = false;
+            playerReadyState[ip] = true;
+            playersReady++;
+            UpdateGameState();
         }
     }
 
     public void RestartGame()
     {
         WaveManager.instance.EndGame();
-        isPlayersReady = false;
+        arePlayersReady = false;
         target.ResetTarget();
         startGame = false;
 
+    }
+
+    public void AddPlayer(string ip)
+    {
+        Debug.LogWarning("Adding player " + ip);
+
+        playerReadyState[ip] = false;
+        playerNumber++;
+    }
+
+    public void RemovePlayer(string ip)
+    {
+        if (playerReadyState[ip])
+        {
+            playersReady--;
+        }
+        playerReadyState.Remove(ip);
+        playerNumber--;
+        if(playerNumber > 0)
+        {
+            UpdateGameState();
+        }
+    }
+
+    private void UpdateGameState()
+    {
+        if (playersReady == playerNumber)
+        {
+            arePlayersReady = true;
+        }
+        //If all players are ready we start the game
+        if (arePlayersReady)
+        {
+            WaveManager.instance.StartGame();
+            startGame = true;
+        }
     }
 }

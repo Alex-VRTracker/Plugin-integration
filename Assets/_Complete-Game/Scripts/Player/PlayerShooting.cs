@@ -135,6 +135,7 @@ namespace CompleteProject
                     {
                         // ... the enemy should take damage.
                         shootingTarget.ImReady();
+                        score = -1;
                     }
                     else
                     {

@@ -32,25 +32,46 @@ public class VRTrackerNetwork : NetworkManager
         }
     }
 
+    public override void OnServerConnect(NetworkConnection conn)
+    {
+        base.OnServerConnect(conn);
+        Debug.LogWarning("Adding a new player " + conn.address);
+
+
+        /*if (conn.address != "localClient")
+        {
+            //Add this player in the player manager
+            PlayerManager.instance.AddPlayer(conn.address);
+        }
+        Debug.LogWarning("Adding player " + conn.address);
+        */
+    }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        Debug.LogWarning("Adding a new player " + playerControllerId);
 
         base.OnServerAddPlayer(conn, playerControllerId);
+        //var newPlayer = conn.playerControllers[0].gameObject;
         var newPlayer = conn.playerControllers[0].gameObject;
+
         if (newPlayer.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
-            Debug.LogWarning("Setting local player");
+            Debug.LogWarning("Setting local player " + conn.address);
             VRTracker.instance.SetLocalPlayer(newPlayer);
+            PlayerManager.instance.AddPlayer(conn.address);
             //Announcer.instance.SetAnnouncer(newPlayer.transform.Find("Announcer").GetComponentInChildren<Text>());
         }
         players.Add(newPlayer);
+
     }
 
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
     {
         players.Remove(player.gameObject);
-
+        if (Network.isServer)
+        {
+            //Add this player in the player manager
+            PlayerManager.instance.RemovePlayer(conn.address);
+        }
         base.OnServerRemovePlayer(conn, player);
     }
 
@@ -66,5 +87,9 @@ public class VRTrackerNetwork : NetworkManager
         base.OnServerDisconnect(conn);
     }
 
+    public override void OnClientConnect(NetworkConnection conn)
+    {
+        base.OnClientConnect(conn);
 
+    }
 }

@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startGame: 0
-  isPlayersReady: 0
+  arePlayersReady: 0
   target: {fileID: 267955590}
 --- !u!1001 &267955589
 Prefab:
@@ -348,6 +348,16 @@ Prefab:
     - target: {fileID: 4459373868262120, guid: bc687dc68c3f6024fb834a2d4d8fec43, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 82972144914393106, guid: bc687dc68c3f6024fb834a2d4d8fec43,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82799243879587978, guid: bc687dc68c3f6024fb834a2d4d8fec43,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bc687dc68c3f6024fb834a2d4d8fec43, type: 2}
