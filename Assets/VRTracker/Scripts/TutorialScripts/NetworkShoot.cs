@@ -50,7 +50,7 @@ public class NetworkShoot : NetworkBehaviour {
     {
         Vector3 destination = origin;
         int scoreObtained = shootingScript.Shoot(origin, directions, out destination);
-        Debug.Log("Shooting " + origin + " direction " + directions);
+        //Debug.Log("Shooting " + origin + " direction " + directions);
 
         if (scoreObtained > 0)
         {
@@ -63,7 +63,7 @@ public class NetworkShoot : NetworkBehaviour {
                 ready = true;
                 //Set player ready
                 PlayerManager.instance.SetPlayerReady(connectionToClient.address);
-                Debug.Log("PLayer ready " + connectionToClient.address);
+                //Debug.Log("PLayer ready " + connectionToClient.address);
             }
         }
         // Execute functions linked to this action
