@@ -10,6 +10,7 @@ public class PlayerManager : NetworkBehaviour
     public bool isPlayersReady = false;
     public static PlayerManager instance;
     public VRStandardAssets.ShootingGallery.ShootingTarget target;
+
     private void Awake()
     {
         if (instance != null)

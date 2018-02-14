@@ -5,10 +5,9 @@ using UnityEngine;
 public class Respawner : MonoBehaviour {
 
 
-    public GameObject respawnPoint;
-
-    public Transform myHead;
-    public CompleteProject.PlayerHealth playerHealth;
+    private GameObject respawnPoint;
+    private Transform myHead;
+    private CompleteProject.PlayerHealth playerHealth;
 
     // Use this for initialization
     void Start()

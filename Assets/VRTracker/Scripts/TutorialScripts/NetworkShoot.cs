@@ -36,15 +36,16 @@ public class NetworkShoot : NetworkBehaviour {
     [Command]
     void CmdShoot()
     {
+        shootingScript.Shoot();
         // Execute functions linked to this action
-        if(!playerHealth.isDead)
+        if (!playerHealth.isDead && isServer)
             RpcShoot();
     }
 
     [ClientRpc]
     void RpcShoot()
     {
-        shootingScript.Shoot();
+        shootingScript.ShootEffects();
     }
     
 }
