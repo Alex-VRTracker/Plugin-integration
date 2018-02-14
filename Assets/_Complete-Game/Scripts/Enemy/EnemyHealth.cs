@@ -7,7 +7,7 @@ namespace CompleteProject
     {
 
         public int startingHealth = 100;            // The amount of health the enemy starts the game with.
-        [SyncVar]
+        [SyncVar(hook = "OnHealthChanged")]
         public int currentHealth;                   // The current health the enemy has.
         public float sinkSpeed = 2.5f;              // The speed at which the enemy sinks through the floor when dead.
         public int scoreValue = 10;                 // The amount added to the player's score when the enemy dies.
@@ -45,14 +45,15 @@ namespace CompleteProject
             }
         }
 
-        [Command]
-        public void CmdTakeDamage(int amount, Vector3 hitPoint)
+        [Server]
+        public void TakeDamage(int amount, Vector3 hitPoint)
         {
             // If the enemy is dead...
             if (isDead)
                 // ... no need to take damage so exit the function.
                 return;
 
+            //TODO Update the animation and sound display on client
             // Play the hurt sound effect.
             enemyAudio.Play();
 
@@ -69,12 +70,12 @@ namespace CompleteProject
             if (currentHealth <= 0)
             {
                 // ... the enemy is dead.
-                Death();
+                RpcDeath();
             }
         }
 
-
-        void Death()
+        [ClientRpc]
+        void RpcDeath()
         {
             // The enemy is dead.
             isDead = true;
@@ -107,6 +108,11 @@ namespace CompleteProject
 
             // After 2 seconds destory the enemy.
             Destroy(gameObject, 2f);
+        }
+
+        void OnHealthChanged(int healthValue)
+        {
+            currentHealth = healthValue;
         }
 
     }

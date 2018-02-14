@@ -118,8 +118,9 @@ namespace CompleteProject
             //SceneManager.LoadScene (0);
         }
 
-        void OnChangeHealth(int currentHealth)
+        void OnChangeHealth(int healthValue)
         {
+            currentHealth = healthValue;
             if(isLocalPlayer)
                 healthSlider.value = currentHealth;
         }

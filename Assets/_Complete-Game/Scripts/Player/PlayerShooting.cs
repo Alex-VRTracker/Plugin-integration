@@ -119,7 +119,7 @@ namespace CompleteProject
                     if (enemyHealth != null)
                     {
                         // ... the enemy should take damage.
-                        enemyHealth.CmdTakeDamage(damagePerShot, shootHit.point);
+                        enemyHealth.TakeDamage(damagePerShot, shootHit.point);
                     }
                     else
                     {
