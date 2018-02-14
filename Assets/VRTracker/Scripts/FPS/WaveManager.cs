@@ -89,7 +89,7 @@ public class WaveManager : NetworkBehaviour
         //audioManager.playSound("Bell");
 
         //Stop the game timer
-        StopTimer();
+        //StopTimer();
 
         //Disable all the spawn points
         //ESpawner.DisableSpawnPoints();
@@ -99,7 +99,9 @@ public class WaveManager : NetworkBehaviour
 
         //Try to make a healthpack appear
         //PickupSpawner.instance.TryHealthSpawn();
-        waveInProgress = false;
+        //waveInProgress = false;
+
+        Stop();
         //Start the next wave
         StartCoroutine(WaitForWellDone(3f));
     }
@@ -223,7 +225,7 @@ public class WaveManager : NetworkBehaviour
         if(time == 0 && PlayerManager.instance.startGame && waveInProgress)
         {
             Debug.Log("Stop wave");
-            ESpawner.ClearEnemies();
+            //ESpawner.StopWaves();
             return false;
         }
         else
@@ -289,6 +291,8 @@ public class WaveManager : NetworkBehaviour
         //ESpawner.DisableSpawnPoints();
         ESpawner.ClearEnemies();
         StopTimer();
+        waveInProgress = false;
+
     }
 
     /// <summary>
@@ -311,5 +315,11 @@ public class WaveManager : NetworkBehaviour
     public void StartGame()
     {
         NextWave();
+    }
+
+    public void EndGame()
+    {
+        Stop();
+        currentWave = 0;
     }
 }

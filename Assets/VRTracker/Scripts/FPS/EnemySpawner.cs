@@ -126,5 +126,11 @@ public class EnemySpawner : NetworkBehaviour
         }
 
     }
-    
+
+    public void StopWaves()
+    {
+        isSpawning = false;
+        ClearEnemies();
+    }
+
 }

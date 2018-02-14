@@ -7,8 +7,8 @@ public class Respawner : MonoBehaviour {
 
     public GameObject respawnPoint;
 
-    private Transform myHead;
-    private CompleteProject.PlayerHealth playerHealth;
+    public Transform myHead;
+    public CompleteProject.PlayerHealth playerHealth;
 
     // Use this for initialization
     void Start()
@@ -27,6 +27,7 @@ public class Respawner : MonoBehaviour {
             //GetComponent<vp_PlayerRespawner>().Respawn();
             playerHealth.Respawn();
             //GetComponent<ScoreScript>().setScore(0);
+            PlayerManager.instance.RestartGame();
         }
     }
 

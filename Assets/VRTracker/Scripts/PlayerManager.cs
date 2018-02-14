@@ -45,7 +45,9 @@ public class PlayerManager : NetworkBehaviour
 
     public void RestartGame()
     {
+        WaveManager.instance.EndGame();
         isPlayersReady = false;
         target.ResetTarget();
+
     }
 }

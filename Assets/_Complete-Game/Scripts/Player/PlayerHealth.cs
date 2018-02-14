@@ -124,23 +124,32 @@ namespace CompleteProject
 
         private void DeathView(bool dead)
         {
-            if (dead)
+            Camera cam = GetComponentInChildren<Camera>();
+            //GetComponent<ScoreScript>().setScore(0);
+            if(cam != null)
             {
-                //GetComponent<ScoreScript>().setScore(0);
-                Camera cam = GetComponentInChildren<Camera>();
-                if(cam != null)
-                {
-                    cam.GetComponent<GrayscaleEffect>().enabled = true;
-                }
-                GetComponent<Respawner>().SetActiveSpawnPoint(true);
+                cam.GetComponent<GrayscaleEffect>().enabled = dead;
             }
+            GetComponent<Respawner>().SetActiveSpawnPoint(dead);
         }
 
         public void Respawn()
         {
             //TODO inform the master
-            DeathView(false);
+            isDead = false;
             currentHealth = startingHealth;
+            DeathView(false);
+        
+            // Tell the animator that the player respawns.
+            anim.SetTrigger("Respawn");
+
+            // Set the audiosource to play the death clip and play it (this will stop the hurt sound from playing).
+            playerAudio.clip = deathClip;
+            playerAudio.Play();
+
+            // Turn off the movement and shooting scripts.
+            playerMovement.enabled = false;
+            //playerShooting.enabled = false;
         }
     }
 }
