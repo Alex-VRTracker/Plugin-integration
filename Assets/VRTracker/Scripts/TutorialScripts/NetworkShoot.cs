@@ -73,7 +73,7 @@ public class NetworkShoot : NetworkBehaviour {
     void FireShot()
     {
         if (!playerHealth.isDead)
-            CmdShoot(shootingScript.transform.position, shootingScript.transform.forward);
+            CmdShoot(shootingScript.transform.position, shootingScript.transform.parent.transform.forward);
     }
 
     [ClientRpc]
