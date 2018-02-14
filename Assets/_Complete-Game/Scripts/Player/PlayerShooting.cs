@@ -158,7 +158,7 @@ namespace CompleteProject
                 Debug.Log("Shooting fail");
 
                 // ... set the second position of the line renderer to the fullest extent of the gun's range.
-                gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
+                destination = shootRay.origin + shootRay.direction * range;
             }
             return score;
         }
