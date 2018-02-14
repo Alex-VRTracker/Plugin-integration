@@ -41,6 +41,8 @@ public class PlayerManager : NetworkBehaviour
     {
         //arePlayersReady = true;
         //Set the player ready state
+        Debug.Log("Setting PLayer ready " + ip);
+
         if (!playerReadyState[ip])
         {
             playerReadyState[ip] = true;

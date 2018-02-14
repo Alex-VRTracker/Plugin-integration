@@ -129,18 +129,22 @@ namespace CompleteProject
                 }
                 else
                 {
-                    VRStandardAssets.ShootingGallery.ShootingTarget shootingTarget = shootHit.collider.GetComponent<VRStandardAssets.ShootingGallery.ShootingTarget>();
-                    // If the EnemyHealth component exist...
-                    if (shootingTarget != null)
+                    if (vrGun.transform.parent.GetComponent<NetworkShoot>().isLocalPlayer)
                     {
-                        // ... the enemy should take damage.
-                        shootingTarget.ImReady();
-                        score = -1;
+                        VRStandardAssets.ShootingGallery.ShootingTarget shootingTarget = shootHit.collider.GetComponent<VRStandardAssets.ShootingGallery.ShootingTarget>();
+                        // If the EnemyHealth component exist...
+                        if (shootingTarget != null)
+                        {
+                            // ... the enemy should take damage.
+                            shootingTarget.ImReady();
+                            score = -1;
+                        }
+                        else
+                        {
+                            Debug.Log("No ennemy");
+                        }
                     }
-                    else
-                    {
-                        Debug.Log("No ennemy");
-                    }
+                    
                 }
                 
 

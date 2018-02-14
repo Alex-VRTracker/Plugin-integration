@@ -15,7 +15,6 @@ public class NetworkShoot : NetworkBehaviour {
     public Text text;                      // Reference to the Text component.
     [SyncVar(hook = "OnReady")]
     public bool ready;
-
     void Awake()
     {
         // Reset the score.
@@ -50,6 +49,8 @@ public class NetworkShoot : NetworkBehaviour {
     void CmdShoot(Vector3 origin, Vector3 directions)
     {
         int scoreObtained = shootingScript.Shoot(origin, directions);
+        Debug.Log("Shooting " + origin + " direction " + directions);
+
         if (scoreObtained > 0)
         {
             score += scoreObtained;
