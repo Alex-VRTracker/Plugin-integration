@@ -37,22 +37,7 @@ public class VRTrackerNetwork : NetworkManager
         base.OnServerConnect(conn);
         Debug.LogWarning("Adding a new player " + conn.address);
 
-		var newPlayer = conn.playerControllers[0].gameObject;
-
-        /*if (conn.address != "localClient")
-        {
-            //Add this player in the player manager
-            PlayerManager.instance.AddPlayer(conn.address);
-        }
-        Debug.LogWarning("Adding player " + conn.address);
-        */
-		if (!newPlayer.GetComponent<NetworkIdentity>().isLocalPlayer)
-		{
-			Debug.LogWarning("Setting local player " + Network.player.ipAddress);
-			VRTracker.instance.SetLocalPlayer(newPlayer);
-			PlayerManager.instance.AddPlayer(Network.player.ipAddress);
-			//Announcer.instance.SetAnnouncer(newPlayer.transform.Find("Announcer").GetComponentInChildren<Text>());
-		}
+      
     }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {

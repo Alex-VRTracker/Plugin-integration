@@ -29,8 +29,8 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
     {
         Debug.LogWarning("On start local player client ");
 
-        VRTrackerBoundaries.instance.localPlayer = gameObject;
-        VRTrackerBoundaries.instance.LookForLocalPlayer();
+        //VRTrackerBoundaries.instance.localPlayer = gameObject;
+        //VRTrackerBoundaries.instance.LookForLocalPlayer();
         GameObject hud = transform.Find("HUD").gameObject;
         if(hud != null)
         {

@@ -116,4 +116,20 @@ public class NetworkShoot : NetworkBehaviour {
         }
     }
 
+    /*public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+        GameObject hud = transform.Find("HUD").gameObject;
+        if (hud != null)
+        {
+            hud.SetActive(true);
+        }
+        GameObject damageHud = transform.Find("DamageHUD").gameObject;
+        if (damageHud != null)
+        {
+            damageHud.SetActive(true);
+        }
+    }*/
 }
+
+

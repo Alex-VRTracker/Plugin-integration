@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1107177714055326
 GameObject:
   m_ObjectHideFlags: 1
@@ -426,7 +426,6 @@ GameObject:
   - component: {fileID: 95739952580761500}
   - component: {fileID: 114835725866142004}
   - component: {fileID: 114006338675136936}
-  - component: {fileID: 114422733093865872}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -488,7 +487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1855497569751062
 GameObject:
   m_ObjectHideFlags: 1
@@ -1460,17 +1459,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Game Over!
---- !u!114 &114422733093865872
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1764823701623966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b296ffca2cecd3745bb857dac8416de5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114427956239382372
 MonoBehaviour:
   m_ObjectHideFlags: 1
