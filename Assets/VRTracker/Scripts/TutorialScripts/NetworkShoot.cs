@@ -80,6 +80,7 @@ public class NetworkShoot : NetworkBehaviour {
     [ClientRpc]
     void RpcShoot(Vector3 origin, Vector3 directions)
     {
+        Debug.Log("RPC shoot " + origin + ", " + directions);
         shootingScript.ShootEffects(origin, directions);
     }
 

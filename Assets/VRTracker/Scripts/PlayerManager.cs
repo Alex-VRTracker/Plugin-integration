@@ -84,6 +84,8 @@ public class PlayerManager : NetworkBehaviour
 
     private void UpdateGameState()
     {
+        Debug.LogWarning("Updating ready game " + playersReady + "/" + playerNumber);
+
         if (playersReady == playerNumber)
         {
             arePlayersReady = true;
