@@ -45,8 +45,8 @@ namespace CompleteProject
             }
         }
 
-
-        public void TakeDamage(int amount, Vector3 hitPoint)
+        [Command]
+        public void CmdTakeDamage(int amount, Vector3 hitPoint)
         {
             // If the enemy is dead...
             if (isDead)
