@@ -107,10 +107,8 @@ public class VRTrackerTag : MonoBehaviour {
 
 		netId = transform.GetComponentInParent<NetworkIdentity> ();
 		if (netId != null && !netId.isLocalPlayer) {
-			Debug.Log ("TAG " +UID +" Not local player");
 			return;
 		} else {
-			Debug.Log ("TAG " +UID +" IS local player");
             VRTracker.instance.SetLocalPlayer(transform.parent.gameObject);
             Debug.Log(transform.parent.gameObject);
 

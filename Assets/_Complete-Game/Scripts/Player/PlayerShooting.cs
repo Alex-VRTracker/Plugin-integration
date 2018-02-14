@@ -144,7 +144,11 @@ namespace CompleteProject
                             Debug.Log("No ennemy");
                         }
                     }
-                    
+                    else
+                    {
+                        Debug.Log("Not local player");
+                    }
+
                 }
 
 
@@ -165,7 +169,6 @@ namespace CompleteProject
 
         public void ShootEffects(Vector3 origin, Vector3 direction, Vector3 destination)
         {
-            Debug.Log("Shooting");
 
             // Reset the timer.
             timer = 0f;
