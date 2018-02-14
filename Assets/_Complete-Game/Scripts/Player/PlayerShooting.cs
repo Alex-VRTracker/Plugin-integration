@@ -183,7 +183,7 @@ namespace CompleteProject
             // Enable the line renderer and set it's first position to be the end of the gun.
             gunLine.enabled = true;
             gunLine.SetPosition(0, origin);
-
+            //gunLine.SetPosition(1, direction);
 
             // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
             //shootRay.origin = origin;
