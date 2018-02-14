@@ -415,16 +415,16 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4903862230426634}
-  - component: {fileID: 95739952580761500}
+  - component: {fileID: 114494632771550628}
+  - component: {fileID: 114829608342823866}
+  - component: {fileID: 114618144946781826}
+  - component: {fileID: 114314505244143392}
   - component: {fileID: 114589719917568362}
   - component: {fileID: 54321414627918860}
   - component: {fileID: 114024831952606532}
   - component: {fileID: 136495658825734584}
   - component: {fileID: 82380137307961930}
-  - component: {fileID: 114494632771550628}
-  - component: {fileID: 114829608342823866}
-  - component: {fileID: 114618144946781826}
-  - component: {fileID: 114314505244143392}
+  - component: {fileID: 95739952580761500}
   - component: {fileID: 114835725866142004}
   - component: {fileID: 114006338675136936}
   m_Layer: 0
@@ -793,7 +793,7 @@ Rigidbody:
   m_GameObject: {fileID: 1764823701623966}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: Infinity
+  m_Drag: 0
   m_AngularDrag: Infinity
   m_UseGravity: 1
   m_IsKinematic: 0
