@@ -52,7 +52,7 @@ namespace CompleteProject
 			if((Input.GetButton ("Fire1")) && timer >= timeBetweenBullets && Time.timeScale != 0)
             {
                 // ... shoot the gun.
-                Shoot ();
+                Shoot (transform.position, transform.forward);
             }
 #else
             // If there is input on the shoot direction stick and it's time to fire...

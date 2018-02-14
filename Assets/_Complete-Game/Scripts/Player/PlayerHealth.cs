@@ -37,7 +37,7 @@ namespace CompleteProject
             playerShooting = GetComponentInChildren <PlayerShooting> ();
 
             // Set the initial health of the player.
-            currentHealth = startingHealth;
+            //currentHealth = startingHealth;
         }
 
 
@@ -60,14 +60,15 @@ namespace CompleteProject
             damaged = false;
         }
 
+        [ServerCallback]
+        void OnEnable()
+        {
+            currentHealth = startingHealth;
+        }
 
+        [Server]
         public void TakeDamage (int amount)
         {
-            //Damage will only be applied on the Server
-            if (!isServer)
-            {
-                return;
-            }
             // Set the damaged flag so the screen will flash.
             damaged = true;
             Debug.Log("Taking damage " + amount);
@@ -84,12 +85,12 @@ namespace CompleteProject
             if(currentHealth <= 0 && !isDead)
             {
                 // ... it should die.
-                Death ();
+                RpcDeath ();
             }
         }
 
-
-        void Death ()
+        [ClientRpc]
+        void RpcDeath ()
         {
             // Set the death flag so this function won't be called again.
             isDead = true;
@@ -119,7 +120,8 @@ namespace CompleteProject
 
         void OnChangeHealth(int currentHealth)
         {
-            healthSlider.value = currentHealth;
+            if(isLocalPlayer)
+                healthSlider.value = currentHealth;
         }
 
         private void DeathView(bool dead)
