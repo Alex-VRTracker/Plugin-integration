@@ -105,7 +105,7 @@ namespace CompleteProject
             // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
             shootRay.origin = origin;
             shootRay.direction = direction;
-            destination = origin;
+            //destination = origin;
             int score = 0;
 
             // Perform the raycast against gameobjects on the shootable layer and if it hits something...
