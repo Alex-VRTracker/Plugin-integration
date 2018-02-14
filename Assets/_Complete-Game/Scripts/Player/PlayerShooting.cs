@@ -80,7 +80,7 @@ namespace CompleteProject
         }
 
 
-        public void Shoot (Vector3 origin, Vector3 direction)
+        public int Shoot (Vector3 origin, Vector3 direction)
         {
             Debug.Log("Shooting");
 
@@ -105,7 +105,8 @@ namespace CompleteProject
             // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
             shootRay.origin = origin;
             shootRay.direction = direction;
-            
+
+            int score = 0;
 
             // Perform the raycast against gameobjects on the shootable layer and if it hits something...
             if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
@@ -119,7 +120,7 @@ namespace CompleteProject
                     if (enemyHealth != null)
                     {
                         // ... the enemy should take damage.
-                        enemyHealth.TakeDamage(damagePerShot, shootHit.point);
+                        score = enemyHealth.TakeDamage(damagePerShot, shootHit.point);
                     }
                     else
                     {
@@ -153,6 +154,7 @@ namespace CompleteProject
                 // ... set the second position of the line renderer to the fullest extent of the gun's range.
                 gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
             }
+            return score;
         }
 
         public void ShootEffects(Vector3 origin, Vector3 direction)

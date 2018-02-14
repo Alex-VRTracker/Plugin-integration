@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class NetworkShoot : NetworkBehaviour {
 
@@ -9,6 +10,15 @@ public class NetworkShoot : NetworkBehaviour {
     private CompleteProject.PlayerShooting shootingScript;
     public VRTrackerTag vrGun;
     private CompleteProject.PlayerHealth playerHealth;
+    [SyncVar(hook = "OnScoreChanged")]
+    int score;
+    public Text text;                      // Reference to the Text component.
+
+    void Awake()
+    {
+        // Reset the score.
+        score = 0;
+    }
 
     // Use this for initialization
     void Start () {
@@ -36,7 +46,11 @@ public class NetworkShoot : NetworkBehaviour {
     [Command]
     void CmdShoot(Vector3 origin, Vector3 directions)
     {
-        shootingScript.Shoot(origin, directions);
+        int scoreObtained = shootingScript.Shoot(origin, directions);
+        if (scoreObtained > 0)
+        {
+            score += scoreObtained; 
+        } 
         // Execute functions linked to this action
         RpcShoot(origin, directions);
 
@@ -54,5 +68,12 @@ public class NetworkShoot : NetworkBehaviour {
     {
         shootingScript.ShootEffects(origin, directions);
     }
-    
+
+    void OnScoreChanged(int value)
+    {
+        score = value;
+        if (isLocalPlayer)
+            text.text = "Score: " + score;
+    }
+
 }

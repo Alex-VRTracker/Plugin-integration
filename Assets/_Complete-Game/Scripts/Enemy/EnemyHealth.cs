@@ -46,12 +46,12 @@ namespace CompleteProject
         }
 
         [Server]
-        public void TakeDamage(int amount, Vector3 hitPoint)
+        public int TakeDamage(int amount, Vector3 hitPoint)
         {
             // If the enemy is dead...
             if (isDead)
                 // ... no need to take damage so exit the function.
-                return;
+                return 0;
 
             //TODO Update the animation and sound display on client
             // Play the hurt sound effect.
@@ -71,7 +71,9 @@ namespace CompleteProject
             {
                 // ... the enemy is dead.
                 RpcDeath();
+                return scoreValue;
             }
+            return 0;
         }
 
         [ClientRpc]
@@ -104,7 +106,7 @@ namespace CompleteProject
             isSinking = true;
 
             // Increase the score by the enemy's score value.
-            ScoreManager.score += scoreValue;
+            //ScoreManager.score += scoreValue;
 
             // After 2 seconds destory the enemy.
             Destroy(gameObject, 2f);
