@@ -62,8 +62,11 @@ public class NetworkShoot : NetworkBehaviour {
             {
                 ready = true;
                 //Set player ready
-                PlayerManager.instance.SetPlayerReady(Network.player.ipAddress);
+                //PlayerManager.instance.SetPlayerReady(Network.player.ipAddress);
                 //Debug.Log("PLayer ready " + connectionToClient.address);
+                PlayerManager.instance.arePlayersReady = true;
+                PlayerManager.instance.UpdateGameState();
+                RpcReady();
             }
             else if (scoreObtained == -2)
             {
@@ -116,6 +119,21 @@ public class NetworkShoot : NetworkBehaviour {
         }
     }
 
+    [ClientRpc]
+    public void RpcReady()
+    {
+        GameObject t = GameObject.FindGameObjectWithTag("Ready");
+
+        if (t != null)
+        {
+            VRStandardAssets.ShootingGallery.ShootingTarget shootingTarget = t.GetComponent<VRStandardAssets.ShootingGallery.ShootingTarget>();
+            if (shootingTarget != null)
+            {
+                shootingTarget.ImReady();
+            }
+        }
+
+    }
     /*public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();

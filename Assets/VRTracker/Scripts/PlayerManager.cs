@@ -82,7 +82,7 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    private void UpdateGameState()
+    public void UpdateGameState()
     {
         Debug.LogWarning("Updating ready game " + playersReady + "/" + playerNumber);
 

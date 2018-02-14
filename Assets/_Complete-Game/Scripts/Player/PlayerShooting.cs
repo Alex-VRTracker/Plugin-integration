@@ -137,7 +137,7 @@ namespace CompleteProject
                         // ... the enemy should take damage.
                         if (vrGun.transform.parent.GetComponent<NetworkShoot>().isLocalPlayer)
                         {
-                            shootingTarget.ImReady();
+                            //shootingTarget.ImReady();
                             score = -1;
                         }
                         else
