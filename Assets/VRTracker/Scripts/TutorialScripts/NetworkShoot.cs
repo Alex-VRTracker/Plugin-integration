@@ -48,7 +48,8 @@ public class NetworkShoot : NetworkBehaviour {
     [Command]
     void CmdShoot(Vector3 origin, Vector3 directions)
     {
-        int scoreObtained = shootingScript.Shoot(origin, directions);
+        Vector3 destination = origin;
+        int scoreObtained = shootingScript.Shoot(origin, directions, out destination);
         Debug.Log("Shooting " + origin + " direction " + directions);
 
         if (scoreObtained > 0)
@@ -66,7 +67,7 @@ public class NetworkShoot : NetworkBehaviour {
             }
         }
         // Execute functions linked to this action
-        RpcShoot(origin, directions);
+        RpcShoot(origin, directions, destination);
 
     }
 
@@ -78,10 +79,10 @@ public class NetworkShoot : NetworkBehaviour {
     }
 
     [ClientRpc]
-    void RpcShoot(Vector3 origin, Vector3 directions)
+    void RpcShoot(Vector3 origin, Vector3 directions, Vector3 destination)
     {
         Debug.Log("RPC shoot " + origin + ", " + directions);
-        shootingScript.ShootEffects(origin, directions);
+        shootingScript.ShootEffects(origin, directions, destination);
     }
 
     void OnScoreChanged(int value)

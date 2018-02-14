@@ -80,7 +80,7 @@ namespace CompleteProject
         }
 
 
-        public int Shoot (Vector3 origin, Vector3 direction)
+        public int Shoot (Vector3 origin, Vector3 direction, out Vector3 destination)
         {
             Debug.Log("Shooting");
 
@@ -105,7 +105,7 @@ namespace CompleteProject
             // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
             shootRay.origin = origin;
             shootRay.direction = direction;
-
+            destination = origin;
             int score = 0;
 
             // Perform the raycast against gameobjects on the shootable layer and if it hits something...
@@ -146,10 +146,11 @@ namespace CompleteProject
                     }
                     
                 }
-                
+
 
                 // Set the second position of the line renderer to the point the raycast hit.
-                gunLine.SetPosition (1, shootHit.point);
+                //gunLine.SetPosition (1, shootHit.point);
+                destination = shootHit.point;
             }
             // If the raycast didn't hit anything on the shootable layer...
             else
@@ -162,7 +163,7 @@ namespace CompleteProject
             return score;
         }
 
-        public void ShootEffects(Vector3 origin, Vector3 direction)
+        public void ShootEffects(Vector3 origin, Vector3 direction, Vector3 destination)
         {
             Debug.Log("Shooting");
 
@@ -183,7 +184,7 @@ namespace CompleteProject
             // Enable the line renderer and set it's first position to be the end of the gun.
             gunLine.enabled = true;
             gunLine.SetPosition(0, origin);
-            //gunLine.SetPosition(1, direction);
+            gunLine.SetPosition(1, destination);
 
             // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
             //shootRay.origin = origin;
