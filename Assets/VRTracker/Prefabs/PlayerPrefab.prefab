@@ -970,7 +970,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1890,7 +1890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vrGun: {fileID: 114974073278683688}
-  text: {fileID: 0}
+  text: {fileID: 114730972432357228}
 --- !u!114 &114900105865174212
 MonoBehaviour:
   m_ObjectHideFlags: 1
