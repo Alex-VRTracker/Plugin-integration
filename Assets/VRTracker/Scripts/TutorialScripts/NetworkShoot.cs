@@ -62,8 +62,13 @@ public class NetworkShoot : NetworkBehaviour {
             {
                 ready = true;
                 //Set player ready
-                PlayerManager.instance.SetPlayerReady(connectionToClient.address);
+                PlayerManager.instance.SetPlayerReady(Network.player.ipAddress);
                 //Debug.Log("PLayer ready " + connectionToClient.address);
+            }
+            else if (scoreObtained == -2)
+            {
+                //NetworkServer.SendToClient(GetComponent<NetworkIdentity>().connectionToClient.connectionId, MsgType.Ready, "Rea")
+                TargetReady(GetComponent<NetworkIdentity>().connectionToClient);
             }
         }
         // Execute functions linked to this action
@@ -94,6 +99,20 @@ public class NetworkShoot : NetworkBehaviour {
     void OnReady(bool state)
     {
         ready = state;
+    }
+
+    [TargetRpc]
+    public void TargetReady(NetworkConnection target)
+    {
+        GameObject t = GameObject.FindGameObjectWithTag("Ready");
+        if(t != null)
+        {
+            VRStandardAssets.ShootingGallery.ShootingTarget shootingTarget = GetComponent<VRStandardAssets.ShootingGallery.ShootingTarget>();
+            if(shootingTarget != null)
+            {
+                shootingTarget.ImReady();
+            }
+        }
     }
 
 }
