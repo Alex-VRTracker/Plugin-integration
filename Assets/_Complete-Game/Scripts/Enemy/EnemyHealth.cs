@@ -54,18 +54,10 @@ namespace CompleteProject
                 return 0;
 
             //TODO Update the animation and sound display on client
-            // Play the hurt sound effect.
-            enemyAudio.Play();
 
             // Reduce the current health by the amount of damage sustained.
             currentHealth -= amount;
-
-            // Set the position of the particle system to where the hit was sustained.
-            hitParticles.transform.position = hitPoint;
-
-            // And play the particles.
-            hitParticles.Play();
-
+            RpcHit(hitPoint);
             // If the current health is less than or equal to zero...
             if (currentHealth <= 0)
             {
@@ -74,6 +66,20 @@ namespace CompleteProject
                 return scoreValue;
             }
             return 0;
+        }
+
+        [ClientRpc]
+        void RpcHit(Vector3 hitPoint)
+        {
+            // Play the hurt sound effect.
+            enemyAudio.Play();
+            // Set the position of the particle system to where the hit was sustained.
+            hitParticles.transform.position = hitPoint;
+
+            // And play the particles.
+            hitParticles.Play();
+
+
         }
 
         [ClientRpc]
