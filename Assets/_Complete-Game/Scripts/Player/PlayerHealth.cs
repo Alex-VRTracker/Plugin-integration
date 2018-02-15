@@ -62,9 +62,10 @@ namespace CompleteProject
             currentHealth = startingHealth;
         }
 
-        [Server]
         public void TakeDamage (int amount)
         {
+            if (!isServer)
+                return;
             // Set the damaged flag so the screen will flash.
             damaged = true;
             Debug.Log("Taking damage " + amount);
