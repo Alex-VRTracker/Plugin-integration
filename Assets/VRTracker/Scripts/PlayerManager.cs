@@ -14,7 +14,6 @@ public class PlayerManager : NetworkBehaviour
     private int playerNumber = 0;
     private int playersReady = 0;
     private int alivePlayer = 0;
-    private bool allDead = false;
 
     private void Awake()
     {
@@ -55,7 +54,6 @@ public class PlayerManager : NetworkBehaviour
 
     public void RestartGame()
     {
-        allDead = false;
         WaveManager.instance.EndGame();
         arePlayersReady = false;
         target.ResetTarget();
@@ -68,6 +66,7 @@ public class PlayerManager : NetworkBehaviour
 
         playerReadyState[ip] = false;
         playerNumber++;
+        alivePlayer++;
     }
 
     public void RemovePlayer(string ip)
@@ -105,19 +104,16 @@ public class PlayerManager : NetworkBehaviour
         Debug.LogWarning("Respawming a player " + alivePlayer + "/" + playerNumber);
 
         alivePlayer++;
-        if(alivePlayer == playerNumber && allDead)
-        {
-            RestartGame();
-        }
+
     }
 
     public void DeadPlayer()
     {
         Debug.LogWarning("Dead player " + alivePlayer + "/" + playerNumber);
         alivePlayer--;
-        if(alivePlayer == 0)
+        if(alivePlayer <= 0)
         {
-            allDead = true;
+            RestartGame();
         }
     }
 }
