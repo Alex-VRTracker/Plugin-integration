@@ -23,10 +23,7 @@ public class Respawner : MonoBehaviour {
         {
             respawnPoint.GetComponent<Objective>().ActivateObjective();
             Debug.Log("Respawing");
-            //GetComponent<vp_PlayerRespawner>().Respawn();
-            playerHealth.Respawn();
-            //GetComponent<ScoreScript>().setScore(0);
-            PlayerManager.instance.RestartGame();
+            playerHealth.CmdRespawn();
         }
     }
 

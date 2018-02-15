@@ -7,8 +7,6 @@ namespace CompleteProject
 {
     public class PlayerHealth : NetworkBehaviour
     {
-
-
         public int startingHealth = 100;                            // The amount of health the player starts the game with.
 
         [SyncVar(hook = "OnChangeHealth")]                          //Synchronize on the network the health bar
@@ -22,7 +20,6 @@ namespace CompleteProject
 
         Animator anim;                                              // Reference to the Animator component.
         AudioSource playerAudio;                                    // Reference to the AudioSource component.
-        PlayerMovement playerMovement;                              // Reference to the player's movement.
         PlayerShooting playerShooting;                              // Reference to the PlayerShooting script.
         public bool isDead;                                                // Whether the player is dead.
         bool damaged;                                               // True when the player gets damaged.
@@ -33,7 +30,6 @@ namespace CompleteProject
             // Setting up the references.
             anim = GetComponent <Animator> ();
             playerAudio = GetComponent <AudioSource> ();
-            playerMovement = GetComponent <PlayerMovement> ();
             playerShooting = GetComponentInChildren <PlayerShooting> ();
 
             // Set the initial health of the player.
@@ -86,6 +82,7 @@ namespace CompleteProject
             {
                 // ... it should die.
                 RpcDeath ();
+                PlayerManager.instance.DeadPlayer();
             }
         }
 
@@ -104,11 +101,6 @@ namespace CompleteProject
             // Set the audiosource to play the death clip and play it (this will stop the hurt sound from playing).
             playerAudio.clip = deathClip;
             playerAudio.Play ();
-
-            // Turn off the movement and shooting scripts.
-            playerMovement.enabled = false;
-            //playerShooting.enabled = false;
-            DeathView(true);
         }
 
 
@@ -121,8 +113,18 @@ namespace CompleteProject
         void OnChangeHealth(int healthValue)
         {
             currentHealth = healthValue;
-            if(isLocalPlayer)
+            if (isLocalPlayer)
+            {
                 healthSlider.value = currentHealth;
+                if(currentHealth <= 0 && !isDead)
+                {
+                    DeathView(true);
+
+                }else if( currentHealth == startingHealth)
+                {
+                    DeathView(false);
+                }
+            }
         }
 
         private void DeathView(bool dead)
@@ -136,23 +138,30 @@ namespace CompleteProject
             GetComponent<Respawner>().SetActiveSpawnPoint(dead);
         }
 
-        public void Respawn()
+        [Command]
+        public void CmdRespawn()
         {
             //TODO inform the master
             isDead = false;
             currentHealth = startingHealth;
-            DeathView(false);
         
             // Tell the animator that the player respawns.
             anim.SetTrigger("Respawn");
+            PlayerManager.instance.RespawnPlayer();
+        }
 
-            // Set the audiosource to play the death clip and play it (this will stop the hurt sound from playing).
-            playerAudio.clip = deathClip;
-            playerAudio.Play();
 
-            // Turn off the movement and shooting scripts.
-            playerMovement.enabled = false;
-            //playerShooting.enabled = false;
+        [ClientRpc]
+        void RpcRespawn()
+        {
+            // Set the death flag so this function won't be called again.
+            isDead = false;
+
+            // Turn off any remaining shooting effects.
+            //playerShooting.DisableEffects ();
+
+            // Tell the animator that the player is dead.
+            anim.SetTrigger("Die");           
         }
     }
 }
