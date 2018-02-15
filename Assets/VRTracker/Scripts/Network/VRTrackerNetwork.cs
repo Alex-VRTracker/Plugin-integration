@@ -83,6 +83,12 @@ public class VRTrackerNetwork : NetworkManager
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
-
+        if (newPlayer.GetComponent<NetworkIdentity>().isLocalPlayer && !VRTracker.instance.isSpectator)
+        {
+            Debug.LogWarning("Setting local player " + Network.player.ipAddress);
+            VRTracker.instance.SetLocalPlayer(newPlayer);
+            PlayerManager.instance.AddPlayer(Network.player.ipAddress);
+            //Announcer.instance.SetAnnouncer(newPlayer.transform.Find("Announcer").GetComponentInChildren<Text>());
+        }
     }
 }
