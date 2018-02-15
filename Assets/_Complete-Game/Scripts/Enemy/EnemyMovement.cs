@@ -8,7 +8,7 @@ namespace CompleteProject
     public class EnemyMovement : NetworkBehaviour
     {
         Transform player;               // Reference to the player's position.
-        PlayerHealth playerHealth;      // Reference to the player's health.
+        public PlayerHealth playerHealth;      // Reference to the player's health.
         EnemyHealth enemyHealth;        // Reference to this enemy's health.
         UnityEngine.AI.NavMeshAgent nav;               // Reference to the nav mesh agent.
         public bool isAttacking = false;                        // If the zombie is currently attacking
@@ -22,8 +22,11 @@ namespace CompleteProject
         {
             // Set up the references.
             //player = GameObject.FindGameObjectWithTag ("Player").transform;
+            //TODO to update
             player = VRTracker.instance.GetLocalPlayer().transform;
-            playerHealth = player.GetComponent <PlayerHealth> ();
+
+            playerHealth = player.gameObject.GetComponent <PlayerHealth> ();
+            Debug.Log("Enemy Movement " + playerHealth);
             enemyHealth = GetComponent <EnemyHealth> ();
             nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
             //Added
@@ -40,36 +43,44 @@ namespace CompleteProject
 
         void Update ()
         {
-            // If the enemy and the player have health left...
-            if (enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
+            if (isServer)
             {
-                // ... set the destination of the nav mesh agent to the player.
-                // nav.SetDestination (player.position);
-                if (isServer) { 
+                // If the enemy and the player have health left...
+                if (enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
+                {
+                    // ... set the destination of the nav mesh agent to the player.
+                    // nav.SetDestination (player.position);
 
-                        if (refreshCount == 10)
+                    if (refreshCount == 10)
+                    {
+                        Transform chosenTarget = FindClosestTarget();
+                        if (chosenTarget != null)
                         {
-                            Transform chosenTarget = FindClosestTarget();
-                            if (chosenTarget != null)
+                            player = chosenTarget;
+                            Vector3 ChosenPosition = new Vector3(chosenTarget.position.x, 0f, chosenTarget.position.z);
+                            RpcSetTarget(ChosenPosition);
+                            if (player.parent.gameObject.GetComponent<PlayerHealth>() != null)
                             {
-                                Vector3 ChosenPosition = new Vector3(chosenTarget.position.x, 0f, chosenTarget.position.z);
-                                nav.SetDestination(ChosenPosition);
-                            }
-                            refreshCount = 0;
-                        }
-                        else
-                        {
-                            refreshCount++;
-                        }
+                                playerHealth = player.parent.gameObject.GetComponent<PlayerHealth>();
 
-                }                
+                            }
+
+                        }
+                        refreshCount = 0;
+                    }
+                    else
+                    {
+                        refreshCount++;
+                    }
+                }
+                // Otherwise...
+                else
+                {
+                    // ... disable the nav mesh agent.
+                    nav.enabled = false;
+                }
             }
-            // Otherwise...
-            else
-            {
-                // ... disable the nav mesh agent.
-                nav.enabled = false;
-            }
+            
         }
       
         public void SetAllTargets()
@@ -108,6 +119,8 @@ namespace CompleteProject
                     }
                 }
             }
+            Debug.Log("Selected player " + chosenTransform.gameObject);
+
             return chosenTransform;
         }
 
@@ -116,5 +129,15 @@ namespace CompleteProject
             nav.SetDestination(ChosenPosition);
         }
 
+        [ClientRpc]
+        void RpcSetTarget(Vector3 ChosenPosition)
+        {
+            nav.SetDestination(ChosenPosition);
+        }
+
+        void OnTargetChanged(Transform target)
+        {
+            playerHealth = player.GetComponent<PlayerHealth>();
+        }
     }
 }

@@ -83,6 +83,6 @@ public class VRTrackerNetwork : NetworkManager
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
-
+        
     }
 }

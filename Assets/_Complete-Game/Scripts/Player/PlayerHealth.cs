@@ -64,7 +64,7 @@ namespace CompleteProject
 
         public void TakeDamage (int amount)
         {
-            if (!isServer)
+            if (!isServer || currentHealth <= 0)
                 return;
             // Set the damaged flag so the screen will flash.
             damaged = true;
