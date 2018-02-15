@@ -132,7 +132,6 @@ public class NetworkShoot : NetworkBehaviour {
                 shootingTarget.ImReady();
             }
         }
-
     }
     /*public override void OnStartLocalPlayer()
     {

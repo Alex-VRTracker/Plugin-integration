@@ -59,7 +59,7 @@ namespace CompleteProject
             if ((CrossPlatformInputManager.GetAxisRaw("Mouse X") != 0 || CrossPlatformInputManager.GetAxisRaw("Mouse Y") != 0) && timer >= timeBetweenBullets)
             {
                 // ... shoot the gun
-                Shoot();
+                //Shoot();
             }
 #endif
             // If the timer has exceeded the proportion of timeBetweenBullets that the effects should be displayed for...
