@@ -83,6 +83,8 @@ public class VRTrackerNetwork : NetworkManager
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
+        var newPlayer = conn.playerControllers[0].gameObject;
+
         if (newPlayer.GetComponent<NetworkIdentity>().isLocalPlayer && !VRTracker.instance.isSpectator)
         {
             Debug.LogWarning("Setting local player " + Network.player.ipAddress);
