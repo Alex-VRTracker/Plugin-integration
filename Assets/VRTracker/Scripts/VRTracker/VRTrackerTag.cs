@@ -97,7 +97,7 @@ public class VRTrackerTag : MonoBehaviour {
 	private Vector3 predictedOrientation;
 	private int counterFrameWithSameOrientation = 0;
 	private Vector3 lastFrameOrientationReceived;
-
+    public Vector3 offset;
 	private NetworkIdentity netId;
 
 	// Use this for initialization
@@ -212,7 +212,7 @@ public class VRTrackerTag : MonoBehaviour {
 			}
 		}
 
-		Vector3 calcOffset = new Vector3(0f,0f,0f); // Position offset due to distance between eyes and tag position
+		Vector3 calcOffset = offset; // Position offset due to distance between eyes and tag position
 
         // Setting Orientation for Tag
         //tagRotation = orientation_ + orientationOffset - orientationBegin;
