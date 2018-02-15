@@ -54,10 +54,10 @@ public class PlayerManager : NetworkBehaviour
 
     public void RestartGame()
     {
+        startGame = false;
         WaveManager.instance.EndGame();
         arePlayersReady = false;
         target.ResetTarget();
-        startGame = false;
     }
 
     public void AddPlayer(string ip)
@@ -94,8 +94,8 @@ public class PlayerManager : NetworkBehaviour
         //If all players are ready we start the game
         if (arePlayersReady)
         {
-            WaveManager.instance.StartGame();
             startGame = true;
+            WaveManager.instance.StartGame();
         }
     }
 

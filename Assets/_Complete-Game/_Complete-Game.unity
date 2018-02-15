@@ -287,15 +287,10 @@ MonoBehaviour:
   - quantity: 3
     duration: 40
     spawnRate: 5
-  - quantity: 6
-    duration: 50
-    spawnRate: 5
-  - quantity: 10
-    duration: 60
-    spawnRate: 5
   countdownTime: 1
   intermissionTime: 1
   time: 0
+  enemyKilled: 0
 --- !u!114 &14871717
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -63,6 +63,7 @@ namespace CompleteProject
             {
                 // ... the enemy is dead.
                 RpcDeath();
+                WaveManager.instance.enemyKilled++;
                 return scoreValue;
             }
             return 0;

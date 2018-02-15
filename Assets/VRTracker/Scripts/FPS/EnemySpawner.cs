@@ -51,7 +51,7 @@ public class EnemySpawner : NetworkBehaviour
         {
             Debug.Log("enemylist " + enemyList.Count);
             
-            Debug.Log("Wave number " + WaveManager.instance.waveList[currentWave].quantity);
+            Debug.Log("Wave number " + currentWave);
 
             if (enemyList.Count < WaveManager.instance.waveList[currentWave].quantity)
             {
@@ -64,6 +64,7 @@ public class EnemySpawner : NetworkBehaviour
                 enemyList.Add(enemy);
                 NetworkServer.Spawn(enemy);
             }
+            
            
         }
     }
@@ -131,6 +132,11 @@ public class EnemySpawner : NetworkBehaviour
     {
         isSpawning = false;
         ClearEnemies();
+    }
+
+    public int GetEnemyNumber()
+    {
+        return enemyList.Count;
     }
 
 }
