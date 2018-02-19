@@ -258,7 +258,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1524251739425670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.7, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4827367692969210}
@@ -272,7 +272,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1110690449247300}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.7, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4244525591621746}
@@ -621,7 +621,7 @@ MeshCollider:
   m_GameObject: {fileID: 1758310304557544}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Convex: 0
   m_InflateMesh: 1
@@ -756,9 +756,9 @@ MonoBehaviour:
   southBoundary: {fileID: 1968043181365124}
   eastBoundary: {fileID: 1684672394623730}
   westBoundary: {fileID: 1686703261345268}
-  borderLimitXMin: -1.4
-  borderLimitXMax: 2.8
-  borderLimitYMin: -1.8
-  borderLimitYMax: 4.4
+  borderLimitXMin: -2.25
+  borderLimitXMax: 3.47
+  borderLimitYMin: -2.23
+  borderLimitYMax: 4.52
   borderLimitZMin: 0
-  borderLimitZMax: 0
+  borderLimitZMax: 2

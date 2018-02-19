@@ -722,7 +722,9 @@ public class VRTracker : MonoBehaviour {
 		
 	public void SetLocalPlayer(GameObject player){
 		LocalPlayerReference = player;
-	}
+        VRTrackerBoundaries.instance.localPlayer = player;
+        VRTrackerBoundaries.instance.LookForLocalPlayer();
+    }
 
 	public GameObject GetLocalPlayer(){
 		return LocalPlayerReference;

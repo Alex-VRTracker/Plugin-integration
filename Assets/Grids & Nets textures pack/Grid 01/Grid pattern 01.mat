@@ -31,10 +31,10 @@ Material:
     - _OutlineWidth: 0.015
     - _Shininess: 0.19553232
     - _VisibilityCDistance: 0.3
-    - _VisibilityDistance: 1.05
+    - _VisibilityDistance: 1.1
     m_Colors:
     - _Color: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 1}
-    - _ControllerPosition: {r: -1.6653976, g: 0.8455879, b: 1.956467, a: 0}
+    - _ControllerPosition: {r: -1.7285874, g: 1.2749268, b: 2.405291, a: 0}
     - _OutlineColour: {r: 0.82745105, g: 0.82745105, b: 0.82745105, a: 1}
-    - _PlayerPosition: {r: -1.6383432, g: 1.0324441, b: 1.7748445, a: 0}
+    - _PlayerPosition: {r: -1.7331865, g: 0.88711673, b: 2.6538305, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
