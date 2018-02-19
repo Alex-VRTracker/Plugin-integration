@@ -68,22 +68,10 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
                     Vector3 tagRotation = tag.getOrientation();
                     Vector3 cameraRotation = camera.transform.localEulerAngles;
 
-                    newRotation.y = tagRotation.y - cameraRotation.y;
-
-
-                    if (Mathf.Abs(destinationOffset.eulerAngles.y - newRotation.y) > minOffsetToBLink /*&& headsetFade != null*/)
-                    {
-                       // headsetFade.Blink(Color.black);
-                    }
-                    else
-                    {
-                        previousOffset = destinationOffset;
-                        destinationOffset = Quaternion.Euler(newRotation);
-                        t = 0;
-
-                        //Debug.Log ("TAG Rotation: " + tagRotation.x + "  " + tagRotation.y + "   " + tagRotation.z);
-                        //Debug.Log ("CAMERA Rotation: " + cameraRotation.x + "  " + cameraRotation.y + "   " + cameraRotation.z);
-                    }
+                    newRotation.y = tagRotation.y - cameraRotation.y; 
+                    previousOffset = destinationOffset;
+                    destinationOffset = Quaternion.Euler(newRotation);
+                    t = 0;
                 }
                 yield return new WaitForSeconds(5);
             }
