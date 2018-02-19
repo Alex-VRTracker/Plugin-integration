@@ -756,9 +756,9 @@ MonoBehaviour:
   southBoundary: {fileID: 1968043181365124}
   eastBoundary: {fileID: 1684672394623730}
   westBoundary: {fileID: 1686703261345268}
-  borderLimitXMin: -1
-  borderLimitXMax: 1
-  borderLimitYMin: -2
-  borderLimitYMax: 2
+  borderLimitXMin: -1.4
+  borderLimitXMax: 2.8
+  borderLimitYMin: -1.8
+  borderLimitYMax: 4.4
   borderLimitZMin: 0
   borderLimitZMax: 0

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 137971243897150450}
   - component: {fileID: 114255560755273650}
   - component: {fileID: 114031250064308856}
+  - component: {fileID: 114383175243191470}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -420,7 +421,6 @@ GameObject:
   - component: {fileID: 114314505244143392}
   - component: {fileID: 114589719917568362}
   - component: {fileID: 54321414627918860}
-  - component: {fileID: 114024831952606532}
   - component: {fileID: 136495658825734584}
   - component: {fileID: 82380137307961930}
   - component: {fileID: 95739952580761500}
@@ -627,7 +627,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1123402975315398}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.72, y: -0.4135381, z: -0.6}
+  m_LocalPosition: {x: -0.72, y: -0.42, z: -0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4677655841176700}
@@ -655,7 +655,7 @@ Transform:
   m_GameObject: {fileID: 1589919717402728}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.75, y: 0.42, z: 0.32}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4159389550826512}
   - {fileID: 4735187484352310}
@@ -1162,18 +1162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 0}
---- !u!114 &114024831952606532
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1764823701623966}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b2268f9c7df8764aa2e92dbf55b5ae1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 6
 --- !u!114 &114031250064308856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1358,6 +1346,7 @@ MonoBehaviour:
   smoothingIntensity: 0.85
   enablePositionSmoothing: 1
   enableOrientationSmoothing: 0
+  offset: {x: 0, y: -0.1, z: -0.05}
 --- !u!114 &114314505244143392
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1426,6 +1415,17 @@ MonoBehaviour:
   range: 100
   vrGun: {fileID: 114974073278683688}
   faceLight: {fileID: 108462283489737070}
+--- !u!114 &114383175243191470
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1021376446387204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c90205edaa350421188f24b62661a673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114399182141918850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2068,6 +2068,7 @@ MonoBehaviour:
   smoothingIntensity: 0.85
   enablePositionSmoothing: 1
   enableOrientationSmoothing: 0
+  offset: {x: 0, y: 0.2, z: 0}
 --- !u!120 &120537200449086070
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -2288,7 +2289,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -333212009
+  randomSeed: 1881506911
   InitialModule:
     serializedVersion: 3
     enabled: 1

@@ -31,7 +31,7 @@ Material:
     - _OutlineWidth: 0.015
     - _Shininess: 0.19553232
     - _VisibilityCDistance: 0.3
-    - _VisibilityDistance: 1
+    - _VisibilityDistance: 1.05
     m_Colors:
     - _Color: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 1}
     - _ControllerPosition: {r: -1.6653976, g: 0.8455879, b: 1.956467, a: 0}
