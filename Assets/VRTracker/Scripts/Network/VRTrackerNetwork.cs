@@ -36,6 +36,16 @@ public class VRTrackerNetwork : NetworkManager
     {
         base.OnServerConnect(conn);
         Debug.LogWarning("Adding a new player " + conn.address);
+		var newPlayer = conn.playerControllers[0].gameObject;
+
+		if (newPlayer.GetComponent<NetworkIdentity>().isLocalPlayer && !VRTracker.instance.isSpectator)
+		{
+			Debug.LogWarning("Setting local player " + Network.player.ipAddress);
+			VRTracker.instance.SetLocalPlayer(newPlayer);
+			PlayerManager.instance.AddPlayer(Network.player.ipAddress);
+			//Announcer.instance.SetAnnouncer(newPlayer.transform.Find("Announcer").GetComponentInChildren<Text>());
+		}
+		players.Add(newPlayer);
 
       
     }
@@ -44,16 +54,7 @@ public class VRTrackerNetwork : NetworkManager
 
         base.OnServerAddPlayer(conn, playerControllerId);
         //var newPlayer = conn.playerControllers[0].gameObject;
-        var newPlayer = conn.playerControllers[0].gameObject;
-
-        if (newPlayer.GetComponent<NetworkIdentity>().isLocalPlayer && !VRTracker.instance.isSpectator)
-        {
-            Debug.LogWarning("Setting local player " + Network.player.ipAddress);
-            VRTracker.instance.SetLocalPlayer(newPlayer);
-            PlayerManager.instance.AddPlayer(Network.player.ipAddress);
-            //Announcer.instance.SetAnnouncer(newPlayer.transform.Find("Announcer").GetComponentInChildren<Text>());
-        }
-        players.Add(newPlayer);
+       
 
     }
 
