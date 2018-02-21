@@ -6030,6 +6030,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 114031250064308856, guid: df0359d714a905142abf2a73511d3560,
+        type: 2}
+      propertyPath: controllerMesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 224295783220364366, guid: df0359d714a905142abf2a73511d3560,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -6070,10 +6075,9 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 201
       objectReference: {fileID: 0}
-    - target: {fileID: 114974073278683688, guid: df0359d714a905142abf2a73511d3560,
-        type: 2}
-      propertyPath: offset.z
-      value: 0.15
+    - target: {fileID: 4735187484352310, guid: df0359d714a905142abf2a73511d3560, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df0359d714a905142abf2a73511d3560, type: 2}
