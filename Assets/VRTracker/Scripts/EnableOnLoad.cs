@@ -66,6 +66,17 @@ public class EnableOnLoad : MonoBehaviour
                 }
 
             }
+
+            if (Network.isServer)
+            {
+                NetworkIdentity nId = transform.parent.GetComponent<NetworkIdentity>();
+                if (nId != null)
+                {
+                    Debug.LogWarning("Adding " + nId.connectionToClient.address);
+                    PlayerManager.instance.AddPlayer(nId.connectionToClient.address);
+                    
+                }
+            }
         }
 
         //Disable mesh
