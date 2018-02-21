@@ -115,8 +115,14 @@ public class VRTrackerTag : MonoBehaviour {
 			return;
 		} else {
             VRTracker.instance.SetLocalPlayer(transform.parent.gameObject);
-            Debug.Log(transform.parent.gameObject);
-
+            Debug.Log("Setting local player " + transform.parent.gameObject);
+            if (netId.isServer)
+            {
+                if (tagType == TagType.Head)
+                {
+                    PlayerManager.instance.AddPlayer(netId.connectionToClient.address);
+                }
+            }
         }
 
         startTimestamp = System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
@@ -138,6 +144,7 @@ public class VRTrackerTag : MonoBehaviour {
 		{
 			IDisAssigned = true;
 		}
+        
         
 	}
 

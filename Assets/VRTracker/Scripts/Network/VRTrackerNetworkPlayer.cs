@@ -31,7 +31,7 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
 
         //VRTrackerBoundaries.instance.localPlayer = gameObject;
         //VRTrackerBoundaries.instance.LookForLocalPlayer();
-        GameObject hud = transform.Find("HUD").gameObject;
+        GameObject hud = transform.Find("PlayerGun/HUD").gameObject;
         if(hud != null)
         {
             hud.SetActive(true);
