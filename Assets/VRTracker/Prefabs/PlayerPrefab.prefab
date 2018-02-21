@@ -1218,7 +1218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableOnLoad: 0
-  controllerMesh: {fileID: 0}
+  controllerMesh: {fileID: 23888920439453598}
 --- !u!114 &114077599576653104
 MonoBehaviour:
   m_ObjectHideFlags: 1
