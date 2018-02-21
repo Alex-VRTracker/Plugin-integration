@@ -147,8 +147,9 @@ namespace CompleteProject
             currentHealth = startingHealth;
         
             // Tell the animator that the player respawns.
-            anim.SetTrigger("Respawn");
+            //anim.SetTrigger("Respawn");
             PlayerManager.instance.RespawnPlayer();
+            RpcRespawn();
         }
 
 
@@ -162,7 +163,7 @@ namespace CompleteProject
             //playerShooting.DisableEffects ();
 
             // Tell the animator that the player is dead.
-            anim.SetTrigger("Die");           
+            anim.SetTrigger("Respawn");           
         }
     }
 }
