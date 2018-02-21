@@ -8,16 +8,11 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
 
 	// Use this for initialization
 	void Start () {
-        /*if (isServer)
+        if (isServer)
         {
-            Camera cam = GetComponent<Camera>();
-            if(cam != null)
-            {
-                CameraManager.instance.cameras.Add(cam);
-                cam.enabled = false;
-                cam.GetComponent<AudioListener>().enabled = false;
-            }
-        }*/
+            VRTrackerNetwork.instance.players.Add(transform.gameObject);
+            Debug.Log("Network player ");
+        }
 	}
 	
 	// Update is called once per frame

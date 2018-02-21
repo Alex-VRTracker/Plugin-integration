@@ -52,9 +52,8 @@ public class VRTrackerNetwork : NetworkManager
             PlayerManager.instance.AddPlayer(Network.player.ipAddress);
             //Announcer.instance.SetAnnouncer(newPlayer.transform.Find("Announcer").GetComponentInChildren<Text>()); 
         }
-        players.Add(newPlayer);
         */
-
+        //players.Add(newPlayer);
     }
 
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
