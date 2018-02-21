@@ -96,7 +96,6 @@ GameObject:
   - component: {fileID: 114490421696258134}
   - component: {fileID: 225407472694991826}
   - component: {fileID: 95464324730503382}
-  - component: {fileID: 114427956239382372}
   m_Layer: 5
   m_Name: HUD
   m_TagString: PlayerUI
@@ -428,6 +427,7 @@ GameObject:
   - component: {fileID: 95739952580761500}
   - component: {fileID: 114835725866142004}
   - component: {fileID: 114006338675136936}
+  - component: {fileID: 114265123175064296}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -1390,6 +1390,17 @@ MonoBehaviour:
   enablePositionSmoothing: 1
   enableOrientationSmoothing: 0
   offset: {x: 0, y: -0.1, z: -0.05}
+--- !u!114 &114265123175064296
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1764823701623966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b296ffca2cecd3745bb857dac8416de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114314505244143392
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1516,18 +1527,6 @@ MonoBehaviour:
   camera: {fileID: 20110234982366714}
   tag: {fileID: 0}
   minOffsetToBLink: 30
---- !u!114 &114427956239382372
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1096984643301502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a210693e63307044a858d1787aacd62c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerHealth: {fileID: 0}
 --- !u!114 &114490421696258134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1614,7 +1613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a210693e63307044a858d1787aacd62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: {fileID: 0}
+  playerHealth: {fileID: 114589719917568362}
 --- !u!114 &114548651336943816
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2300,7 +2299,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1270364196
+  randomSeed: 1380418852
   InitialModule:
     serializedVersion: 3
     enabled: 1
