@@ -6,13 +6,21 @@ using System.IO;
 
 public class VRTrackerBoundariesHandler : MonoBehaviour {
     /* 
-    *VRTracker Boundaries Handle is a singleton that update and resize the boundaries
-    */
+     * VRTracker Boundaries is a singleton that will retrieve the local user
+     * It will then add the player gameObject (Head + Controller) into the different boundaries
+     * Each boundaries will appear when the local user will be close
+     * 
+     * It will also update and resize the boundaries
+     */
 
     public static VRTrackerBoundariesHandler instance;
 
     private string JsonFilePath = "Boundaries.json";
     private JSONNode jBoundaries;
+
+    public GameObject localPlayer;
+    private VRTrackerTag[] vrtrackerTags;
+
 
     public GameObject northBoundary; // Boundary with the maximum Y
 	public GameObject southBoundary; // Boundary with the minimum Y
@@ -43,6 +51,29 @@ public class VRTrackerBoundariesHandler : MonoBehaviour {
         }
         RearrangeBoundaries();
         //UpdateValues(-3, 3, -4, 4);
+    }
+
+    /// <summary>
+    /// LookForLocalPlayer will update the different boundaries with local player component (Head + controller)
+    /// TODO : Update the function so that it can automatically handle different configurations for the player
+    /// </summary>
+    public void LookForLocalPlayer()
+    {
+        vrtrackerTags = localPlayer.GetComponentsInChildren<VRTrackerTag>();
+        VRTrackerBoundariesProximity[] boundaries = GetComponentsInChildren<VRTrackerBoundariesProximity>();
+
+        foreach (VRTrackerBoundariesProximity boundary in boundaries)
+        {
+            if (vrtrackerTags.Length > 0)
+            {
+                boundary.player = vrtrackerTags[0].transform;
+            }
+            if (vrtrackerTags.Length > 1)
+            {
+                boundary.controller = vrtrackerTags[1].transform;
+            }
+        }
+
     }
 
     // Check if Boundaries is saved in a file

@@ -34,7 +34,7 @@ Material:
     - _VisibilityDistance: 1.1
     m_Colors:
     - _Color: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 1}
-    - _ControllerPosition: {r: -1.8762152, g: 1.2023054, b: 3.0101202, a: 0}
+    - _ControllerPosition: {r: -1.8803889, g: 1.2397271, b: 2.8590114, a: 0}
     - _OutlineColour: {r: 0.82745105, g: 0.82745105, b: 0.82745105, a: 1}
-    - _PlayerPosition: {r: -1.2162731, g: -0.07029421, b: 2.3648074, a: 0}
+    - _PlayerPosition: {r: -1.4795338, g: 0.51387745, b: 2.5140579, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
