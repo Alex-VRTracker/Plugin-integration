@@ -7,7 +7,7 @@ namespace CompleteProject
     {
 
         public int startingHealth = 100;            // The amount of health the enemy starts the game with.
-        [SyncVar]
+        [SyncVar(hook = "OnHealthChanged")]
         public int currentHealth;                   // The current health the enemy has.
         public float sinkSpeed = 2.5f;              // The speed at which the enemy sinks through the floor when dead.
         public int scoreValue = 10;                 // The amount added to the player's score when the enemy dies.
@@ -45,36 +45,46 @@ namespace CompleteProject
             }
         }
 
-
-        public void TakeDamage(int amount, Vector3 hitPoint)
+        [Server]
+        public int TakeDamage(int amount, Vector3 hitPoint)
         {
             // If the enemy is dead...
             if (isDead)
                 // ... no need to take damage so exit the function.
-                return;
+                return 0;
 
-            // Play the hurt sound effect.
-            enemyAudio.Play();
+            //TODO Update the animation and sound display on client
 
             // Reduce the current health by the amount of damage sustained.
             currentHealth -= amount;
+            RpcHit(hitPoint);
+            // If the current health is less than or equal to zero...
+            if (currentHealth <= 0)
+            {
+                // ... the enemy is dead.
+                RpcDeath();
+                WaveManager.instance.enemyKilled++;
+                return scoreValue;
+            }
+            return 0;
+        }
 
+        [ClientRpc]
+        void RpcHit(Vector3 hitPoint)
+        {
+            // Play the hurt sound effect.
+            enemyAudio.Play();
             // Set the position of the particle system to where the hit was sustained.
             hitParticles.transform.position = hitPoint;
 
             // And play the particles.
             hitParticles.Play();
 
-            // If the current health is less than or equal to zero...
-            if (currentHealth <= 0)
-            {
-                // ... the enemy is dead.
-                Death();
-            }
+
         }
 
-
-        void Death()
+        [ClientRpc]
+        void RpcDeath()
         {
             // The enemy is dead.
             isDead = true;
@@ -103,10 +113,15 @@ namespace CompleteProject
             isSinking = true;
 
             // Increase the score by the enemy's score value.
-            ScoreManager.score += scoreValue;
+            //ScoreManager.score += scoreValue;
 
             // After 2 seconds destory the enemy.
             Destroy(gameObject, 2f);
+        }
+
+        void OnHealthChanged(int healthValue)
+        {
+            currentHealth = healthValue;
         }
 
     }

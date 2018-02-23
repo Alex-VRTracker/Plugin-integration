@@ -525,7 +525,6 @@ public class VRTracker : MonoBehaviour {
 	 */
 	public void receiveSpecialCommand(string TagID, string data){
         // TODO: You can do whatever you wants with the special command, have fun !
-        Debug.Log("uid " + TagID + ", " + data);
 		bool tagFound = false;
 		// Search for the Tag the special command is sent to
 		foreach (VRTrackerTag tag in tags)
@@ -723,7 +722,9 @@ public class VRTracker : MonoBehaviour {
 		
 	public void SetLocalPlayer(GameObject player){
 		LocalPlayerReference = player;
-	}
+        VRTrackerBoundaries.instance.localPlayer = player;
+        VRTrackerBoundaries.instance.LookForLocalPlayer();
+    }
 
 	public GameObject GetLocalPlayer(){
 		return LocalPlayerReference;

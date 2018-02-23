@@ -7,8 +7,6 @@ namespace CompleteProject
 {
     public class PlayerHealth : NetworkBehaviour
     {
-
-
         public int startingHealth = 100;                            // The amount of health the player starts the game with.
 
         [SyncVar(hook = "OnChangeHealth")]                          //Synchronize on the network the health bar
@@ -22,7 +20,6 @@ namespace CompleteProject
 
         Animator anim;                                              // Reference to the Animator component.
         AudioSource playerAudio;                                    // Reference to the AudioSource component.
-        PlayerMovement playerMovement;                              // Reference to the player's movement.
         PlayerShooting playerShooting;                              // Reference to the PlayerShooting script.
         public bool isDead;                                                // Whether the player is dead.
         bool damaged;                                               // True when the player gets damaged.
@@ -33,11 +30,10 @@ namespace CompleteProject
             // Setting up the references.
             anim = GetComponent <Animator> ();
             playerAudio = GetComponent <AudioSource> ();
-            playerMovement = GetComponent <PlayerMovement> ();
             playerShooting = GetComponentInChildren <PlayerShooting> ();
 
             // Set the initial health of the player.
-            currentHealth = startingHealth;
+            //currentHealth = startingHealth;
         }
 
 
@@ -60,14 +56,16 @@ namespace CompleteProject
             damaged = false;
         }
 
+        [ServerCallback]
+        void OnEnable()
+        {
+            currentHealth = startingHealth;
+        }
 
         public void TakeDamage (int amount)
         {
-            //Damage will only be applied on the Server
-            if (!isServer)
-            {
+            if (!isServer || currentHealth <= 0)
                 return;
-            }
             // Set the damaged flag so the screen will flash.
             damaged = true;
             Debug.Log("Taking damage " + amount);
@@ -84,12 +82,13 @@ namespace CompleteProject
             if(currentHealth <= 0 && !isDead)
             {
                 // ... it should die.
-                Death ();
+                RpcDeath ();
+                PlayerManager.instance.DeadPlayer();
             }
         }
 
-
-        void Death ()
+        [ClientRpc]
+        void RpcDeath ()
         {
             // Set the death flag so this function won't be called again.
             isDead = true;
@@ -103,11 +102,6 @@ namespace CompleteProject
             // Set the audiosource to play the death clip and play it (this will stop the hurt sound from playing).
             playerAudio.clip = deathClip;
             playerAudio.Play ();
-
-            // Turn off the movement and shooting scripts.
-            playerMovement.enabled = false;
-            //playerShooting.enabled = false;
-            EnableDeathView();
         }
 
 
@@ -117,22 +111,59 @@ namespace CompleteProject
             //SceneManager.LoadScene (0);
         }
 
-        void OnChangeHealth(int currentHealth)
+        void OnChangeHealth(int healthValue)
         {
-            healthSlider.value = currentHealth;
-        }
-
-        private void EnableDeathView()
-        {
-            if (isDead)
+            currentHealth = healthValue;
+            if (isLocalPlayer)
             {
-                //GetComponent<ScoreScript>().setScore(0);
-                Camera cam = GetComponentInChildren<Camera>();
-                if(cam != null)
+                healthSlider.value = currentHealth;
+                if(currentHealth <= 0 && !isDead)
                 {
-                    cam.GetComponent<GrayscaleEffect>().enabled = true;
+                    DeathView(true);
+
+                }else if( currentHealth == startingHealth)
+                {
+                    DeathView(false);
                 }
             }
+        }
+
+        private void DeathView(bool dead)
+        {
+            Camera cam = GetComponentInChildren<Camera>();
+            //GetComponent<ScoreScript>().setScore(0);
+            if(cam != null)
+            {
+                cam.GetComponent<GrayscaleEffect>().enabled = dead;
+            }
+            GetComponent<Respawner>().SetActiveSpawnPoint(dead);
+        }
+
+        [Command]
+        public void CmdRespawn()
+        {
+            //TODO inform the master
+            isDead = false;
+            currentHealth = startingHealth;
+        
+            // Tell the animator that the player respawns.
+            //anim.SetTrigger("Respawn");
+            PlayerManager.instance.RespawnPlayer();
+            RpcRespawn();
+        }
+
+
+        [ClientRpc]
+        void RpcRespawn()
+        {
+            // Set the death flag so this function won't be called again.
+            isDead = false;
+
+            // Turn off any remaining shooting effects.
+            //playerShooting.DisableEffects ();
+
+            // Tell the animator that the player is dead.
+            anim.SetTrigger("Respawn");           
         }
     }
 }

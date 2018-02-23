@@ -97,23 +97,32 @@ public class VRTrackerTag : MonoBehaviour {
 	private Vector3 predictedOrientation;
 	private int counterFrameWithSameOrientation = 0;
 	private Vector3 lastFrameOrientationReceived;
-
+    public Vector3 offset;
 	private NetworkIdentity netId;
+    private int aPCount = 0;
+    private bool isAP = false;
+    private int aPLCount = 0;
+    private bool isAPL = false;
 
-	// Use this for initialization
-	protected virtual void Start () {
+
+    // Use this for initialization
+    protected virtual void Start () {
 		//Debug.Log ("TAG " + UID + "  " + tagType.ToString ());
 		//onTagData("cmd=specialdata&s=30&x=376.43&y=481&z=36&st=1&s=10&ox=190.19&oy=-49.17&oz=-22.71&ax=21.27&ay=0.78&az=-15.79");
 
 		netId = transform.GetComponentInParent<NetworkIdentity> ();
 		if (netId != null && !netId.isLocalPlayer) {
-			Debug.Log ("TAG " +UID +" Not local player");
 			return;
 		} else {
-			Debug.Log ("TAG " +UID +" IS local player");
             VRTracker.instance.SetLocalPlayer(transform.parent.gameObject);
-            Debug.Log(transform.parent.gameObject);
-
+            Debug.Log("Setting local player " + transform.parent.gameObject);
+            if (netId.isServer)
+            {
+                if (tagType == TagType.Head)
+                {
+                    PlayerManager.instance.AddPlayer(netId.connectionToClient.address);
+                }
+            }
         }
 
         startTimestamp = System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
@@ -135,6 +144,7 @@ public class VRTrackerTag : MonoBehaviour {
 		{
 			IDisAssigned = true;
 		}
+        
         
 	}
 
@@ -169,9 +179,24 @@ public class VRTrackerTag : MonoBehaviour {
 				float accOperator = (float)(0.5 * (deltaTimeLateUpdateSinceLastPosition + DeadReckogningDelayMs) * (deltaTimeLateUpdateSinceLastPosition + DeadReckogningDelayMs) / 1000000);
 				float accOperatorLastUpdate = (float)(0.5 * deltaTimeSinceLastFrame * deltaTimeSinceLastFrame / 1000000);
 
-				// Here is where the magic happens, we calculate the futur position based on Last Late Update position, and futur position based on last message reception
-				Vector3 predictionFromLastUpdate = predictedPosition + accOperatorLastUpdate * accelerationDropedOverTime + speedDropedOverTime * deltaTimeSinceLastFrame / 1000;
-				Vector3 predictedPositionFromLastReception = positionsArray [positionsArray.Length - 1].Value + accOperator * accelerationDropedOverTime + speedDropedOverTime * (deltaTimeLateUpdateSinceLastPosition + DeadReckogningDelayMs) / 1000; 
+                if((accOperator) > 0)
+                {
+                    if (!isAP || aPCount > 5)
+                        aPCount = 0;
+                    accOperator *= (1 + (5 - aPCount)/10);
+                    aPCount++;
+                }
+                else
+                {
+                    if (isAP || aPCount > 5)
+                        aPCount = 0;
+                    accOperator *= (1 - (5 - aPCount)/10);
+                    aPCount++;
+                }
+
+                // Here is where the magic happens, we calculate the futur position based on Last Late Update position, and futur position based on last message reception
+                Vector3 predictionFromLastUpdate = predictedPosition + (accOperatorLastUpdate * accelerationDropedOverTime + speedDropedOverTime * deltaTimeSinceLastFrame / 1000);// *accOperator;
+                Vector3 predictedPositionFromLastReception = positionsArray[positionsArray.Length - 1].Value + (accOperator * accelerationDropedOverTime + speedDropedOverTime * (deltaTimeLateUpdateSinceLastPosition + DeadReckogningDelayMs) / 1000);//*accOperator; 
 				// And we give much more importance to the futur position based on last update, this avoids the shakes in the position
 				predictedPosition = Vector3.Lerp (predictedPositionFromLastReception, predictionFromLastUpdate, Mathf.Clamp (smoothingIntensity, 0.0f, 1.0f));
 
@@ -206,7 +231,6 @@ public class VRTrackerTag : MonoBehaviour {
 					{
 						Debug.LogWarning("Tag " + UID + " asks for orientation");
 					}
-					Debug.LogWarning("Tag " + UID + " asks for orientation");
 					VRTracker.instance.TagOrientation (UID, true);
 				}
 				counter++;
@@ -215,7 +239,7 @@ public class VRTrackerTag : MonoBehaviour {
 			}
 		}
 
-		Vector3 calcOffset = new Vector3(0f,0f,0f); // Position offset due to distance between eyes and tag position
+		Vector3 calcOffset = offset; // Position offset due to distance between eyes and tag position
 
         // Setting Orientation for Tag
         //tagRotation = orientation_ + orientationOffset - orientationBegin;

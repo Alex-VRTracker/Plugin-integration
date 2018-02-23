@@ -36,7 +36,8 @@ public class WaveManager : NetworkBehaviour
 
     public float time = 0;                              //The current time shown by the timer
     private bool isCounting = false;                //If the Timer is currently counting
-    private bool started = false;
+    private bool waveInProgress = false;
+    public int enemyKilled = 0;
 
     private void Awake()
     {
@@ -57,14 +58,14 @@ public class WaveManager : NetworkBehaviour
         ESpawner = GetComponent<EnemySpawner>();
         announcer = GetComponent<Announcer>();
         currentWave = 0;
-        NextWave();
+        //NextWave();
 
     }
 
 
     private void Update()
     {
-        if(!VerifyTimer() || !VerifyEnemy())
+        if(!VerifyTimer() || !AliveEnemy())
         {
             ManageEndOfWave();
         }
@@ -89,7 +90,7 @@ public class WaveManager : NetworkBehaviour
         //audioManager.playSound("Bell");
 
         //Stop the game timer
-        StopTimer();
+        //StopTimer();
 
         //Disable all the spawn points
         //ESpawner.DisableSpawnPoints();
@@ -99,9 +100,15 @@ public class WaveManager : NetworkBehaviour
 
         //Try to make a healthpack appear
         //PickupSpawner.instance.TryHealthSpawn();
-        started = false;
+        //waveInProgress = false;
+
+        Stop();
         //Start the next wave
         StartCoroutine(WaitForWellDone(3f));
+        if(currentWave >= waveList.Count)
+        {
+            PlayerManager.instance.RestartGame();
+        }
     }
 
     /// <summary>
@@ -179,34 +186,43 @@ public class WaveManager : NetworkBehaviour
     private void StartWave()
     {
         Debug.Log("Start wave" + currentWave);
-
-        //Set the timer to the correct duration and start it
-        time = waveList[currentWave].duration;
-        StartTimer();
-        started = true;
-        //Set the spawnRate and quantity of the zombie spawner
-        ESpawner.SetSpawnRate(waveList[currentWave].spawnRate);
-        ESpawner.SpawnWave(waveList[currentWave].quantity);
-		ESpawner.SetWave (currentWave);
-        //Increment the current wave index
-        currentWave++;
-       
+        if (currentWave == waveList.Count)
+        {
+            //restart game
+            PlayerManager.instance.RestartGame();
+        }
+        else
+        {
+            enemyKilled = 0;
+            //Set the timer to the correct duration and start it
+            time = waveList[currentWave].duration;
+            StartTimer();
+            waveInProgress = true;
+            //Set the spawnRate and quantity of the zombie spawner
+            ESpawner.SetSpawnRate(waveList[currentWave].spawnRate);
+            ESpawner.SpawnWave(waveList[currentWave].quantity);
+            ESpawner.SetWave(currentWave);
+            //Increment the current wave index
+            currentWave++;
+        }
     }
 
     /// <summary>
     /// Verifies if all the enemies have been killed by the player(s)
     /// </summary>
     /// <returns></returns>
-    private bool VerifyEnemy()
+    private bool AliveEnemy()
     {
-        if (!ESpawner.isSpawning && GameObject.FindWithTag("Enemy") == null && started)
+        if (!ESpawner.isSpawning && waveInProgress && PlayerManager.instance.startGame)
         {
-            return false;
+            Debug.Log("Enemy killed " + enemyKilled + "/" + waveList[currentWave - 1].quantity);
+
+            if (waveList[currentWave - 1].quantity == enemyKilled)
+            {
+                return false;
+            }
         }
-        else
-        {
-            return true;
-        }
+        return true;
     }
 
     /// <summary>
@@ -215,10 +231,10 @@ public class WaveManager : NetworkBehaviour
     /// <returns></returns>
     private bool VerifyTimer()
     {
-        if(time == 0 && started)
+        if(time == 0 && PlayerManager.instance.startGame && waveInProgress)
         {
             Debug.Log("Stop wave");
-            ESpawner.ClearEnemies();
+            //ESpawner.StopWaves();
             return false;
         }
         else
@@ -282,8 +298,10 @@ public class WaveManager : NetworkBehaviour
         //audioManager.playSound("Bell");
         //doorManager.CloseAllDoors();
         //ESpawner.DisableSpawnPoints();
-        ESpawner.ClearEnemies();
         StopTimer();
+        ESpawner.ClearEnemies();
+        waveInProgress = false;
+
     }
 
     /// <summary>
@@ -303,4 +321,14 @@ public class WaveManager : NetworkBehaviour
         time = (0f);
     }
 
+    public void StartGame()
+    {
+        currentWave = 0;
+        NextWave();
+    }
+
+    public void EndGame()
+    {
+        Stop();
+    }
 }

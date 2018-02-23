@@ -151,9 +151,6 @@ namespace VRStandardAssets.Intro
 				VRTracker.instance.serverIp = Network.player.ipAddress;
 				VRTracker.instance.sendServerIP (VRTracker.instance.serverIp);
                 VRTrackerNetwork.instance.serverBindAddress = VRTracker.instance.serverIp;
-                #if UNITY_EDITOR || UNITY_STANDALONE
-                    Debug.LogWarning("Unity Editor");
-				#endif
 
                 if (VRTracker.instance.isSpectator)
                 {

@@ -188,7 +188,7 @@ namespace VRStandardAssets.ShootingGallery
 
             // Find a reference to the ShootingTarget script on the target gameobject and call it's Restart function.
             ShootingTarget shootingTarget = target.GetComponent<ShootingTarget>();
-            shootingTarget.Restart(timeRemaining);
+            shootingTarget.Restart();
 
             // Subscribe to the OnRemove event.
             shootingTarget.OnRemove += HandleTargetRemoved;

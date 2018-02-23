@@ -8,16 +8,11 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
 
 	// Use this for initialization
 	void Start () {
-        /*if (isServer)
+        if (isServer)
         {
-            Camera cam = GetComponent<Camera>();
-            if(cam != null)
-            {
-                CameraManager.instance.cameras.Add(cam);
-                cam.enabled = false;
-                cam.GetComponent<AudioListener>().enabled = false;
-            }
-        }*/
+            VRTrackerNetwork.instance.players.Add(transform.gameObject);
+            Debug.Log("Network player ");
+        }
 	}
 	
 	// Update is called once per frame
@@ -29,8 +24,18 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
     {
         Debug.LogWarning("On start local player client ");
 
-        VRTrackerBoundaries.instance.localPlayer = gameObject;
-        VRTrackerBoundaries.instance.LookForLocalPlayer();
+        //VRTrackerBoundaries.instance.localPlayer = gameObject;
+        //VRTrackerBoundaries.instance.LookForLocalPlayer();
+        GameObject hud = transform.Find("PlayerGun/HUD").gameObject;
+        if(hud != null)
+        {
+            hud.SetActive(true);
+        }
+        GameObject damageHud = transform.Find("DamageHUD").gameObject;
+        if (damageHud != null)
+        {
+            damageHud.SetActive(true);
+        }
     }
 
 }
