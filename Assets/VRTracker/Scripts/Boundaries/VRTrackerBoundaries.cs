@@ -51,17 +51,16 @@ public class VRTrackerBoundaries : MonoBehaviour {
             instance = this;
         }
         //Retrieve local player
-        localPlayer = VRTracker.instance.GetLocalPlayer();
         if(localPlayer != null)
         {
-            Debug.Log("Setting local player for boundaries");
-            LookForLocalPlayer();
+            Debug.Log("Local Player already set");
         }
         else
         {
-            Debug.Log("Null player " + localPlayer);
-
+            Debug.Log("Looking for player ");
+            localPlayer = VRTracker.instance.GetLocalPlayer();
         }
+        LookForLocalPlayer();
         //Resize the boundaries
         RearrangeBoundaries();
         VRTracker.instance.OnNewBoundaries += UpdateValues;
