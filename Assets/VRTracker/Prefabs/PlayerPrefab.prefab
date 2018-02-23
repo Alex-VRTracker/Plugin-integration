@@ -327,7 +327,6 @@ GameObject:
   - component: {fileID: 114835725866142004}
   - component: {fileID: 114006338675136936}
   - component: {fileID: 114265123175064296}
-  - component: {fileID: 114517554731323050}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -515,7 +514,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1764823701623966}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6720293, y: 0.00000016467487, z: 1.3813932}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4566499711350216}
@@ -1299,17 +1298,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114517554731323050
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1764823701623966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 175e089ea002c144aabb930531879e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114543515920388968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1566,7 +1554,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vrGun: {fileID: 114974073278683688}
-  text: {fileID: 0}
+  score: 0
+  text: {fileID: 114828897954555248}
   ready: 0
 --- !u!114 &114900105865174212
 MonoBehaviour:
