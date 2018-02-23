@@ -15,8 +15,8 @@ public class VRTrackerBoundaries : MonoBehaviour {
      */
 
     public GameObject localPlayer;
-    private VRTrackerTag[] vrtrackerTags;
-    private Transform[] playerTransform;
+    private List<VRTrackerTag> vrtrackerTags;
+    private List<Transform> playerTransform;
 
     private string JsonFilePath = "Boundaries.json";
     private JSONNode jBoundaries;
@@ -47,10 +47,11 @@ public class VRTrackerBoundaries : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Looking for player ");
-            localPlayer = VRTracker.instance.GetLocalPlayer();
+            Debug.Log("Looking for player's tag ");
+            VRTracker.instance.OnAddTag += RetrieveNewTag;
+            //localPlayer = VRTracker.instance.GetLocalPlayer();
         }
-        LookForLocalPlayer();
+        //LookForLocalPlayer();
         //Resize the boundaries
         RearrangeBoundaries();
         VRTracker.instance.OnNewBoundaries += UpdateValues;
@@ -64,16 +65,16 @@ public class VRTrackerBoundaries : MonoBehaviour {
     public void LookForLocalPlayer()
     {
         //Update all the boundaries local player
-        vrtrackerTags = localPlayer.GetComponentsInChildren<VRTrackerTag>();
+        //vrtrackerTags = localPlayer.GetComponentsInChildren<VRTrackerTag>();
         VRTrackerBoundariesProximity[] boundaries = GetComponentsInChildren<VRTrackerBoundariesProximity>();
 
         foreach (VRTrackerBoundariesProximity boundary in boundaries)
         {
-            if(vrtrackerTags.Length > 0)
+            if(vrtrackerTags.Count > 0)
             {
                 boundary.player = vrtrackerTags[0].transform;
             }
-            if(vrtrackerTags.Length > 1)
+            if(vrtrackerTags.Count > 1)
             {
                 boundary.controller = vrtrackerTags[1].transform;
             }
@@ -199,5 +200,15 @@ public class VRTrackerBoundaries : MonoBehaviour {
         borderLimitYMax = VRTracker.instance.ymax;
         RearrangeBoundaries();
         SaveAssociation();
+    }
+
+    public void RetrieveNewTag()
+    {
+        int index = VRTracker.instance.tags.Count;
+        VRTrackerTag tagTemp = VRTracker.instance.tags[index - 1].GetComponent < VRTrackerTag>();
+        //playerTransform.Add(tagTemp.transform);
+        //vrtrackerTags.Add(tagTemp);
+        vrtrackerTags = VRTracker.instance.tags;
+        LookForLocalPlayer();
     }
 }

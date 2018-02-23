@@ -14,6 +14,8 @@ public class PlayerManager : NetworkBehaviour
     private int playerNumber = 0;
     private int playersReady = 0;
     private int alivePlayer = 0;
+    
+    public Scoreboard scoreBoard;
 
     private void Awake()
     {
@@ -69,6 +71,14 @@ public class PlayerManager : NetworkBehaviour
         alivePlayer++;
     }
 
+    public void AddPlayerScore(GameObject player)
+    {
+        if (scoreBoard != null)
+        {
+            scoreBoard.AddPlayer("Player " + playerNumber, player);
+        }
+    }
+
     public void RemovePlayer(string ip)
     {
         if (playerReadyState[ip])
@@ -115,4 +125,6 @@ public class PlayerManager : NetworkBehaviour
             RestartGame();
         }
     }
+
+
 }

@@ -31,7 +31,7 @@ public class VRTracker : MonoBehaviour {
 
 	public float RoomNorthOffset;
 
-    public event Action OnAddPlayer;  // Called when a player is added with a tagtype head
+    public event Action OnAddTag;  // Called when a player is added with a tagtype head
     public event Action OnNewBoundaries;  // Called when new boundaries are set from dashboard
     [System.NonSerialized]
     public float xmin, xmax, ymin, ymax;
@@ -610,6 +610,8 @@ public class VRTracker : MonoBehaviour {
 	public void AddTag(VRTrackerTag tag)
 	{
 		tags.Add(tag);
+        if (OnAddTag != null)
+            OnAddTag();
 	}
 
     public VRTrackerTag getTag(TagType type)

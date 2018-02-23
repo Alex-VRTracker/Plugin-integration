@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System;
 
 public class NetworkShoot : NetworkBehaviour {
 
@@ -11,7 +12,9 @@ public class NetworkShoot : NetworkBehaviour {
     public VRTrackerTag vrGun;
     private CompleteProject.PlayerHealth playerHealth;
     [SyncVar(hook = "OnScoreChanged")]
-    int score;
+    public int score;
+    public event Action OnUpdateScore;
+
     public Text text;                      // Reference to the Text component.
     [SyncVar(hook = "OnReady")]
     public bool ready;
@@ -97,6 +100,8 @@ public class NetworkShoot : NetworkBehaviour {
         score = value;
         if (isLocalPlayer)
             text.text = "Score: " + score;
+        if (OnUpdateScore != null)
+            OnUpdateScore();
     }
 
     void OnReady(bool state)

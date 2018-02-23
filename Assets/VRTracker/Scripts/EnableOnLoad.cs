@@ -76,6 +76,7 @@ public class EnableOnLoad : MonoBehaviour
                     PlayerManager.instance.AddPlayer(nId.connectionToClient.address);
                     
                 }
+
             }
         }
 
