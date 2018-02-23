@@ -623,21 +623,21 @@ public class VRTracker : MonoBehaviour {
 
     public VRTrackerTag getHeadsetTag(){
 		foreach (VRTrackerTag tag in tags)
-			if (tag.tagType == VRTrackerTag.TagType.Head)
+			if (tag.tagType == TagType.Head)
 				return tag;
 		return null;
 	}
 
 	public VRTrackerTag getLeftControllerTag(){
 		foreach (VRTrackerTag tag in tags)
-			if (tag.tagType == VRTrackerTag.TagType.LeftController)
+			if (tag.tagType == TagType.LeftController)
 				return tag;
 		return null;
 	}
 
 	public VRTrackerTag getRightControllerTag(){
 		foreach (VRTrackerTag tag in tags)
-			if (tag.tagType == VRTrackerTag.TagType.RightController)
+			if (tag.tagType == TagType.RightController)
 				return tag;
 		return null;
 	}
