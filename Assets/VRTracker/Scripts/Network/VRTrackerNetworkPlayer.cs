@@ -31,11 +31,11 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
         {
             hud.SetActive(true);
         }
-        GameObject damageHud = transform.Find("DamageHUD").gameObject;
+        /*GameObject damageHud = transform.Find("DamageHUD").gameObject;
         if (damageHud != null)
         {
             damageHud.SetActive(true);
-        }
+        }*/
     }
 
 }
