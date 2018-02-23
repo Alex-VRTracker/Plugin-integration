@@ -115,8 +115,9 @@ public class VRTrackerTag : MonoBehaviour {
             {
                 if (tagType == VRTracker.TagType.Head)
                 {
-                    PlayerManager.instance.AddPlayer(netId.connectionToClient.address);
-                    PlayerManager.instance.AddPlayerScore(transform.parent.gameObject);
+                    //PlayerManager.instance.AddPlayer(netId.connectionToClient.address);
+                    //PlayerManager.instance.AddPlayerScore(transform.parent.gameObject);
+					Debug.Log("New tag head");
                 }
             }
         }
