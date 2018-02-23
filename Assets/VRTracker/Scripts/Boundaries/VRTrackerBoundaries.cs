@@ -64,6 +64,7 @@ public class VRTrackerBoundaries : MonoBehaviour {
         }
         //Resize the boundaries
         RearrangeBoundaries();
+        VRTracker.instance.OnNewBoundaries += UpdateValues;
 
     }
 
@@ -198,5 +199,16 @@ public class VRTrackerBoundaries : MonoBehaviour {
         borderLimitXMax = xMax;
         borderLimitYMax = yMax;
         RearrangeBoundaries();
+        SaveAssociation();
+    }
+
+    public void UpdateValues()
+    {
+        borderLimitXMin = VRTracker.instance.xmin;
+        borderLimitYMin = VRTracker.instance.ymin;
+        borderLimitXMax = VRTracker.instance.xmax;
+        borderLimitYMax = VRTracker.instance.ymax;
+        RearrangeBoundaries();
+        SaveAssociation();
     }
 }

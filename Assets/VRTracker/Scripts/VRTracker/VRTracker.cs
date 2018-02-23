@@ -31,7 +31,17 @@ public class VRTracker : MonoBehaviour {
 
 	public float RoomNorthOffset;
 
-	private GameObject LocalPlayerReference;
+    public event Action OnAddPlayer;  // Called when a player is added with a tagtype head
+    public event Action OnNewBoundaries;  // Called when new boundaries are set from dashboard
+    [System.NonSerialized]
+    public float xmin, xmax, ymin, ymax;
+
+    private GameObject LocalPlayerReference;
+
+    public enum TagType
+    {
+        Head, Gun, LeftController, RightController, LeftFoot, RightFoot
+    }
 
     private void Awake()
 	{
@@ -310,20 +320,19 @@ public class VRTracker : MonoBehaviour {
                 // Tag UID sending the special command
                 if (datasplit[0] == "xmin")
                 {
-                    VRTrackerBoundariesHandler.instance.borderLimitXMin = float.Parse(datasplit[1]);
+                   xmin = float.Parse(datasplit[1]);
                 }else if (datasplit[0] == "xmax")
                 {
-                    VRTrackerBoundariesHandler.instance.borderLimitXMax = float.Parse(datasplit[1]);
+                    xmax = float.Parse(datasplit[1]);
                 }else if (datasplit[0] == "ymin")
                 {
-                    VRTrackerBoundariesHandler.instance.borderLimitYMin = float.Parse(datasplit[1]);
+                    ymin = float.Parse(datasplit[1]);
                 }else if (datasplit[0] == "ymax")
                 {
-                    VRTrackerBoundariesHandler.instance.borderLimitYMax = float.Parse(datasplit[1]);
+                   ymax = float.Parse(datasplit[1]);
                 }
             }
-            VRTrackerBoundariesHandler.instance.RearrangeBoundaries();
-            VRTrackerBoundariesHandler.instance.SaveAssociation();
+            OnUpdateBoundaries();
         }
 
         else
@@ -729,18 +738,10 @@ public class VRTracker : MonoBehaviour {
 	public GameObject GetLocalPlayer(){
 		return LocalPlayerReference;
 	}
-    /*
-    public void unassignAllTag()
+    
+    private void OnUpdateBoundaries()
     {
-        Dictionary<string, VRTrackerAssociation>.KeyCollection keyTag = VRTrackerTagAssociation.instance.prefabAssociation.Keys;
-        foreach (string gameObjectName in keyTag)
-        {
-            if (VRTrackerTagAssociation.instance.prefabAssociation.TryGetValue(prefabName, out tagAssociation))
-            {
-                tagAssociation.tagID = tagUID;
-                assignTag(tagUID);
-                return true;
-            }
-        }
-    }*/
+        if(OnNewBoundaries != null)
+            OnNewBoundaries();
+    }
 }

@@ -13,4 +13,7 @@ public class Scoreboard : MonoBehaviour {
 	void Update () {
 		
 	}
+
+
+
 }
