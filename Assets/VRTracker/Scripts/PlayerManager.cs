@@ -11,7 +11,7 @@ public class PlayerManager : NetworkBehaviour
     public static PlayerManager instance;
     public VRStandardAssets.ShootingGallery.ShootingTarget target;
     Dictionary<string, bool> playerReadyState;
-    private int playerNumber = 0;
+    public int playerNumber = 0;
     private int playersReady = 0;
     private int alivePlayer = 0;
     

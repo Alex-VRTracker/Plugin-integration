@@ -7,13 +7,11 @@ public class DisablePositionOculus : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Debug.Log("Disable position tracking 1");
         UnityEngine.XR.InputTracking.disablePositionalTracking = true;
 	}
 
     void OnEnable()
     {
-        Debug.Log("Disable position tracking 2");
         UnityEngine.XR.InputTracking.disablePositionalTracking = true;
     }
 

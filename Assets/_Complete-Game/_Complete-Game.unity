@@ -253,14 +253,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - enemyPrefab: {fileID: 100000, guid: ea3c2728ef33e3a4d99527a86cda6465, type: 2}
-    level: 1
+    level: 0
     spawnTime: 3
   - enemyPrefab: {fileID: 100002, guid: e5171f72421770240bd7c3989fe351e3, type: 2}
-    level: 2
+    level: 1
     spawnTime: 3
   - enemyPrefab: {fileID: 153412, guid: 548c56f4bcf4db24b8aa057e9846a005, type: 2}
+    level: 2
+    spawnTime: 5
+  - enemyPrefab: {fileID: 1851731808415792, guid: a1a512d6fd4f64e8ba7459bc103b148d,
+      type: 2}
     level: 3
-    spawnTime: 15
+    spawnTime: 5
   spawnPoints:
   - enabled: 0
     spawPoint: {fileID: 345275348}
@@ -296,19 +300,19 @@ MonoBehaviour:
     spawnRate: 5
   - quantity: 8
     duration: 40
-    spawnRate: 4
+    spawnRate: 3.5
   - quantity: 12
     duration: 40
-    spawnRate: 3.5
+    spawnRate: 3
   - quantity: 16
     duration: 50
-    spawnRate: 3
+    spawnRate: 2.5
   - quantity: 20
     duration: 60
-    spawnRate: 2.5
+    spawnRate: 2
   - quantity: 24
     duration: 60
-    spawnRate: 2
+    spawnRate: 1.5
   countdownTime: 3
   intermissionTime: 5
   time: 0
@@ -327,6 +331,7 @@ MonoBehaviour:
   startGame: 0
   arePlayersReady: 0
   target: {fileID: 267955590}
+  playerNumber: 0
   scoreBoard: {fileID: 1778588080}
 --- !u!1 &91324488
 GameObject:
