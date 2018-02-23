@@ -18,8 +18,6 @@ public class VRTrackerBoundaries : MonoBehaviour {
     private VRTrackerTag[] vrtrackerTags;
     private Transform[] playerTransform;
 
-    public static VRTrackerBoundaries instance;
-
     private string JsonFilePath = "Boundaries.json";
     private JSONNode jBoundaries;
 
@@ -42,14 +40,6 @@ public class VRTrackerBoundaries : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        if (instance != null)
-        {
-            Debug.LogError("More than one CameraManager in the scene");
-        }
-        else
-        {
-            instance = this;
-        }
         //Retrieve local player
         if(localPlayer != null)
         {

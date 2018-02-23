@@ -102,7 +102,6 @@ public class PlayerManager : NetworkBehaviour
     public void RespawnPlayer()
     {
         Debug.LogWarning("Respawming a player " + alivePlayer + "/" + playerNumber);
-
         alivePlayer++;
 
     }
