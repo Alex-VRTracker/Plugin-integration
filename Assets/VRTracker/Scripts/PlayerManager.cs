@@ -73,6 +73,8 @@ public class PlayerManager : NetworkBehaviour
 
     public void AddPlayerScore(GameObject player)
     {
+        Debug.LogWarning("Adding player " + player);
+
         if (scoreBoard != null)
         {
             scoreBoard.AddPlayer("Player " + playerNumber, player);
