@@ -612,7 +612,16 @@ public class VRTracker : MonoBehaviour {
 		tags.Add(tag);
 	}
 
-	public VRTrackerTag getHeadsetTag(){
+    public VRTrackerTag getTag(TagType type)
+    {
+        foreach (VRTrackerTag tag in tags)
+            if (tag.tagType == type)
+                return tag;
+        Debug.LogWarning("Could not find a VR Tracker Tag with type " + type.ToString() + " in current Scene");
+        return null;
+    }
+
+    public VRTrackerTag getHeadsetTag(){
 		foreach (VRTrackerTag tag in tags)
 			if (tag.tagType == VRTrackerTag.TagType.Head)
 				return tag;
@@ -635,7 +644,7 @@ public class VRTracker : MonoBehaviour {
 
 	public void RemoveTag(VRTrackerTag tag)
 	{
-	//	tags.Remove(tag);
+		tags.Remove(tag);
 	}
 
 	public GameObject GetTagObject(string id)
@@ -652,7 +661,7 @@ public class VRTracker : MonoBehaviour {
 
 
 
-	public void assignDirectlyTags()
+	public void AssignDirectlyTags()
 	{
 		//Assign tags from file
 
@@ -662,7 +671,7 @@ public class VRTracker : MonoBehaviour {
 			foreach (KeyValuePair<string, VRTrackerAssociation> playerAssociation in VRTrackerTagAssociation.instance.prefabAssociation)
 			{
 				//TODO fix this part when partial assignation
-				if (!assignTagToUser(playerAssociation.Key, VRTrackerTagAssociation.instance.userTagUID[playerAssociation.Key]))
+				if (!AssignTagToUser(playerAssociation.Key, VRTrackerTagAssociation.instance.userTagUID[playerAssociation.Key]))
 				{
 					assignationComplete = false;
 					break;
@@ -678,7 +687,7 @@ public class VRTracker : MonoBehaviour {
 		}
 	}
 
-	public bool assignTagToUser(string prefabName, string tagUID)
+	public bool AssignTagToUser(string prefabName, string tagUID)
 	{
 		Dictionary<string, string>.KeyCollection keyTag = VRTrackerTagAssociation.instance.userTagUID.Keys;
 		foreach (string mac in keyTag)

@@ -72,7 +72,7 @@ namespace VRStandardAssets.Intro
 			if (VRTracker.instance.autoAssignation)
 			{
                 yield return new WaitForSeconds(1);
-				VRTracker.instance.assignDirectlyTags();
+				VRTracker.instance.AssignDirectlyTags();
                 if (!VRTracker.instance.assignationComplete)
                 {
                     m_SliderCroup.hideSkipAssignationSlider();
