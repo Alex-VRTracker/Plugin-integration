@@ -73,11 +73,11 @@ public class PlayerManager : NetworkBehaviour
 
     public void AddPlayerScore(GameObject player)
     {
-        Debug.LogWarning("Adding player " + player);
-
-        if (scoreBoard != null)
+        NetworkIdentity nId = player.GetComponent<NetworkIdentity>();
+        Debug.LogWarning("Adding player " + player + ", " + nId.netId);
+        if (scoreBoard != null && nId != null)
         {
-            scoreBoard.AddPlayer("Player " + playerNumber, player);
+            scoreBoard.RpcAddPlayer("Player " + playerNumber, nId.netId);
         }
     }
 

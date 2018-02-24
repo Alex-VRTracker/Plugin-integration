@@ -818,11 +818,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!224 &524899401 stripped
-RectTransform:
-  m_PrefabParentObject: {fileID: 224521194981180564, guid: b1064fab8a1205443bacf743258433cd,
-    type: 2}
-  m_PrefabInternal: {fileID: 1513890981}
 --- !u!1001 &539745750
 Prefab:
   m_ObjectHideFlags: 0
@@ -2047,35 +2042,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 224299165260803146, guid: b1064fab8a1205443bacf743258433cd,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -70.78
-      objectReference: {fileID: 0}
-    - target: {fileID: 224980720134870246, guid: b1064fab8a1205443bacf743258433cd,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -56.236378
-      objectReference: {fileID: 0}
-    - target: {fileID: 224980720134870246, guid: b1064fab8a1205443bacf743258433cd,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114928130763125422, guid: b1064fab8a1205443bacf743258433cd,
-        type: 2}
-      propertyPath: playerScoreItem
-      value: 
-      objectReference: {fileID: 1606585521729664, guid: 38ff6aed757868343bbab17c2b1114c2,
-        type: 2}
-    - target: {fileID: 114928130763125422, guid: b1064fab8a1205443bacf743258433cd,
-        type: 2}
-      propertyPath: playerScoreboardList
-      value: 
-      objectReference: {fileID: 524899401}
-    - target: {fileID: 1526904549334794, guid: b1064fab8a1205443bacf743258433cd, type: 2}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 1607511582903278, guid: b1064fab8a1205443bacf743258433cd, type: 2}
+      propertyPath: m_Name
+      value: Scoreboard
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1064fab8a1205443bacf743258433cd, type: 2}

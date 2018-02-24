@@ -38,18 +38,26 @@ public class Scoreboard : NetworkBehaviour
         }
     }*/
     
-    public void AddPlayer(string name, GameObject player)
+    [ClientRpc]
+    public void RpcAddPlayer(string name, NetworkInstanceId playerId)
     {
+        Debug.LogWarning("Sending to client ");
+
         GameObject scoreBoardItem = (GameObject)Instantiate(playerScoreItem, playerScoreboardList);
         PlayerScoreItem item = scoreBoardItem.GetComponent<PlayerScoreItem>();
+        Debug.LogWarning("Adding a to the list ");
+        scoreBoardItem.transform.parent = playerScoreboardList;
+        GameObject player = ClientScene.FindLocalObject(playerId);
         if (item != null)
         {
             item.Setup(name, player.GetComponentInChildren<NetworkShoot>());
             
-            NetworkServer.Spawn(scoreBoardItem);
+            //NetworkServer.Spawn(scoreBoardItem);
         }
 
     }
+
+
 
 
     

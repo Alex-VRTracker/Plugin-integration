@@ -156,6 +156,21 @@ public class NetworkShoot : NetworkBehaviour {
             damageHud.SetActive(true);
         }
     }*/
+
+    [ClientRpc]
+    public void RpcAddScoreBoard()
+    {
+        GameObject t = GameObject.FindGameObjectWithTag("Ready");
+
+        if (t != null)
+        {
+            VRStandardAssets.ShootingGallery.ShootingTarget shootingTarget = t.GetComponent<VRStandardAssets.ShootingGallery.ShootingTarget>();
+            if (shootingTarget != null)
+            {
+                shootingTarget.ImReady();
+            }
+        }
+    }
 }
 
 
