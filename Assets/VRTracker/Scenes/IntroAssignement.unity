@@ -154,42 +154,12 @@ Prefab:
     - target: {fileID: 224546805306525820, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -55
       objectReference: {fileID: 0}
     - target: {fileID: 224546805306525820, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114725821439155704, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
-        type: 2}
-      propertyPath: m_Text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 224664056445366146, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
-        type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 160
-      objectReference: {fileID: 0}
-    - target: {fileID: 114725821439155704, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
-        type: 2}
-      propertyPath: m_FontData.m_FontSize
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114725821439155704, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
-        type: 2}
-      propertyPath: m_FontData.m_MaxSize
-      value: 240
-      objectReference: {fileID: 0}
-    - target: {fileID: 224664056445366146, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 210
-      objectReference: {fileID: 0}
-    - target: {fileID: 224664056445366146, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -200
+      value: -5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dcadca34b813c734dbdd9fbcc3c15c4f, type: 2}
