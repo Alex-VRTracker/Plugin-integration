@@ -45,7 +45,8 @@ public class Scoreboard : NetworkBehaviour
         if (item != null)
         {
             item.Setup(name, player.GetComponentInChildren<NetworkShoot>());
-            //NetworkServer.Spawn(scoreBoardItem);
+            
+            NetworkServer.Spawn(scoreBoardItem);
         }
 
     }

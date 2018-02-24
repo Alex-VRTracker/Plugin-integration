@@ -16,6 +16,8 @@ public class NetworkShoot : NetworkBehaviour {
     public event Action OnUpdateScore;
 
     public Text text;                      // Reference to the Text component.
+    private Text scoreBoardText;
+
     [SyncVar(hook = "OnReady")]
     public bool ready;
     void Awake()
@@ -100,6 +102,8 @@ public class NetworkShoot : NetworkBehaviour {
         score = value;
         if (isLocalPlayer)
             text.text = "Score: " + score;
+        if (scoreBoardText != null)
+            scoreBoardText.text = score.ToString();
         if (OnUpdateScore != null)
             OnUpdateScore();
     }
