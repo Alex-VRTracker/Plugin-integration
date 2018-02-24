@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 114835725866142004}
   - component: {fileID: 114006338675136936}
   - component: {fileID: 114265123175064296}
+  - component: {fileID: 114238489141281862}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -1070,6 +1071,17 @@ MonoBehaviour:
   shader: {fileID: 4800000, guid: 07f7dca98facbcb4e8278c0e2b0ac1a8, type: 3}
   textureRamp: {fileID: 0}
   rampOffset: 0
+--- !u!114 &114238489141281862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1764823701623966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114242730269388516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1555,7 +1567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vrGun: {fileID: 114974073278683688}
   score: 0
-  text: {fileID: 114828897954555248}
+  text: {fileID: 0}
   ready: 0
 --- !u!114 &114900105865174212
 MonoBehaviour:
