@@ -1895,22 +1895,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114849337856739472, guid: 71adf1c14cccb4819b3d892f30609c2c,
-        type: 2}
-      propertyPath: m_NetworkPort
-      value: 7785
-      objectReference: {fileID: 0}
-    - target: {fileID: 114435685311450398, guid: 71adf1c14cccb4819b3d892f30609c2c,
-        type: 2}
-      propertyPath: isSpectator
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114849337856739472, guid: 71adf1c14cccb4819b3d892f30609c2c,
-        type: 2}
-      propertyPath: m_PlayerPrefab
-      value: 
-      objectReference: {fileID: 1151017805802450, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71adf1c14cccb4819b3d892f30609c2c, type: 2}
   m_IsPrefabParent: 0

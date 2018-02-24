@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 222274168974887530}
   - component: {fileID: 114201250952213214}
   - component: {fileID: 114645014757174990}
+  - component: {fileID: 114427420723941772}
   m_Layer: 0
   m_Name: PlayerScoreboardItem
   m_TagString: Untagged
@@ -123,6 +124,38 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114427420723941772
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1606585521729664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 56
+    i1: 255
+    i2: 106
+    i3: 237
+    i4: 117
+    i5: 120
+    i6: 104
+    i7: 52
+    i8: 59
+    i9: 186
+    i10: 177
+    i11: 124
+    i12: 43
+    i13: 17
+    i14: 20
+    i15: 194
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114645014757174990
 MonoBehaviour:
   m_ObjectHideFlags: 1
