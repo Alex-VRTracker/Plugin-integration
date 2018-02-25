@@ -77,7 +77,8 @@ public class PlayerManager : NetworkBehaviour
         Debug.LogWarning("Adding player " + player + ", " + nId.netId);
         if (scoreBoard != null && nId != null)
         {
-            scoreBoard.RpcAddPlayer("Player " + playerNumber, nId.netId);
+			NetworkInstanceId nIdScore = scoreBoard.spawnPlayerScore ();
+			scoreBoard.RpcAddPlayer("Player " + playerNumber, nId.netId, nIdScore);
         }
     }
 
