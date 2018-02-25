@@ -82,7 +82,7 @@ public class Scoreboard : NetworkBehaviour
             
             //NetworkServer.Spawn(scoreBoardItem);
         }*/
-        Debug.LogWarning("RPC Adding player " + number + ", " + playerId);
+        Debug.LogWarning("RPC Adding player " + number + ", " + playersScore[number - 1].scoreText.transform.gameObject.activeSelf);
 
         //PlayerScoreItem[] playerline = GetComponentsInChildren<PlayerScoreItem>();
         /*for (int i = 0; i < number && i < playersScore.Length; i++)
@@ -90,7 +90,7 @@ public class Scoreboard : NetworkBehaviour
             if(!playersScore[i].transform.gameObject.activeSelf)
                 playersScore[i].transform.gameObject.SetActive(true);
         }*/
-        playersScore[number - 1].transform.gameObject.SetActive(true);
+        playersScore[number - 1].scoreText.transform.parent.gameObject.SetActive(true);
 
     }
 
@@ -111,7 +111,7 @@ public class Scoreboard : NetworkBehaviour
         }
         for (int i = 0; i < number - 1 && i < playersScore.Length; i++)
         {
-            playersScore[i].transform.gameObject.SetActive(true);
+            playersScore[i].scoreText.transform.parent.gameObject.SetActive(true);
         }
     }
         

@@ -241,8 +241,8 @@ GameObject:
   - component: {fileID: 4662819864379532}
   - component: {fileID: 114928130763125422}
   - component: {fileID: 114035972571961414}
-  - component: {fileID: 114973127335293590}
   - component: {fileID: 114610470002334624}
+  - component: {fileID: 114973127335293590}
   - component: {fileID: 114009607210170988}
   - component: {fileID: 114659359079593130}
   m_Layer: 0
@@ -297,7 +297,6 @@ GameObject:
   - component: {fileID: 223026619768354448}
   - component: {fileID: 114313040702426310}
   - component: {fileID: 114174348706928534}
-  - component: {fileID: 114899072130914334}
   m_Layer: 0
   m_Name: ScoreBoardCanvas
   m_TagString: Untagged
@@ -884,38 +883,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Player 4
---- !u!114 &114899072130914334
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1748914958845834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 177
-    i1: 6
-    i2: 79
-    i3: 171
-    i4: 138
-    i5: 18
-    i6: 5
-    i7: 68
-    i8: 59
-    i9: 172
-    i10: 247
-    i11: 67
-    i12: 37
-    i13: 132
-    i14: 51
-    i15: 205
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!114 &114928130763125422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -930,8 +897,8 @@ MonoBehaviour:
   playerScoreItem: {fileID: 1606585521729664, guid: 38ff6aed757868343bbab17c2b1114c2,
     type: 2}
   playersScore:
-  - {fileID: 114973127335293590}
   - {fileID: 114610470002334624}
+  - {fileID: 114973127335293590}
   - {fileID: 114610470002334624}
   - {fileID: 114659359079593130}
   playerScoreboardList: {fileID: 224521194981180564}
