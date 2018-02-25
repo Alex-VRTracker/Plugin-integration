@@ -17,6 +17,10 @@ public class PlayerManager : NetworkBehaviour
     
     public Scoreboard scoreBoard;
 
+    //public delegate void AddPlayerDelegate(int currentNumber, NetworkInstanceId nId);
+    //[SyncEvent]
+    //public event AddPlayerDelegate eventAddPlayer;
+
     private void Awake()
     {
         if (instance != null)
@@ -88,7 +92,9 @@ public class PlayerManager : NetworkBehaviour
         if (scoreBoard != null && nId != null)
         {
             //NetworkInstanceId nIdScore = scoreBoard.SpawnPlayerScore ();
-            scoreBoard.RpcAddPlayer("Player " + playerNumber, nId.netId);
+            //eventAddPlayer(playerNumber, nId.netId);
+            scoreBoard.AddPlayer(playerNumber, nId.netId);
+            scoreBoard.RpcAddPlayer(playerNumber, nId.netId);
         }
     }
 
@@ -139,5 +145,11 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    public void UpdatePlayerScore(NetworkInstanceId nId, int score)
+    {
+        Debug.Log("Udpdating player score " + score);
+
+        scoreBoard.SetPlayerScore(nId, score);
+    }
 
 }

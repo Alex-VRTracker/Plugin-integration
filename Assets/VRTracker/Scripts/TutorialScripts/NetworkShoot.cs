@@ -60,6 +60,11 @@ public class NetworkShoot : NetworkBehaviour {
         if (scoreObtained > 0)
         {
             score += scoreObtained;
+            if(PlayerManager.instance != null)
+            {
+                Debug.Log("Udpdating player score " + score);
+                PlayerManager.instance.UpdatePlayerScore(netId, score);
+            }
         }
         else
         {

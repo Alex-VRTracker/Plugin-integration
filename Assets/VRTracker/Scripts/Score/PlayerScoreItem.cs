@@ -11,9 +11,12 @@ public class PlayerScoreItem : NetworkBehaviour
     Text usernameText;
 
     [SerializeField]
-    Text scoreText;
+    public Text scoreText;
 
     NetworkShoot scoreScript;
+
+    [SyncVar(hook ="OnChangeScore")]
+    public int score;
 
     public void Setup(string username, NetworkShoot ns)
     {
@@ -31,4 +34,9 @@ public class PlayerScoreItem : NetworkBehaviour
         scoreText.text = scoreScript.score.ToString();
     }
 
+    public void OnChangeScore(int newScore)
+    {
+        score = newScore;
+        scoreText.text = score.ToString();
+    }
 }

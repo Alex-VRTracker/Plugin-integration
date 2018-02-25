@@ -390,6 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usernameText: {fileID: 114814878925815334}
   scoreText: {fileID: 114500097665640038}
+  score: 0
 --- !u!114 &114087395724203632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -566,6 +567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usernameText: {fileID: 114467754246513718}
   scoreText: {fileID: 114649512054815154}
+  score: 0
 --- !u!114 &114313040702426310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -726,6 +728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usernameText: {fileID: 114601834212077370}
   scoreText: {fileID: 114489198731618080}
+  score: 0
 --- !u!114 &114601834212077370
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -893,6 +896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usernameText: {fileID: 114703344874761578}
   scoreText: {fileID: 114232749191761598}
+  score: 0
 --- !u!114 &114928130763125422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -906,6 +910,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScoreItem: {fileID: 1606585521729664, guid: 38ff6aed757868343bbab17c2b1114c2,
     type: 2}
+  playersScore:
+  - {fileID: 114926400894043258}
+  - {fileID: 114300718495405290}
+  - {fileID: 114567940839462100}
+  - {fileID: 114038360745427630}
   playerScoreboardList: {fileID: 224521194981180564}
 --- !u!222 &222242895125544700
 CanvasRenderer:

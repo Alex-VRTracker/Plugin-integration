@@ -2,21 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class Scoreboard : NetworkBehaviour
 {
 
     [SerializeField]
     GameObject playerScoreItem;
-
+    [SerializeField]
+    PlayerScoreItem[] playersScore;
     [SerializeField]
     Transform playerScoreboardList;
 
-    Dictionary<string, GameObject> playerScore;
+    //[SyncVar(hook ="OnUpdatePlayerScore")]
+    Dictionary<NetworkInstanceId, int> playerScore;
 
+    Dictionary<NetworkInstanceId, PlayerScoreItem> playersLine;
 
-    void Start()
+    void Awake()
     {
+        playerScore = new Dictionary<NetworkInstanceId, int>();
+        playersLine = new Dictionary<NetworkInstanceId, PlayerScoreItem>();
         //Player[] players = GameManager.GetAllPlayers();
 
         /*foreach (Player player in players)
@@ -27,6 +33,10 @@ public class Scoreboard : NetworkBehaviour
             {
                 item.Setup(player.username, player.kills, player.deaths);
             }
+        }*/
+        /*if(this != null)
+        {
+            PlayerManager.instance.eventAddPlayer += AddPlayer;
         }*/
     }
 
@@ -48,10 +58,12 @@ public class Scoreboard : NetworkBehaviour
         return item.GetComponent<NetworkIdentity> ().netId;
 	}
 
+
+
     [ClientRpc]
-	public void RpcAddPlayer(string name, NetworkInstanceId playerId)
+	public void RpcAddPlayer(int number, NetworkInstanceId playerId)
     {
-        GameObject scoreBoardItem = (GameObject)Instantiate(playerScoreItem, playerScoreboardList);
+        /*GameObject scoreBoardItem = (GameObject)Instantiate(playerScoreItem, playerScoreboardList);
         if (scoreBoardItem != null)
             scoreBoardItem.transform.parent = playerScoreboardList;
 
@@ -69,8 +81,46 @@ public class Scoreboard : NetworkBehaviour
             item.Setup(name, player.GetComponentInChildren<NetworkShoot>());
             
             //NetworkServer.Spawn(scoreBoardItem);
-        }
+        }*/
+        Debug.LogWarning("RPC Adding player " + number + ", " + playerId);
 
+        //PlayerScoreItem[] playerline = GetComponentsInChildren<PlayerScoreItem>();
+        for (int i = 0; i < number && i < playersScore.Length; i++)
+        {
+            playersScore[i].transform.gameObject.SetActive(true);
+        }
+    }
+
+
+
+    public void AddPlayer(int number, NetworkInstanceId nId)
+    {
+        Debug.LogWarning("Adding player " + number + ", " + nId);
+        Debug.LogWarning("playerLine "  + playersLine);
+
+        //PlayerScoreItem[] playerline = GetComponentsInChildren<PlayerScoreItem>();
+        if (playersScore.Length >= number)
+        {
+            Debug.LogWarning("Score player " + playersScore[number - 1]);
+
+            if (playersScore[number - 1] != null)
+                playersLine[nId] = playersScore[number - 1];
+        }
+        for (int i = 0; i < number - 1 && i < playersScore.Length; i++)
+        {
+            playersScore[i].transform.gameObject.SetActive(true);
+        }
     }
         
+    public void OnUpdatePlayerScore(NetworkInstanceId nId, int score)
+    {
+        playerScore[nId] = score;
+        playersLine[nId].score = score;
+    }
+
+    public void SetPlayerScore(NetworkInstanceId nId, int score)
+    {
+        playerScore[nId] = score;
+        playersLine[nId].score = score;
+    }
 }
