@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 222461395756369872}
   - component: {fileID: 114002252835830452}
   - component: {fileID: 114300718495405290}
+  - component: {fileID: 114874687461171120}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -176,6 +177,7 @@ GameObject:
   - component: {fileID: 222445714020817092}
   - component: {fileID: 114087395724203632}
   - component: {fileID: 114038360745427630}
+  - component: {fileID: 114547804869002374}
   m_Layer: 0
   m_Name: Player4
   m_TagString: Untagged
@@ -210,6 +212,7 @@ GameObject:
   - component: {fileID: 222376875602823304}
   - component: {fileID: 114199386784303806}
   - component: {fileID: 114567940839462100}
+  - component: {fileID: 114085068656722518}
   m_Layer: 0
   m_Name: Player3
   m_TagString: Untagged
@@ -228,6 +231,7 @@ GameObject:
   - component: {fileID: 222569620187644262}
   - component: {fileID: 114242194379966962}
   - component: {fileID: 114926400894043258}
+  - component: {fileID: 114797924608106696}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -391,6 +395,38 @@ MonoBehaviour:
   usernameText: {fileID: 114814878925815334}
   scoreText: {fileID: 114500097665640038}
   score: 0
+--- !u!114 &114085068656722518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1579049871328212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 177
+    i1: 6
+    i2: 79
+    i3: 171
+    i4: 138
+    i5: 18
+    i6: 5
+    i7: 68
+    i8: 59
+    i9: 172
+    i10: 247
+    i11: 67
+    i12: 37
+    i13: 132
+    i14: 51
+    i15: 205
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114087395724203632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -715,6 +751,38 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 0
+--- !u!114 &114547804869002374
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1526904549334794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 177
+    i1: 6
+    i2: 79
+    i3: 171
+    i4: 138
+    i5: 18
+    i6: 5
+    i7: 68
+    i8: 59
+    i9: 172
+    i10: 247
+    i11: 67
+    i12: 37
+    i13: 132
+    i14: 51
+    i15: 205
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114567940839462100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -816,7 +884,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 999999
+  m_Text: 0
 --- !u!114 &114703344874761578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -850,6 +918,38 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Player 1
+--- !u!114 &114797924608106696
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1591055112262268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 177
+    i1: 6
+    i2: 79
+    i3: 171
+    i4: 138
+    i5: 18
+    i6: 5
+    i7: 68
+    i8: 59
+    i9: 172
+    i10: 247
+    i11: 67
+    i12: 37
+    i13: 132
+    i14: 51
+    i15: 205
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114814878925815334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -883,6 +983,38 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Player 4
+--- !u!114 &114874687461171120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1341166945234428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 177
+    i1: 6
+    i2: 79
+    i3: 171
+    i4: 138
+    i5: 18
+    i6: 5
+    i7: 68
+    i8: 59
+    i9: 172
+    i10: 247
+    i11: 67
+    i12: 37
+    i13: 132
+    i14: 51
+    i15: 205
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114926400894043258
 MonoBehaviour:
   m_ObjectHideFlags: 1
