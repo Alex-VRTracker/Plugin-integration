@@ -85,10 +85,13 @@ public class Scoreboard : NetworkBehaviour
         Debug.LogWarning("RPC Adding player " + number + ", " + playerId);
 
         //PlayerScoreItem[] playerline = GetComponentsInChildren<PlayerScoreItem>();
-        for (int i = 0; i < number && i < playersScore.Length; i++)
+        /*for (int i = 0; i < number && i < playersScore.Length; i++)
         {
-            playersScore[i].transform.gameObject.SetActive(true);
-        }
+            if(!playersScore[i].transform.gameObject.activeSelf)
+                playersScore[i].transform.gameObject.SetActive(true);
+        }*/
+        playersScore[number - 1].transform.gameObject.SetActive(true);
+
     }
 
 
