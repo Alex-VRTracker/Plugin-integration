@@ -12,7 +12,6 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
         {
             VRTrackerNetwork.instance.players.Add(transform.gameObject);
             Debug.Log("Network player ");
-            VRTracker.instance.SetLocalPlayer(transform.parent.gameObject);
         }
     }
 	
@@ -24,7 +23,8 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         Debug.LogWarning("On start local player client ");
-
+        VRTracker.instance.SetLocalPlayer(gameObject);
+        Debug.Log("Setting local player " + gameObject);
         //VRTrackerBoundaries.instance.localPlayer = gameObject;
         //VRTrackerBoundaries.instance.LookForLocalPlayer();
         GameObject hud = transform.Find("PlayerGunV2/HUD").gameObject;

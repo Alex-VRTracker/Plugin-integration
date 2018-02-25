@@ -1671,9 +1671,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tagTypeToFollow: 0
-  followOrientationX: 1
-  followOrientationY: 1
-  followOrientationZ: 1
+  followOrientationX: 0
+  followOrientationY: 0
+  followOrientationZ: 0
   followPositionX: 1
   followPositionY: 1
   followPositionZ: 1

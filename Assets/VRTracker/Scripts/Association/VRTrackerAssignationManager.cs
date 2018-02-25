@@ -32,6 +32,7 @@ namespace VRStandardAssets.Intro
 
 			DontDestroyOnLoad (VRTracker.instance);
 			Debug.Log("Instance is spectator :  " + VRTracker.instance.isSpectator);
+            bool assignationSuccess = false;
 
             if (VRTracker.instance.autoAssignation)
             {
@@ -42,8 +43,7 @@ namespace VRStandardAssets.Intro
                 if (VRTrackerTagAssociation.instance.LoadAssociation())
                 {
 
-                    bool assignationSuccess = false;
-                    for (int i = 0; i < 3 && !VRTracker.instance.assignationComplete; i++)
+                    /*for (int i = 0; i < 3 && !VRTracker.instance.assignationComplete; i++)
                     {
                         if (VRTrackerTagAssociation.instance.TryAutoAssignTag())
                         {
@@ -52,8 +52,8 @@ namespace VRStandardAssets.Intro
                         }
 
                         yield return new WaitForSeconds(1);
-                    }
-
+                    }*/
+                    assignationSuccess = VRTrackerTagAssociation.instance.TryAutoAssignTag();
                     if (!assignationSuccess)
                     {
                         m_SliderCroup.hideSkipAssignationSlider();
@@ -126,17 +126,20 @@ namespace VRStandardAssets.Intro
 				//VRTracker.instance.assignationComplete = true;
 			}
 			Debug.Log("Instance is spectator :  " + VRTracker.instance.isSpectator);
-            
+
 
             // In order, fade in the UI on confirming the use of sliders, wait for the slider to be filled, then fade out the UI.
-            yield return StartCoroutine(m_HowToUseConfirmFader.InteruptAndFadeIn());
-            yield return StartCoroutine(m_SliderCroup.WaitForBarsToFill());
-            //yield return StartCoroutine(m_SliderCroup.WaitForBarsToFill());
-            yield return StartCoroutine(m_HowToUseConfirmFader.InteruptAndFadeOut());
+            if (!assignationSuccess)
+            {
+                yield return StartCoroutine(m_HowToUseConfirmFader.InteruptAndFadeIn());
+                //yield return StartCoroutine(m_SliderCroup.WaitForBarsToFill());
+                yield return StartCoroutine(m_SliderCroup.WaitForBarsToFill());
+                yield return StartCoroutine(m_HowToUseConfirmFader.InteruptAndFadeOut());
+            }
 
 
             // Assign a Tag to each Prefab instance containing a Tag in VR Tracker
-            if (!VRTracker.instance.IsAssigned() && !VRTracker.instance.isSpectator)
+            if (!assignationSuccess && !VRTracker.instance.isSpectator)
 			{
 				Debug.Log("Manual assignement ");
 				//Assignement step
