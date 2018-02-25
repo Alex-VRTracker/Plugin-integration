@@ -40,21 +40,25 @@ public class VRTrackerBoundaries : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        //Retrieve local player
-        if(localPlayer != null)
+        if (!VRTracker.instance.isSpectator)
         {
-            Debug.Log("Local Player already set");
+            //Retrieve local player
+            if (localPlayer != null)
+            {
+                Debug.Log("Local Player already set");
+            }
+            else
+            {
+                Debug.Log("Looking for player's tag ");
+                VRTracker.instance.OnAddTag += RetrieveNewTag;
+                //localPlayer = VRTracker.instance.GetLocalPlayer();
+            }
+            //LookForLocalPlayer();
+            //Resize the boundaries
+            RearrangeBoundaries();
+            VRTracker.instance.OnNewBoundaries += UpdateValues;
+
         }
-        else
-        {
-            Debug.Log("Looking for player's tag ");
-            VRTracker.instance.OnAddTag += RetrieveNewTag;
-            //localPlayer = VRTracker.instance.GetLocalPlayer();
-        }
-        //LookForLocalPlayer();
-        //Resize the boundaries
-        RearrangeBoundaries();
-        VRTracker.instance.OnNewBoundaries += UpdateValues;
 
     }
 

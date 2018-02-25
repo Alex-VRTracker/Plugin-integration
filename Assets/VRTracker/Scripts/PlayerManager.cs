@@ -37,8 +37,18 @@ public class PlayerManager : NetworkBehaviour
 
     // Update is called once per frame
     void Update () {
-       
-	}
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Debug.Log("Starting Game");
+            if(playerNumber > 0)
+            {
+                startGame = true;
+                WaveManager.instance.StartGame();
+            }
+
+        }
+
+    }
 
     public void SetPlayerReady(string ip)
     {

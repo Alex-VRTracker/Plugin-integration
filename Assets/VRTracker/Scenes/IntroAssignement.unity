@@ -161,9 +161,9 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: -5
       objectReference: {fileID: 0}
-    - target: {fileID: 114027273397589800, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
+    - target: {fileID: 23412686303200008, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
         type: 2}
-      propertyPath: m_FontData.m_AlignByGeometry
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1899,6 +1899,11 @@ Prefab:
     - target: {fileID: 4442430545188724, guid: 71adf1c14cccb4819b3d892f30609c2c, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114435685311450398, guid: 71adf1c14cccb4819b3d892f30609c2c,
+        type: 2}
+      propertyPath: isSpectator
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71adf1c14cccb4819b3d892f30609c2c, type: 2}

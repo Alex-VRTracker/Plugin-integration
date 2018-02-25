@@ -36,5 +36,5 @@ Material:
     - _Color: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 1}
     - _ControllerPosition: {r: 0, g: 0, b: 0, a: 0}
     - _OutlineColour: {r: 0.82745105, g: 0.82745105, b: 0.82745105, a: 1}
-    - _PlayerPosition: {r: -1.8415253, g: 1.0138652, b: 2.6416533, a: 0}
+    - _PlayerPosition: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
