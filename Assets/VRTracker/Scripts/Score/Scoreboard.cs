@@ -87,8 +87,8 @@ public class Scoreboard : NetworkBehaviour
         //PlayerScoreItem[] playerline = GetComponentsInChildren<PlayerScoreItem>();
         for (int i = 0; i < number && i < playersScore.Length; i++)
         {
-            if(!playersScore[i].transform.gameObject.activeSelf)
-                playersScore[i].transform.gameObject.SetActive(true);
+            if(!playersScore[i].transform.parent.gameObject.activeSelf)
+                playersScore[i].transform.parent.gameObject.SetActive(true);
         }
         //playersScore[number - 1].scoreText.transform.parent.gameObject.SetActive(true);
 
