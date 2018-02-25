@@ -83,7 +83,7 @@ namespace CompleteProject
         public int Shoot (Vector3 origin, Vector3 direction, out Vector3 destination)
         {
             Debug.Log("Shooting");
-
+            Debug.Log(origin);
             // Reset the timer.
             /*timer = 0f;
 

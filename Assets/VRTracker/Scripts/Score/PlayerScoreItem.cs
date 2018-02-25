@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class PlayerScoreItem : MonoBehaviour
+public class PlayerScoreItem : NetworkBehaviour
 {
 
     [SerializeField]
     Text usernameText;
 
     [SerializeField]
-    Text scoreText;
+    public Text scoreText;
 
     NetworkShoot scoreScript;
+
+    [SyncVar(hook ="OnChangeScore")]
+    public int score;
 
     public void Setup(string username, NetworkShoot ns)
     {
@@ -30,4 +34,9 @@ public class PlayerScoreItem : MonoBehaviour
         scoreText.text = scoreScript.score.ToString();
     }
 
+    public void OnChangeScore(int newScore)
+    {
+        score = newScore;
+        scoreText.text = score.ToString();
+    }
 }

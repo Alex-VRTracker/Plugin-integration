@@ -40,21 +40,25 @@ public class VRTrackerBoundaries : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        //Retrieve local player
-        if(localPlayer != null)
+        if (!VRTracker.instance.isSpectator)
         {
-            Debug.Log("Local Player already set");
+            //Retrieve local player
+            if (localPlayer != null)
+            {
+                Debug.Log("Local Player already set");
+            }
+            else
+            {
+                Debug.Log("Looking for player's tag ");
+                VRTracker.instance.OnAddTag += RetrieveNewTag;
+                //localPlayer = VRTracker.instance.GetLocalPlayer();
+            }
+            //LookForLocalPlayer();
+            //Resize the boundaries
+            RearrangeBoundaries();
+            VRTracker.instance.OnNewBoundaries += UpdateValues;
+
         }
-        else
-        {
-            Debug.Log("Looking for player's tag ");
-            VRTracker.instance.OnAddTag += RetrieveNewTag;
-            //localPlayer = VRTracker.instance.GetLocalPlayer();
-        }
-        //LookForLocalPlayer();
-        //Resize the boundaries
-        RearrangeBoundaries();
-        VRTracker.instance.OnNewBoundaries += UpdateValues;
 
     }
 
@@ -64,21 +68,26 @@ public class VRTrackerBoundaries : MonoBehaviour {
     /// </summary>
     public void LookForLocalPlayer()
     {
-        //Update all the boundaries local player
-        //vrtrackerTags = localPlayer.GetComponentsInChildren<VRTrackerTag>();
-        VRTrackerBoundariesProximity[] boundaries = GetComponentsInChildren<VRTrackerBoundariesProximity>();
-
-        foreach (VRTrackerBoundariesProximity boundary in boundaries)
+        if(this != null)
         {
-            if(vrtrackerTags.Count > 0)
+            Debug.Log("Looking for local player");
+            //Update all the boundaries local player
+            //vrtrackerTags = localPlayer.GetComponentsInChildren<VRTrackerTag>();
+            VRTrackerBoundariesProximity[] boundaries = GetComponentsInChildren<VRTrackerBoundariesProximity>();
+
+            foreach (VRTrackerBoundariesProximity boundary in boundaries)
             {
-                boundary.player = vrtrackerTags[0].transform;
-            }
-            if(vrtrackerTags.Count > 1)
-            {
-                boundary.controller = vrtrackerTags[1].transform;
+                if (vrtrackerTags.Count > 0)
+                {
+                    boundary.player = vrtrackerTags[0].transform;
+                }
+                if (vrtrackerTags.Count > 1)
+                {
+                    boundary.controller = vrtrackerTags[1].transform;
+                }
             }
         }
+        
 
     }
 

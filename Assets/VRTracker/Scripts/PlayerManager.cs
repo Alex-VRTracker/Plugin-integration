@@ -17,6 +17,10 @@ public class PlayerManager : NetworkBehaviour
     
     public Scoreboard scoreBoard;
 
+    //public delegate void AddPlayerDelegate(int currentNumber, NetworkInstanceId nId);
+    //[SyncEvent]
+    //public event AddPlayerDelegate eventAddPlayer;
+
     private void Awake()
     {
         if (instance != null)
@@ -37,8 +41,18 @@ public class PlayerManager : NetworkBehaviour
 
     // Update is called once per frame
     void Update () {
-       
-	}
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Debug.Log("Starting Game");
+            if(playerNumber > 0)
+            {
+                startGame = true;
+                WaveManager.instance.StartGame();
+            }
+
+        }
+
+    }
 
     public void SetPlayerReady(string ip)
     {
@@ -73,11 +87,14 @@ public class PlayerManager : NetworkBehaviour
 
     public void AddPlayerScore(GameObject player)
     {
-        Debug.LogWarning("Adding player " + player);
-
-        if (scoreBoard != null)
+        NetworkIdentity nId = player.GetComponent<NetworkIdentity>();
+        Debug.LogWarning("Adding player " + player + ", " + nId.netId);
+        if (scoreBoard != null && nId != null)
         {
-            scoreBoard.AddPlayer("Player " + playerNumber, player);
+            //NetworkInstanceId nIdScore = scoreBoard.SpawnPlayerScore ();
+            //eventAddPlayer(playerNumber, nId.netId);
+            scoreBoard.AddPlayer(playerNumber, nId.netId);
+            scoreBoard.RpcAddPlayer(playerNumber, nId.netId);
         }
     }
 
@@ -128,5 +145,11 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    public void UpdatePlayerScore(NetworkInstanceId nId, int score)
+    {
+        Debug.Log("Udpdating player score " + score);
+
+        scoreBoard.SetPlayerScore(nId, score);
+    }
 
 }

@@ -74,11 +74,6 @@ public class EnableOnLoad : MonoBehaviour
                 //PlayerManager.instance.AddPlayer(nId.connectionToClient.address);
                 //PlayerManager.instance.AddPlayerScore(transform.parent.gameObject);
             }
-            else
-            {
-                Debug.LogWarning("NOt server ");
-
-            }
 
         }
 
