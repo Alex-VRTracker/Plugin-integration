@@ -49,7 +49,7 @@ public class VRTrackerNetwork : NetworkManager
 			Debug.LogWarning ("Setting local player " + Network.player.ipAddress);
 			PlayerManager.instance.AddPlayer (Network.player.ipAddress);
 
-			//VRTracker.instance.SetLocalPlayer(newPlayer);
+			VRTracker.instance.SetLocalPlayer(newPlayer);
 			//Announcer.instance.SetAnnouncer(newPlayer.transform.Find("Announcer").GetComponentInChildren<Text>()); 
 		} else {
 			Debug.LogWarning ("Not local player " + conn.address);

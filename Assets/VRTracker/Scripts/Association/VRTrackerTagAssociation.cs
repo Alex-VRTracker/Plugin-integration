@@ -56,7 +56,7 @@ public class VRTrackerTagAssociation : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (isWaitingForAssociation)
+		/*if (isWaitingForAssociation)
 		{
 			currentTime -= Time.deltaTime;
 			if(currentTime <= 0)
@@ -70,7 +70,7 @@ public class VRTrackerTagAssociation : MonoBehaviour {
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 
@@ -119,8 +119,8 @@ public class VRTrackerTagAssociation : MonoBehaviour {
 		}
 	}
 
-	// Check if Tag association to User is saved in a file
-	public void LoadAssociation(){
+    // Check if Tag association to User is saved in a file
+    /*public void LoadAssociation(){
 		// Path.Combine combines strings into a file path
 		// Application.StreamingAssets points to Assets/StreamingAssets in the Editor, and the StreamingAssets folder in a build
 
@@ -146,12 +146,34 @@ public class VRTrackerTagAssociation : MonoBehaviour {
 		{
 			Debug.LogWarning("Cannot load json file!");
 		}
-	}
+	}*/
+    // Check if Tag association to User is saved in a file
+    public bool LoadAssociation()
+    {
+
+        string filePath = Path.Combine(Application.persistentDataPath, JsonFilePath);
+        Debug.Log("Opening " + filePath);
+
+        if (File.Exists(filePath))
+        {
+            // Read the json from the file into a string
+            string jsonDataString = File.ReadAllText(filePath);
+            playerAssociation = JSON.Parse(jsonDataString);
+            //updateAssociation ();
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning("Cannot load json file!");
+        }
+        return false;
+    }
+
 
     /// <summary>
     /// Update the association data from the file
     /// </summary>
-	private void updateAssociation(){
+	private void UpdateAssociation(){
 
         if (playerAssociation == null) {
 			isAssociationLoaded = false;
@@ -195,7 +217,7 @@ public class VRTrackerTagAssociation : MonoBehaviour {
 		}
 	}
 
-	public void addAvailableTag(string uid){
+	public void AddAvailableTag(string uid){
         availableTagMac.Add (uid);
 	}
 
@@ -253,11 +275,74 @@ public class VRTrackerTagAssociation : MonoBehaviour {
 		}
 	}
 
-	/// <summary>
-	/// Saves the tag association for the game for this device
-	/// </summary>
-	public void SaveAssociation(){
-		foreach(KeyValuePair<string, VRTrackerAssociation> tagAssociation in prefabAssociation)
+
+    // Try to assign the Tag UID from the Player file
+    public bool TryAutoAssignTag()
+    {
+
+        Dictionary<VRTrackerTag, string> tagToAssign = new Dictionary<VRTrackerTag, string>();
+        bool allTagAreInJSONList = true;
+
+        // Check if the Tags to assign are all in the JSON file
+        foreach (VRTrackerTag tag in VRTracker.instance.tags)
+        {
+            if (!tag.IDisAssigned)
+            {
+
+                bool tagFoundinJson = false;
+                //foreach(KeyValuePair<string,string> jsonTag in playerAssociation){
+                for (short i = 0; i < playerAssociation.Count; i++)
+                {
+                    if (playerAssociation.KeyAtIndex(i) == tag.tagType.ToString())
+                    {
+                        tagToAssign.Add(tag, playerAssociation[playerAssociation.KeyAtIndex(i)]);
+                        tagFoundinJson = true;
+                    }
+                }
+                if (!tagFoundinJson)
+                    allTagAreInJSONList = false;// && tagFoundinJson; // If one of the tag is not present, false
+            }
+        }
+
+        if (!allTagAreInJSONList)
+        {
+            Debug.LogWarning("Tag Association Error : Could not find all Tag in the JSON file");
+            return false;
+        }
+
+        // Check if the Tags to assign are available in the Gateway
+        bool allLinkFound = true;
+        foreach (KeyValuePair<VRTrackerTag, string> tagUID in tagToAssign)
+        {
+            bool tagLinkFound = false;
+            foreach (string mac in availableTagMac)
+            {
+                if (mac == tagUID.Value)
+                    tagLinkFound = true;
+            }
+            if (!tagLinkFound)
+                allLinkFound = false;
+        }
+
+        if (!allLinkFound)
+        {
+            Debug.LogWarning("Tag Association Error : Could not find all Tag on the Gateway");
+            return false;
+        }
+
+        foreach (KeyValuePair<VRTrackerTag, string> tagUID in tagToAssign)
+        {
+            tagUID.Key.AssignTag(tagUID.Value);
+        }
+        return true;
+    }
+
+
+    /// <summary>
+    /// Saves the tag association for the game for this device
+    /// </summary>
+    public void SaveAssociation(){
+        /*foreach(KeyValuePair<string, VRTrackerAssociation> tagAssociation in prefabAssociation)
 		{
 			if(tagAssociation.Value.tagID != "" && tagAssociation.Value.tagID != "Enter Your Tag UID")
 			{
@@ -270,13 +355,28 @@ public class VRTrackerTagAssociation : MonoBehaviour {
 				canSave = true;
 			}
 		}
-		VRTrackerTagAssociation.instance.Save();
+        //VRTrackerTagAssociation.instance.Save();
+        */
+        foreach (VRTrackerTag tag in VRTracker.instance.tags)
+        {
+            if (tag.UID != "" && tag.UID != "Enter Your Tag UID")
+            {
+                //Store every tag association
+                if (playerAssociation == null)
+                {
+                    playerAssociation = new JSONObject();
+                }
+                playerAssociation[tag.tagType.ToString()] = tag.UID;
+                canSave = true;
+            }
+        }
+        Save();
 	}
 
-    public void AddPrefabAssociation(string prefabName, VRTrackerAssociation newAsso)
+    /*public void AddPrefabAssociation(string prefabName, VRTrackerAssociation newAsso)
     {
         prefabAssociation.Add(prefabName, newAsso);
         objectToAssign.Add(prefabName);
-    }
+    }*/
 }
 	

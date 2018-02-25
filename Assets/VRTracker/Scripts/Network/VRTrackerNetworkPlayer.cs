@@ -12,8 +12,9 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
         {
             VRTrackerNetwork.instance.players.Add(transform.gameObject);
             Debug.Log("Network player ");
+            VRTracker.instance.SetLocalPlayer(transform.parent.gameObject);
         }
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
