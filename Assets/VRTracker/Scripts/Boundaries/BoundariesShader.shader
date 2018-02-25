@@ -7,8 +7,8 @@ Shader "Custom/Bondaries" {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 		_PlayerPosition ("Player Position", vector) = (0,0,0,0) // The location of the player - will be set by script
 		_ControllerPosition("Controller Position", vector) = (0,0,0,0) // The location of the controller - will be set by script
-        _VisibilityDistance ("Visibility Distance", float) = 1.0 // How close does the player have to be to make object visible
-		_VisibilityCDistance("Visibility Controller Distance", float) = 0.40 // How close does the player have to be to make object visible
+        _VisibilityDistance ("Visibility Distance", float) = 1.5 // How close does the player have to be to make object visible
+		_VisibilityCDistance("Visibility Controller Distance", float) = 1.2 // How close does the player have to be to make object visible
 		_OutlineWidth ("Outline Width", float) = 3.0 // Used to add an outline around visible area a la Mario Galaxy - http://www.youtube.com/watch?v=91raP59am9U
         _OutlineColour ("Outline Colour", color) = (1.0,1.0,0.0,1.0) // Colour of the outline
 	}

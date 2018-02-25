@@ -11,9 +11,15 @@ public class PlayerManager : NetworkBehaviour
     public static PlayerManager instance;
     public VRStandardAssets.ShootingGallery.ShootingTarget target;
     Dictionary<string, bool> playerReadyState;
-    private int playerNumber = 0;
+    public int playerNumber = 0;
     private int playersReady = 0;
     private int alivePlayer = 0;
+    
+    public Scoreboard scoreBoard;
+
+    //public delegate void AddPlayerDelegate(int currentNumber, NetworkInstanceId nId);
+    //[SyncEvent]
+    //public event AddPlayerDelegate eventAddPlayer;
 
     private void Awake()
     {
@@ -35,8 +41,18 @@ public class PlayerManager : NetworkBehaviour
 
     // Update is called once per frame
     void Update () {
-       
-	}
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Debug.Log("Starting Game");
+            if(playerNumber > 0)
+            {
+                startGame = true;
+                WaveManager.instance.StartGame();
+            }
+
+        }
+
+    }
 
     public void SetPlayerReady(string ip)
     {
@@ -67,6 +83,19 @@ public class PlayerManager : NetworkBehaviour
         playerReadyState[ip] = false;
         playerNumber++;
         alivePlayer++;
+    }
+
+    public void AddPlayerScore(GameObject player)
+    {
+        NetworkIdentity nId = player.GetComponent<NetworkIdentity>();
+        Debug.LogWarning("Adding player " + player + ", " + nId.netId);
+        if (scoreBoard != null && nId != null)
+        {
+            //NetworkInstanceId nIdScore = scoreBoard.SpawnPlayerScore ();
+            //eventAddPlayer(playerNumber, nId.netId);
+            scoreBoard.AddPlayer(playerNumber, nId.netId);
+            scoreBoard.RpcAddPlayer(playerNumber, nId.netId);
+        }
     }
 
     public void RemovePlayer(string ip)
@@ -102,7 +131,6 @@ public class PlayerManager : NetworkBehaviour
     public void RespawnPlayer()
     {
         Debug.LogWarning("Respawming a player " + alivePlayer + "/" + playerNumber);
-
         alivePlayer++;
 
     }
@@ -116,4 +144,12 @@ public class PlayerManager : NetworkBehaviour
             RestartGame();
         }
     }
+
+    public void UpdatePlayerScore(NetworkInstanceId nId, int score)
+    {
+        Debug.Log("Udpdating player score " + score);
+
+        scoreBoard.SetPlayerScore(nId, score);
+    }
+
 }

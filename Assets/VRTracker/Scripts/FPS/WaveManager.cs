@@ -200,7 +200,7 @@ public class WaveManager : NetworkBehaviour
             waveInProgress = true;
             //Set the spawnRate and quantity of the zombie spawner
             ESpawner.SetSpawnRate(waveList[currentWave].spawnRate);
-            ESpawner.SpawnWave(waveList[currentWave].quantity);
+            ESpawner.SpawnWave(waveList[currentWave].quantity * 1+((PlayerManager.instance.playerNumber-1)/2));
             ESpawner.SetWave(currentWave);
             //Increment the current wave index
             currentWave++;

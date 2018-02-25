@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System;
 
 public class NetworkShoot : NetworkBehaviour {
 
@@ -11,8 +12,12 @@ public class NetworkShoot : NetworkBehaviour {
     public VRTrackerTag vrGun;
     private CompleteProject.PlayerHealth playerHealth;
     [SyncVar(hook = "OnScoreChanged")]
-    int score;
+    public int score;
+    public event Action OnUpdateScore;
+
     public Text text;                      // Reference to the Text component.
+    private Text scoreBoardText;
+
     [SyncVar(hook = "OnReady")]
     public bool ready;
     void Awake()
@@ -55,6 +60,11 @@ public class NetworkShoot : NetworkBehaviour {
         if (scoreObtained > 0)
         {
             score += scoreObtained;
+            if(PlayerManager.instance != null)
+            {
+                Debug.Log("Udpdating player score " + score);
+                PlayerManager.instance.UpdatePlayerScore(netId, score);
+            }
         }
         else
         {
@@ -97,6 +107,10 @@ public class NetworkShoot : NetworkBehaviour {
         score = value;
         if (isLocalPlayer)
             text.text = "Score: " + score;
+        if (scoreBoardText != null)
+            scoreBoardText.text = score.ToString();
+        if (OnUpdateScore != null)
+            OnUpdateScore();
     }
 
     void OnReady(bool state)
@@ -147,6 +161,21 @@ public class NetworkShoot : NetworkBehaviour {
             damageHud.SetActive(true);
         }
     }*/
+
+    [ClientRpc]
+    public void RpcAddScoreBoard()
+    {
+        GameObject t = GameObject.FindGameObjectWithTag("Ready");
+
+        if (t != null)
+        {
+            VRStandardAssets.ShootingGallery.ShootingTarget shootingTarget = t.GetComponent<VRStandardAssets.ShootingGallery.ShootingTarget>();
+            if (shootingTarget != null)
+            {
+                shootingTarget.ImReady();
+            }
+        }
+    }
 }
 
 

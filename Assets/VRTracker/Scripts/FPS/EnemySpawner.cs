@@ -57,8 +57,11 @@ public class EnemySpawner : NetworkBehaviour
             {
                 // Find a random index between zero and one less than the number of spawn points.
                 int spawnPointIndex = Random.Range(0, spawnPoints.Count);
-                int enemyIndex = Random.Range(0, enemies.Length);
-
+                int enemyIndex = Random.Range(0, currentWave);
+                /*while(enemies[enemyIndex].level > currentWave)
+                {
+                    enemyIndex = Random.Range(0, enemies.Length);
+                }*/
                 var enemy = (GameObject)Instantiate(enemies[enemyIndex].enemyPrefab, spawnPoints[spawnPointIndex].spawPoint.transform.position, spawnPoints[spawnPointIndex].spawPoint.transform.rotation);
 
                 enemyList.Add(enemy);

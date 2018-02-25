@@ -33,7 +33,12 @@ public class Announcer : NetworkBehaviour
     private void Start()
     {
         //cam = Camera.main.gameObject
-        currentText = VRTracker.instance.GetLocalPlayer().transform.Find("Player").GetComponentInChildren<Text>();
+        if(this != null)
+        {
+            if (!VRTracker.instance.isSpectator)
+                currentText = VRTracker.instance.GetLocalPlayer().transform.Find("Player").GetComponentInChildren<Text>();
+
+        }
 
     }
 

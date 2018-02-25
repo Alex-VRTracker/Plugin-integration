@@ -72,7 +72,7 @@ namespace VRStandardAssets.Intro
 			if (VRTracker.instance.autoAssignation)
 			{
                 yield return new WaitForSeconds(1);
-				VRTracker.instance.assignDirectlyTags();
+				VRTracker.instance.AssignDirectlyTags();
                 if (!VRTracker.instance.assignationComplete)
                 {
                     m_SliderCroup.hideSkipAssignationSlider();
@@ -146,8 +146,9 @@ namespace VRStandardAssets.Intro
 			}
 			// Load the next Level (the Game !)
 			yield return StartCoroutine(m_LoadingFader.InteruptAndFadeIn());
-			//LevelLoader.instance.LoadLevel(1);
-			if (VRTracker.instance.serverIp == "") {
+            //LevelLoader.instance.LoadLevel(1);
+            Debug.Log("Network Address : " + Network.player.ipAddress);
+			if (VRTracker.instance.serverIp == "" || VRTracker.instance.serverIp == Network.player.ipAddress) {
 				VRTracker.instance.serverIp = Network.player.ipAddress;
 				VRTracker.instance.sendServerIP (VRTracker.instance.serverIp);
                 VRTrackerNetwork.instance.serverBindAddress = VRTracker.instance.serverIp;

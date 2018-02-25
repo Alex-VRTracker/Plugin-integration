@@ -7,14 +7,10 @@ using System.Collections.Generic;
 
 public class VRTrackerTag : MonoBehaviour {
 
-    // Type of Tag (Head, controller Left / Right for VRTK)
-	public enum TagType 
-	{
-		Head, LeftController, RightController
-	}
-	public TagType tagType;
+    [Tooltip("Set the type of Tag to access it later. Each type must only be used once.")]
+    public VRTracker.TagType tagType;
 
-	// Button value saved here for VRTK
+    // Button value saved here for VRTK
     [System.NonSerialized] public bool triggerPressed = false;
     [System.NonSerialized] public bool triggerUp = false;
     [System.NonSerialized] public bool triggerDown = false;
@@ -115,12 +111,13 @@ public class VRTrackerTag : MonoBehaviour {
 			return;
 		} else {
             VRTracker.instance.SetLocalPlayer(transform.parent.gameObject);
-            Debug.Log("Setting local player " + transform.parent.gameObject);
             if (netId.isServer)
             {
-                if (tagType == TagType.Head)
+                if (tagType == VRTracker.TagType.Head)
                 {
-                    PlayerManager.instance.AddPlayer(netId.connectionToClient.address);
+                    //PlayerManager.instance.AddPlayer(netId.connectionToClient.address);
+                    //PlayerManager.instance.AddPlayerScore(transform.parent.gameObject);
+					Debug.Log("New tag head");
                 }
             }
         }
