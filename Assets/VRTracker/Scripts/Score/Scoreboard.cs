@@ -43,7 +43,9 @@ public class Scoreboard : NetworkBehaviour
 		GameObject scoreBoardItem = (GameObject)Instantiate(playerScoreItem, playerScoreboardList);
 		PlayerScoreItem item = scoreBoardItem.GetComponent<PlayerScoreItem>();
 		NetworkServer.Spawn(scoreBoardItem);
-		return item.GetComponent<NetworkIdentity> ().netId;
+        if (scoreBoardItem != null)
+            scoreBoardItem.transform.parent = playerScoreboardList;
+        return item.GetComponent<NetworkIdentity> ().netId;
 	}
 
     [ClientRpc]
@@ -55,8 +57,7 @@ public class Scoreboard : NetworkBehaviour
         //GameObject scoreBoardItem = (GameObject)Instantiate(playerScoreItem, playerScoreboardList);
         //PlayerScoreItem item = scoreBoardItem.GetComponent<PlayerScoreItem>();
         Debug.LogWarning("Adding a to the list ");
-		if(scoreBoardItem != null)
-        	scoreBoardItem.transform.parent = playerScoreboardList;
+		
 		PlayerScoreItem item = scoreBoardItem.GetComponent<PlayerScoreItem>();
         GameObject player = ClientScene.FindLocalObject(playerId);
         if (item != null)
