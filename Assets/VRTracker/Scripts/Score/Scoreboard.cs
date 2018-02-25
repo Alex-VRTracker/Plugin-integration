@@ -82,7 +82,6 @@ public class Scoreboard : NetworkBehaviour
             
             //NetworkServer.Spawn(scoreBoardItem);
         }*/
-        Debug.LogWarning("RPC Adding player " + number + ", " + playersScore[number - 1].scoreText.transform.gameObject.activeSelf);
 
         //PlayerScoreItem[] playerline = GetComponentsInChildren<PlayerScoreItem>();
         for (int i = 0; i < number && i < playersScore.Length; i++)
@@ -98,13 +97,10 @@ public class Scoreboard : NetworkBehaviour
 
     public void AddPlayer(int number, NetworkInstanceId nId)
     {
-        Debug.LogWarning("Adding player " + number + ", " + nId);
-        Debug.LogWarning("playerLine "  + playersLine);
 
         //PlayerScoreItem[] playerline = GetComponentsInChildren<PlayerScoreItem>();
         if (playersScore.Length >= number)
         {
-            Debug.LogWarning("Score player " + playersScore[number - 1]);
 
             if (playersScore[number - 1] != null)
                 playersLine[nId] = playersScore[number - 1];
