@@ -11,6 +11,38 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1903625307236530}
   m_IsPrefabParent: 1
+--- !u!1 &1028273214895914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4886258036339134}
+  - component: {fileID: 114574968423905178}
+  m_Layer: 0
+  m_Name: Tag_Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1423284863394352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4448946835463554}
+  - component: {fileID: 114342483821191532}
+  m_Layer: 0
+  m_Name: Tag_Head
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1903625307236530
 GameObject:
   m_ObjectHideFlags: 0
@@ -38,9 +70,37 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4448946835463554}
+  - {fileID: 4886258036339134}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4448946835463554
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1423284863394352}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4442430545188724}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4886258036339134
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1028273214895914}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4442430545188724}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114227343335427276
 MonoBehaviour:
@@ -55,6 +115,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JsonFilePath: Player_Data.json
   assignationDelay: 10
+--- !u!114 &114342483821191532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1423284863394352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4b89a5f8b9c849b595b98387d4d31ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagType: 0
+  orientationEnabled: 0
+  status: 
+  battery: 0
+  UID: Enter Your Tag UID
+  displayLog: 0
+  DeadReckogningDelayMs: 100
+  smoothingIntensity: 0.9
+  enablePositionSmoothing: 1
+  enableOrientationSmoothing: 0
+  offset: {x: 0, y: 0, z: 0}
 --- !u!114 &114435685311450398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -70,6 +152,28 @@ MonoBehaviour:
   autoAssignation: 1
   isSpectator: 0
   RoomNorthOffset: 0
+--- !u!114 &114574968423905178
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1028273214895914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4b89a5f8b9c849b595b98387d4d31ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagType: 1
+  orientationEnabled: 1
+  status: 
+  battery: 0
+  UID: Enter Your Tag UID
+  displayLog: 0
+  DeadReckogningDelayMs: 100
+  smoothingIntensity: 0.9
+  enablePositionSmoothing: 1
+  enableOrientationSmoothing: 0
+  offset: {x: 0, y: 0, z: 0}
 --- !u!114 &114849337856739472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -90,7 +194,7 @@ MonoBehaviour:
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
   m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 1151017805802450, guid: dcadca34b813c734dbdd9fbcc3c15c4f,
+  m_PlayerPrefab: {fileID: 1901484748006730, guid: 5ee49c0c1547cf041add9b6207a0b0f7,
     type: 2}
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 0

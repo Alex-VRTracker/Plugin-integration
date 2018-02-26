@@ -87,11 +87,11 @@ public class VRTracker : MonoBehaviour {
         myws.SendAsync("cmd=allavailabletag", OnSendComplete);
 
         //Ask the server IP
-        askServerIP();
+        AskServerIP();
 
         foreach (VRTrackerTag tag in tags) {
 			if(tag.UID != "Enter Your Tag UID")
-				assignTag(tag.UID);
+				AssignTag(tag.UID);
 		}
 
 		getMagneticOffset ();
@@ -154,15 +154,15 @@ public class VRTracker : MonoBehaviour {
 					if (tag.UID == uid) {
 						if (orientationUpdated) {
 							if (orientationQuaternion)
-								tag.updateOrientationQuat (orientation_quat);
+								tag.UpdateOrientationQuat (orientation_quat);
 							else
-								tag.updateOrientation (orientation);
+								tag.UpdateOrientation (orientation);
 						}
 						if (positionUpdated) {
 							if (!timestampUpdated)
-								tag.updatePosition (position);
+								tag.UpdatePosition (position);
 							else
-								tag.updatePosition (position, timestamp);
+								tag.UpdatePosition (position, timestamp);
 
 						}
 					}
@@ -187,7 +187,7 @@ public class VRTracker : MonoBehaviour {
 				}
 			}
 			if (uid != null && command != null)
-				receiveSpecialCommand (uid, command);
+				ReceiveSpecialCommand (uid, command);
 
 		} else if (e.Data.Contains ("cmd=tag")) { // Tag V2 data 
 			string[] datas = e.Data.Split ('&');
@@ -203,7 +203,7 @@ public class VRTracker : MonoBehaviour {
 
 			}
 			if (uid != null)
-				receiveSpecialData(uid, e.Data);
+				ReceiveSpecialData(uid, e.Data);
 		}
 		else if (e.Data.Contains ("cmd=taginfos")) {
 
@@ -245,7 +245,7 @@ public class VRTracker : MonoBehaviour {
 				myws.SendAsync ("cmd=mac&uid=" + UserUID, OnSendComplete);
 				foreach (VRTrackerTag tag in tags) {
 					if (tag.UID != "Enter Your Tag UID")
-						assignTag (tag.UID);
+						AssignTag (tag.UID);
 				}
 			}
 		} else if (e.Data.Contains ("function=needaddress")) {
@@ -270,7 +270,7 @@ public class VRTracker : MonoBehaviour {
 			foreach (string data in datas) {
 				string[] datasplit = data.Split ('=');
 				if (datasplit [0].Contains ("tag")) {
-					VRTrackerTagAssociation.instance.addAvailableTag (datasplit [1]);
+					VRTrackerTagAssociation.instance.AddAvailableTag (datasplit [1]);
 				}
 			}
 		} else if (e.Data.Contains ("cmd=reoriente")) {
@@ -393,7 +393,7 @@ public class VRTracker : MonoBehaviour {
 	 * Asks the gateway to assign a specific Tag to this device.  
 	 * Assigned Tags will then send their position to this device.
 	 */
-	public void assignTag(string TagID){
+	public void AssignTag(string TagID){
 		myws.SendAsync ("cmd=tagassign&uid=" + TagID, OnSendComplete);
     }
 
@@ -401,15 +401,15 @@ public class VRTracker : MonoBehaviour {
 	 * Asks the gateway to assign a Tag to this device.  
 	 * Assigned Tags will then send their position to this device.
 	 */
-	public void assignATag(){
-		myws.SendAsync ("cmd=assignatag", OnSendComplete);
+	public void AssignATag(){
+		myws.SendAsync ("cmd=AssignATag", OnSendComplete);
 	}
 
 	/* 
 	 * Asks the gateway to UNassign a specific Tag from this device.  
 	 * You will stop receiving updates from this Tag.
 	 */
-	public void unAssignTag(string TagID){
+	public void UnassignTag(string TagID){
 		myws.SendAsync("cmd=tagunassign&uid=" + TagID, OnSendComplete);
 	}
 
@@ -417,14 +417,14 @@ public class VRTracker : MonoBehaviour {
 	 * Asks the gateway to UNassign all Tags from this device.  
 	 * You will stop receiving updates from any Tag.
 	 */
-	public void unAssignAllTags(){
+	public void UnassignAllTags(){
 		myws.SendAsync("cmd=tagunassignall", OnSendComplete);
 	}
 
 	/* 
 	 * Ask for informations on a specific Tag
 	 */
-	public void getTagInformations(string TagID){
+	public void GetTagInformations(string TagID){
 		myws.SendAsync("cmd=taginfos&uid=" + TagID, OnSendComplete);
 	}
 
@@ -448,7 +448,7 @@ public class VRTracker : MonoBehaviour {
 	 * G (0-255)
 	 * B (0-255)
 	 */
-	public void setTagColor(string TagID, int red, int green, int blue){
+	public void SetTagColor(string TagID, int red, int green, int blue){
 		myws.SendAsync("cmd= color&r=" + red + "&g=" + green + "&b=" + blue + "&uid=" + TagID, OnSendComplete);
 	}
 
@@ -456,7 +456,7 @@ public class VRTracker : MonoBehaviour {
 	/* 
 	 * Send special command to a Tag
 	 */
-	public void sendTagCommand(string TagID, string command){
+	public void SendTagCommand(string TagID, string command){
 		Debug.Log("VR Tracker : " + command);
 		myws.SendAsync("cmd=specialcmd&uid=" + TagID + "&data=" + command, OnSendComplete);
 	}
@@ -464,7 +464,7 @@ public class VRTracker : MonoBehaviour {
 	/* 
 	 * Send special command to the gateway that will be broadcast to all others users
 	 */
-	public void sendSpecialData(string command)
+	public void SendSpecialData(string command)
 	{
 		Debug.Log("VR Tracker : " + command);
 		myws.SendAsync("cmd=specialdata&data="+ command, OnSendComplete);
@@ -475,12 +475,12 @@ public class VRTracker : MonoBehaviour {
 	 * Send User device battery level to the Gateway
 	 * battery (0-100)
 	 */
-	public void sendUserBattery(int battery){
+	public void SendUserBattery(int battery){
 		myws.SendAsync("cmd=usrbattery&battery=" + battery, OnSendComplete);
 	}
 
 	// For Multiplayer, we ask all other user if the know the Server IP
-	public void askServerIP(){
+	public void AskServerIP(){
 		Debug.Log ("Is WS connected " + connected.ToString ());
         myws.SendAsync("cmd=specialdata&function=needaddress", OnSendComplete);
 
@@ -532,7 +532,7 @@ public class VRTracker : MonoBehaviour {
 	/*
 	 * Executed on reception of a special command 
 	 */
-	public void receiveSpecialCommand(string TagID, string data){
+	public void ReceiveSpecialCommand(string TagID, string data){
         // TODO: You can do whatever you wants with the special command, have fun !
 		bool tagFound = false;
 		// Search for the Tag the special command is sent to
@@ -541,15 +541,15 @@ public class VRTracker : MonoBehaviour {
 			if (tag.UID == TagID)
 			{
 				tagFound = true;
-				tag.onSpecialCommand(data);
+				tag.OnSpecialCommand(data);
 			}
 		}
 		// If the Tag was not found, the command is sent to all Tags
 		if (!tagFound) {
-			/*foreach (VRTrackerTag tag in tags) {
-				tag.onSpecialCommandToAll (TagID, data);
-			}*/
-			onAssociation (TagID, data);
+			foreach (VRTrackerTag tag in tags) {
+				tag.OnSpecialCommandToAll (TagID, data);
+			}
+			//onAssociation (TagID, data);
 		}
 		
 	}
@@ -559,7 +559,7 @@ public class VRTracker : MonoBehaviour {
 	/*
 	 * Executed on reception of a special data 
 	 */
-	public void receiveSpecialData(string TagID, string data){
+	public void ReceiveSpecialData(string TagID, string data){
 		// TODO: You can do whatever you wants with the special command, have fun !
 
 		bool tagFound = false;
@@ -569,7 +569,7 @@ public class VRTracker : MonoBehaviour {
 			if (tag.UID == TagID)
 			{
 				tagFound = true;
-				tag.onTagData(data);
+				tag.OnTagData(data);
 			}
 		}
 	}
@@ -698,14 +698,14 @@ public class VRTracker : MonoBehaviour {
 			if (VRTrackerTagAssociation.instance.prefabAssociation.TryGetValue(prefabName, out tagAssociation))
 			{
 				tagAssociation.tagID = tagUID;
-                //assignTag(tagUID);
+                //AssignTag(tagUID);
                 return true;
 			}
 		}
 		return false;
 	}
 
-	public bool isAssigned()
+	public bool IsAssigned()
 	{
 		return assignationComplete;
 	}
@@ -716,8 +716,8 @@ public class VRTracker : MonoBehaviour {
 		VRTrackerTagAssociation.instance.SaveAssociation ();
 	}
 
-	public void askForServer(){
-		askServerIP ();
+	public void AskForServer(){
+		AskServerIP ();
 	}
 
 	// Ask the gateway for the rotation offset between true magnetic North and room forward axis (Y in VR Tracker coordinates, Z in Unity coordinates)
@@ -729,14 +729,14 @@ public class VRTracker : MonoBehaviour {
 		if (data.Contains ("buttonon")){
             //Update the assignation
 
-            foreach (KeyValuePair<string, VRTrackerAssociation> kvp in VRTrackerTagAssociation.instance.prefabAssociation) {
+            /*foreach (KeyValuePair<string, VRTrackerAssociation> kvp in VRTrackerTagAssociation.instance.prefabAssociation) {
                 if (kvp.Value.isWaitingForAssignation) {
                     kvp.Value.assign (tagID);
                     //Ask for the tag assignation
-                    //assignTag(tagID);
+                    //AssignTag(tagID);
 					VRTrackerTagAssociation.instance.isWaitingForAssociation = false;
 				}
-			}
+			}*/
 		}
 	}
 		

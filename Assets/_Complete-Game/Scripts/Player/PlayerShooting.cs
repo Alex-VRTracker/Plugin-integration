@@ -33,6 +33,8 @@ namespace CompleteProject
             gunLight = GetComponent<Light> ();
             //faceLight = GetComponentInChildren<Light> ();
 
+            if(VRTracker.instance != null && VRTracker.instance.getTag(VRTracker.TagType.Gun))
+                vrGun = VRTracker.instance.getTag(VRTracker.TagType.Gun);
             // Callback for Local layer, not server
             /*if (vrGun)
             {
@@ -135,7 +137,7 @@ namespace CompleteProject
                     if (shootingTarget != null)
                     {
                         // ... the enemy should take damage.
-                        if (vrGun.transform.parent.GetComponent<NetworkShoot>().isLocalPlayer)
+                        if (vrGun != null && transform.parent.parent.GetComponent<NetworkShoot>().isLocalPlayer)
                         {
                             //shootingTarget.ImReady();
                             score = -1;

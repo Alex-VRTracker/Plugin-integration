@@ -100,6 +100,14 @@ public class VRTrackerTag : MonoBehaviour {
     private int aPLCount = 0;
     private bool isAPL = false;
 
+    protected void Awake()
+    {
+        positionSpeeds = new Vector3[2];
+        positions = new Queue<KeyValuePair<long, Vector3>>();
+
+        orientationSpeeds = new Vector3[2];
+        orientations = new Queue<KeyValuePair<long, Vector3>>();
+    }
 
     // Use this for initialization
     protected virtual void Start () {
@@ -108,18 +116,12 @@ public class VRTrackerTag : MonoBehaviour {
 
 		netId = transform.GetComponentInParent<NetworkIdentity> ();
 		if (netId != null && !netId.isLocalPlayer) {
-			return;
+            Debug.Log("TAG " + UID + " Not local player");
+
+            return;
 		} else {
-            VRTracker.instance.SetLocalPlayer(transform.parent.gameObject);
-            if (netId.isServer)
-            {
-                if (tagType == VRTracker.TagType.Head)
-                {
-                    //PlayerManager.instance.AddPlayer(netId.connectionToClient.address);
-                    //PlayerManager.instance.AddPlayerScore(transform.parent.gameObject);
-					Debug.Log("New tag head");
-                }
-            }
+            //VRTracker.instance.SetLocalPlayer(transform.parent.gameObject);
+            Debug.Log("TAG " + UID + " IS local player");
         }
 
         startTimestamp = System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
@@ -135,7 +137,7 @@ public class VRTrackerTag : MonoBehaviour {
 
         VRTracker.instance.AddTag (this);
 		//Try to assign automatically the tag
-		tryAssignToPrefab ();
+		//tryAssignToPrefab ();
 
 		if(UID != "Enter Your Tag UID")
 		{
@@ -403,12 +405,12 @@ public class VRTrackerTag : MonoBehaviour {
 			return tagRotation;
 	}
 
-    public void updatePosition(Vector3 position_, int timestamp)
+    public void UpdatePosition(Vector3 position_, int timestamp)
     {
-        updatePosition(position_);
+        UpdatePosition(position_);
     }
 
-    public void updatePosition(Vector3 position_){
+    public void UpdatePosition(Vector3 position_){
         // PREDICTION
         this.positionReceived = position_;
         
@@ -449,7 +451,7 @@ public class VRTrackerTag : MonoBehaviour {
 	}
 
 	// Update the Oriention from IMU For Tag V1
-	public void updateOrientation(Vector3 neworientation)
+	public void UpdateOrientation(Vector3 neworientation)
 	{
 		Vector3 flippedRotation = neworientation;
 		orientation_ = flippedRotation;
@@ -459,7 +461,7 @@ public class VRTrackerTag : MonoBehaviour {
 		orientationMessageSaved = false;
 	}
 
-	public void updateOrientationAndAcceleration(Vector3 neworientation, Vector3 newacceleration)
+	public void UpdateOrientationAndAcceleration(Vector3 neworientation, Vector3 newacceleration)
 	{
 		Vector3 flippedRotation = new Vector3(-neworientation.z, neworientation.x, neworientation.y);
 		Quaternion quattest = Quaternion.Euler (flippedRotation);
@@ -473,7 +475,7 @@ public class VRTrackerTag : MonoBehaviour {
 	}
 
 	// Update the Oriention from IMU For Tag V2
-	public void updateOrientationQuat(Quaternion neworientation)
+	public void UpdateOrientationQuat(Quaternion neworientation)
 	{
 		orientationUsesQuaternion = true;
 		this.orientation_ = neworientation.eulerAngles;
@@ -482,13 +484,13 @@ public class VRTrackerTag : MonoBehaviour {
 		orientationMessageSaved = false;
 	}
 
-	public void onSpecialCommand(string data){
+	public void OnSpecialCommand(string data){
         commandReceived = true;
 		command = data;
 	}
 
 
-	public void onSpecialCommandToAll(string tagID, string data){
+	public void OnSpecialCommandToAll(string tagID, string data){
 		if (waitingForID && data.Contains ("buttonon")){
 			UID = tagID;
 			IDisAssigned = true;
@@ -496,7 +498,7 @@ public class VRTrackerTag : MonoBehaviour {
 		}
 	}
 
-	public void onTagData(string data){
+	public void OnTagData(string data){
 		//Debug.Log ("TAG: " + data);
 		string[] sensors = data.Split(new string[] {"&s="}, System.StringSplitOptions.RemoveEmptyEntries);
 		for (int i = 1; i < sensors.Length; i++) {
@@ -530,7 +532,7 @@ public class VRTrackerTag : MonoBehaviour {
 				float.TryParse(values ["az"], System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out f);
 				rec_acceleration.z = f;
 
-				updateOrientationAndAcceleration (rec_orientation, rec_acceleration);
+				UpdateOrientationAndAcceleration (rec_orientation, rec_acceleration);
 			}
 
 			// Trackpad
@@ -589,15 +591,15 @@ public class VRTrackerTag : MonoBehaviour {
     		VRTracker.instance.RemoveTag(this);
 	}
 
-	public void assignTag(string tagID)
+	public void AssignTag(string tagID)
 	{
 		UID = tagID;
 		IDisAssigned = true;
 		waitingForID = false;
-		VRTracker.instance.assignTag(tagID);
+		VRTracker.instance.AssignTag(tagID);
 	}
 
-	public void tryAssignToPrefab(){
+	public void TryAssignToPrefab(){
 		//Add tag to the singleton VR Tracker
 		GameObject parent = transform.parent.gameObject;
 		if (parent != null) {
@@ -608,7 +610,7 @@ public class VRTrackerTag : MonoBehaviour {
 					if(VRTrackerTagAssociation.instance != null){
 						string tagID = VRTrackerTagAssociation.instance.getAssociatedTagID (gameObject.name);
 						if (tagID != "") {
-							assignTag (tagID);
+							AssignTag (tagID);
 						}
 						else {
 							Debug.LogError ("ID not valid : " + tagID);

@@ -32,12 +32,42 @@ namespace VRStandardAssets.Intro
 
 			DontDestroyOnLoad (VRTracker.instance);
 			Debug.Log("Instance is spectator :  " + VRTracker.instance.isSpectator);
+            bool assignationSuccess = false;
 
             if (VRTracker.instance.autoAssignation)
             {
+                /*
                 Debug.Log("Loading association");
-                VRTrackerTagAssociation.instance.LoadAssociation();
+                VRTrackerTagAssociation.instance.LoadAssociation();*/
+                Debug.Log("Loading association");
+                if (VRTrackerTagAssociation.instance.LoadAssociation())
+                {
+
+                    /*for (int i = 0; i < 3 && !VRTracker.instance.assignationComplete; i++)
+                    {
+                        if (VRTrackerTagAssociation.instance.TryAutoAssignTag())
+                        {
+                            assignationSuccess = true;
+                            break;
+                        }
+
+                        yield return new WaitForSeconds(1);
+                    }*/
+                    assignationSuccess = VRTrackerTagAssociation.instance.TryAutoAssignTag();
+                    if (!assignationSuccess)
+                    {
+                        m_SliderCroup.hideSkipAssignationSlider();
+                    }
+                    else
+                    {
+                        //TODO: Load next level directly
+                        Debug.Log("Tags where associated from file successfully");
+                        //LevelLoader.instance.LoadLevel(1);
+                    }
+                }
             }
+
+            /*
             if (!VRTrackerTagAssociation.instance.isAssociationLoaded)
             {
                 Debug.LogWarning("hide auto assingation");
@@ -78,13 +108,14 @@ namespace VRStandardAssets.Intro
                     m_SliderCroup.hideSkipAssignationSlider();
                 }
             }
-
+            */
 			#if (UNITY_IOS || UNITY_ANDROID) && !UNITY_EDITOR
 				VRTracker.instance.isSpectator = false;
 				Debug.Log("Setting spectator mode to  :  " + VRTracker.instance.isSpectator);
 		
 			#endif
-			if (!VRTracker.instance.isSpectator)
+            
+            if (!VRTracker.instance.isSpectator)
 			{
 				m_SliderCroup.hideSpectatorMode();
                 Debug.Log("Setting spectator mode to  :  " + VRTracker.instance.isSpectator);
@@ -96,33 +127,38 @@ namespace VRStandardAssets.Intro
 			}
 			Debug.Log("Instance is spectator :  " + VRTracker.instance.isSpectator);
 
+
             // In order, fade in the UI on confirming the use of sliders, wait for the slider to be filled, then fade out the UI.
-            yield return StartCoroutine(m_HowToUseConfirmFader.InteruptAndFadeIn());
-            yield return StartCoroutine(m_SliderCroup.WaitForBarsToFill());
-            //yield return StartCoroutine(m_SliderCroup.WaitForBarsToFill());
-            yield return StartCoroutine(m_HowToUseConfirmFader.InteruptAndFadeOut());
+            if (!assignationSuccess)
+            {
+                yield return StartCoroutine(m_HowToUseConfirmFader.InteruptAndFadeIn());
+                //yield return StartCoroutine(m_SliderCroup.WaitForBarsToFill());
+                yield return StartCoroutine(m_SliderCroup.WaitForBarsToFill());
+                yield return StartCoroutine(m_HowToUseConfirmFader.InteruptAndFadeOut());
+            }
 
 
             // Assign a Tag to each Prefab instance containing a Tag in VR Tracker
-            if (!VRTracker.instance.isAssigned() && !VRTracker.instance.isSpectator)
+            if (!assignationSuccess && !VRTracker.instance.isSpectator)
 			{
 				Debug.Log("Manual assignement ");
 				//Assignement step
-				//foreach (VRTrackerTag tagObject in VRTracker.instance.tags)
-				foreach (KeyValuePair<string, VRTrackerAssociation> prefab in VRTrackerTagAssociation.instance.prefabAssociation)
+				foreach (VRTrackerTag tag in VRTracker.instance.tags)
+				//foreach (KeyValuePair<string, VRTrackerAssociation> prefab in VRTrackerTagAssociation.instance.prefabAssociation)
 				{
 
-					Debug.Log("Assigning Tag to " + prefab.Key);
+					Debug.Log("Assigning Tag to " + tag);
 
 					bool associationFailed = true;
 					while (associationFailed)
 					{
 
-						// Edit shown title to the Prefab name
-						m_AssociationFader.transform.Find("CalibrationInstructions/Title").GetComponentInChildren<Text>().text = "Assign" + prefab.Key;
+                        // Edit shown title to the Prefab name
+                        /*m_AssociationFader.transform.Find("CalibrationInstructions/Title").GetComponentInChildren<Text>().text = "Assign" + prefab.Key;
 
-						// Start assignation
-						yield return StartCoroutine(ShowMenu(m_AssociationFader, prefab.Value));
+
+                        // Start assignation
+                        yield return StartCoroutine(ShowMenu(m_AssociationFader, prefab.Value));
 
 						// Check if timed out and throw an error
 						if (!prefab.Value.isIDAssigned)
@@ -135,10 +171,30 @@ namespace VRStandardAssets.Intro
 							associationFailed = false;
 
 						}
-					}
+                        */
+
+                        // Edit shown title to the Prefab name
+                        m_AssociationFader.transform.Find("CalibrationInstructions/Title").GetComponentInChildren<Text>().text = "Assign " + tag.tagType.ToString();
+
+                        // Start assignation
+                        yield return StartCoroutine(ShowMenu(m_AssociationFader, tag));
+
+                        // Check if timed out and throw an error
+                        if (!tag.IDisAssigned)
+                        {
+                            associationFailed = true;
+                            yield return StartCoroutine(ShowMenu(m_FailedCalibrationFader, m_FailedCalibrationSlider));
+                        }
+                        else
+                        {
+                            associationFailed = false;
+                            tag.AssignTag(tag.UID);
+                        }
+                    }
 
 				}
 			}
+
 			if(!VRTracker.instance.isSpectator)
 			{
 				VRTracker.instance.SaveAssociationTagUser();
@@ -165,8 +221,8 @@ namespace VRStandardAssets.Intro
                 }
             } else {
                 Debug.Log("Starting client");
-                VRTrackerNetwork.instance.networkAddress = VRTracker.instance.serverIp;
-				VRTrackerNetwork.instance.StartClient ();
+                //VRTrackerNetwork.instance.networkAddress = VRTracker.instance.serverIp;
+				//VRTrackerNetwork.instance.StartClient ();
 
                 VRTrackerNetwork.instance.serverBindAddress = VRTracker.instance.serverIp;
                 VRTrackerNetwork.instance.serverBindToIP = true;
