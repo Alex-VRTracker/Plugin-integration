@@ -178,21 +178,6 @@ public class VRTrackerTag : MonoBehaviour {
 				float accOperator = (float)(0.5 * (deltaTimeLateUpdateSinceLastPosition + DeadReckogningDelayMs) * (deltaTimeLateUpdateSinceLastPosition + DeadReckogningDelayMs) / 1000000);
 				float accOperatorLastUpdate = (float)(0.5 * deltaTimeSinceLastFrame * deltaTimeSinceLastFrame / 1000000);
 
-                if((accOperator) > 0)
-                {
-                    if (!isAP || aPCount > 5)
-                        aPCount = 0;
-                    accOperator *= (1 + (5 - aPCount)/10);
-                    aPCount++;
-                }
-                else
-                {
-                    if (isAP || aPCount > 5)
-                        aPCount = 0;
-                    accOperator *= (1 - (5 - aPCount)/10);
-                    aPCount++;
-                }
-
                 // Here is where the magic happens, we calculate the futur position based on Last Late Update position, and futur position based on last message reception
                 Vector3 predictionFromLastUpdate = predictedPosition + (accOperatorLastUpdate * accelerationDropedOverTime + speedDropedOverTime * deltaTimeSinceLastFrame / 1000);// *accOperator;
                 Vector3 predictedPositionFromLastReception = positionsArray[positionsArray.Length - 1].Value + (accOperator * accelerationDropedOverTime + speedDropedOverTime * (deltaTimeLateUpdateSinceLastPosition + DeadReckogningDelayMs) / 1000);//*accOperator; 

@@ -30,8 +30,8 @@ namespace VRStandardAssets.Utils
             float fps = 1.0f / m_DeltaTime;
 
             // Set the displayed value of the fps to be an integer.
-            m_Text.text = Mathf.FloorToInt (fps) + " fps";
-
+            m_Text.text = "FPS: " + Mathf.FloorToInt (fps);
+           // Debug.Log("Current FPS :" + fps);
             // Turn the fps display on and off using the F key.
             if (Input.GetKeyDown (KeyCode.F))
             {
