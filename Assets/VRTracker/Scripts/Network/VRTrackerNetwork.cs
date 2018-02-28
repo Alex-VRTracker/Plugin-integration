@@ -54,7 +54,6 @@ public class VRTrackerNetwork : NetworkManager
 		} else {
 			Debug.LogWarning ("Not local player " + conn.address);
 			PlayerManager.instance.AddPlayer (conn.address);
-
 		}
 		PlayerManager.instance.AddPlayerScore (newPlayer);
 

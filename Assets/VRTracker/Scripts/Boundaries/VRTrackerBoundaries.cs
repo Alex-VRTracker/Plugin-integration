@@ -50,8 +50,11 @@ public class VRTrackerBoundaries : MonoBehaviour {
             else
             {
                 Debug.Log("Looking for player's tag ");
-                VRTracker.instance.OnAddTag += RetrieveNewTag;
+                //VRTracker.instance.OnAddTag += RetrieveNewTag;
                 //localPlayer = VRTracker.instance.GetLocalPlayer();
+                //VRTracker.instance.
+                RetrieveNewTag();
+
             }
             //LookForLocalPlayer();
             //Resize the boundaries
