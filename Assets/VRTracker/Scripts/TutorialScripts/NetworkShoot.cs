@@ -36,7 +36,7 @@ public class NetworkShoot : NetworkBehaviour {
             // Callback for Local layer, not server
             shootingScript.vrGun.OnDown += CmdShoot;
         }*/
-        if (VRTracker.instance != null)
+        if (VRTracker.instance != null && isLocalPlayer)
             vrGun = VRTracker.instance.getTag(VRTracker.TagType.Gun);
 
         if(vrGun != null)

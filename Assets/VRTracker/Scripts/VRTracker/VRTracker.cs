@@ -105,7 +105,7 @@ public class VRTracker : MonoBehaviour {
     // Handler for all messages from the Gateway
     private void OnMessageHandler(object sender, MessageEventArgs e) {
 
-//		Debug.Log (e.Data);
+		Debug.Log (e.Data);
 		if (e.Data.Contains ("cmd=position")) {
 //			Debug.Log (System.DateTime.Now.Millisecond + ", " + e.Data);
 
@@ -535,6 +535,7 @@ public class VRTracker : MonoBehaviour {
 	public void ReceiveSpecialCommand(string TagID, string data){
         // TODO: You can do whatever you wants with the special command, have fun !
 		bool tagFound = false;
+        Debug.Log("Special cmd for " + TagID + ", " + data);
 		// Search for the Tag the special command is sent to
 		foreach (VRTrackerTag tag in tags)
 		{
