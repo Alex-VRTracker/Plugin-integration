@@ -25,15 +25,11 @@ public class VRTrackerBoundariesProximity : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 		if (!player.Equals(null)) {
-			render.sharedMaterial.SetVector ("_PlayerPosition", player.position);
-            render.sharedMaterial.SetVector ("_ControllerPosition", controller.position);
+            if(player != null)
+			    render.sharedMaterial.SetVector ("_PlayerPosition", player.position);
+            if(controller != null)
+                render.sharedMaterial.SetVector ("_ControllerPosition", controller.position);
         }
-        float scaleX = Mathf.Cos(Time.time) * 0.5F + 1;
-        float scaleY = Mathf.Sin(Time.time) * 0.5F + 1;
-        render.material.mainTextureScale = new Vector2(2, 2);
-
-        render.material.SetTextureScale("_MainTex", new Vector2(1f, 1f));
-        //Debug.LogWarning("Material " + render.material.GetTextureScale("_MainTex"));
-
+    
     }
 }
