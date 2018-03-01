@@ -157,8 +157,8 @@ public class PlayerManager : NetworkBehaviour
     public void UpdatePlayerScore(NetworkInstanceId nId, int score)
     {
         Debug.Log("Udpdating player score " + score);
-
-        scoreBoard.SetPlayerScore(nId, score);
+		if(scoreBoard != null)
+        	scoreBoard.SetPlayerScore(nId, score);
     }
 
 }
