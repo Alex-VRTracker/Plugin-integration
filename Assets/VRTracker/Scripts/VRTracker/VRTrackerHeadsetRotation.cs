@@ -24,7 +24,7 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
 
     [Tooltip("The minimum offset in degrees to blink instead of rotating.")]
     public float minOffsetToBLink = 20.0f;
-    public Image img;
+    public VRTrackerScreenFader fader;
 
     /*[Tooltip("The VRTK Headset Fade script to use when fading the headset. If this is left blank then the script will need to be applied to the same GameObject.")]
     public VRTK.VRTK_HeadsetFade headsetFade;
@@ -78,11 +78,16 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
                     previousOffset = destinationOffset;
 
                     destinationOffset = Quaternion.Euler(newRotation);
+                    Debug.Log("Value of offsetY " + offsetY);
                     if(offsetY > minOffsetToBLink)
                     {
+                        Debug.Log("Need blink " );
+
                         t = timeToReachTarget;
-                        StartCoroutine(FadeImage(true));
-                        StartCoroutine(FadeImage(false));
+                        if(fader != null)
+                        {
+                            fader.FadeRotation();
+                        }
                     }
                     else
                     {
@@ -151,33 +156,5 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
 
     }
 
-    IEnumerator FadeImage(bool fadeAway)
-    {
-        if (img != null)
-        {
-            // fade from opaque to transparent
-            if (fadeAway)
-            {
-                // loop over 1 second backwards
-                for (float i = 0.15f; i >= 0; i -= Time.deltaTime)
-                {
-                    // set color with i as alpha
-                    img.color = new Color(1, 1, 1, i);
-                    yield return null;
-                }
-            }
-            // fade from transparent to opaque
-            else
-            {
-                // loop over 1 second
-                for (float i = 0.15f; i <= 1; i += Time.deltaTime)
-                {
-                    // set color with i as alpha
-                    img.color = new Color(1, 1, 1, i);
-                    yield return null;
-                }
-            }
-        
-    }
-    }   
+  
 }

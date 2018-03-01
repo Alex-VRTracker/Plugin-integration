@@ -32,7 +32,8 @@ Shader "Custom/Bondaries" {
 		 uniform float _VisibilityCDistance;
          uniform float _OutlineWidth;
          uniform fixed4 _OutlineColour;
-         
+		 float4 _MainTex_ST;
+
          // Input to vertex shader
          struct vertexInput {
              float4 vertex : POSITION;
@@ -44,14 +45,17 @@ Shader "Custom/Bondaries" {
              float4 position_in_world_space : TEXCOORD0;
              float4 tex : TEXCOORD1;
           };
-          
+		  //material.SetVector("_MainTex_ST", scaleAndOffset);
+		  //float2 scaled_uv = tex.uv * _MainTex_ST.xy + _MainTex_ST.zw;
+
           // VERTEX SHADER
           vertexOutput vert(vertexInput input) 
           {
              vertexOutput output; 
              output.pos =  UnityObjectToClipPos(input.vertex);
              output.position_in_world_space = mul(unity_ObjectToWorld, input.vertex);
-             output.tex = input.texcoord;
+			 //TODO see why we need to multiple texcoord by 3
+             output.tex = input.texcoord*3;
              return output;
           }
   
@@ -61,7 +65,6 @@ Shader "Custom/Bondaries" {
              // Calculate distance to player position
              float dist = distance(input.position_in_world_space, _PlayerPosition);
 			 float cDist = distance(input.position_in_world_space, _ControllerPosition);
-
               // Return appropriate colour
              if (dist < _VisibilityDistance || cDist < _VisibilityCDistance) {
                 return tex2D(_MainTex, float4(input.tex)); // Visible
