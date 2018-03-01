@@ -65,18 +65,21 @@ public class WaveManager : NetworkBehaviour
 
     private void Update()
     {
-        if(!VerifyTimer() || !AliveEnemy())
+        if (isServer)
         {
-            ManageEndOfWave();
-        }
-        if (isCounting)
-        {
-            //Make the timer count and stop if it reaches 0
-            time -= Time.deltaTime;
-            if (time <= 0)
+            if (!VerifyTimer() || !AliveEnemy())
             {
-                time = 0;
-                isCounting = false;
+                ManageEndOfWave();
+            }
+            if (isCounting)
+            {
+                //Make the timer count and stop if it reaches 0
+                time -= Time.deltaTime;
+                if (time <= 0)
+                {
+                    time = 0;
+                    isCounting = false;
+                }
             }
         }
     }
@@ -102,13 +105,22 @@ public class WaveManager : NetworkBehaviour
         //PickupSpawner.instance.TryHealthSpawn();
         //waveInProgress = false;
 
-        Stop();
-        //Start the next wave
-        StartCoroutine(WaitForWellDone(3f));
-        if(currentWave >= waveList.Count)
+        if (isServer)
         {
-            PlayerManager.instance.RestartGame();
+            Stop();
+            //Start the next wave
+            StartCoroutine(WaitForWellDone(3f));
+            if (currentWave >= waveList.Count)
+            {
+                PlayerManager.instance.RestartGame();
+            }
         }
+        else
+        {
+            StopTimer();
+            StartCoroutine(WaitForWellDone(3f));
+        }
+
     }
 
     /// <summary>
