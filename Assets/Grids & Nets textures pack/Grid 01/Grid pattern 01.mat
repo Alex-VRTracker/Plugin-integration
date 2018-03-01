@@ -23,7 +23,7 @@ Material:
         m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d675874bc322bcd4bb6574f7f983c2d8, type: 3}
+        m_Texture: {fileID: 2800000, guid: fbdc4c0cf18e904479936619abe7a89b, type: 3}
         m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -34,7 +34,7 @@ Material:
     - _VisibilityDistance: 2
     m_Colors:
     - _Color: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 1}
-    - _ControllerPosition: {r: -1.7271197, g: 1.0794417, b: 3.4091287, a: 0}
+    - _ControllerPosition: {r: -1.7271197, g: 0.99, b: 3.4091287, a: 0}
     - _OutlineColour: {r: 0.82745105, g: 0.82745105, b: 0.82745105, a: 1}
-    - _PlayerPosition: {r: -1.8966963, g: 1.0180553, b: 2.536588, a: 0}
+    - _PlayerPosition: {r: -0.31, g: 1.47, b: 3.98, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
