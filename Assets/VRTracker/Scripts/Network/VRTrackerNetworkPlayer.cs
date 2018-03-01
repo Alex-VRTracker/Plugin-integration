@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class VRTrackerNetworkPlayer : NetworkBehaviour
 {
 
+    private NetworkTransformChild[] ntc;
 	// Use this for initialization
 	void Start () {
         if (isServer)
@@ -13,11 +14,15 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
             VRTrackerNetwork.instance.players.Add(transform.gameObject);
             Debug.Log("Network player ");
         }
+        ntc = gameObject.GetComponents<NetworkTransformChild>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+        for (int i = 0; i < ntc.Length; i++)
+        {
+            Debug.Log("Target " + ntc[i].target + "," + ntc[i].targetSyncPosition + ", " + ntc[i].target.transform.position);
+        }
 	}
 
     public override void OnStartLocalPlayer()
