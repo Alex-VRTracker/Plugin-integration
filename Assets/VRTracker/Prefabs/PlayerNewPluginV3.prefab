@@ -471,8 +471,8 @@ GameObject:
   - component: {fileID: 4725856386992686}
   - component: {fileID: 114517926580757148}
   - component: {fileID: 114832328725991048}
-  - component: {fileID: 114604996875323430}
   - component: {fileID: 114267072697386524}
+  - component: {fileID: 114604996875323430}
   - component: {fileID: 114901307656723262}
   - component: {fileID: 54892926313479744}
   - component: {fileID: 136909427299012912}
@@ -1306,7 +1306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 4067757413534658}
-  m_ChildIndex: 1
+  m_ChildIndex: 0
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
@@ -1634,7 +1634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 4410256180296444}
-  m_ChildIndex: 0
+  m_ChildIndex: 1
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
