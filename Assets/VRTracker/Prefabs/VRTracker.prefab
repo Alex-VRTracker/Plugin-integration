@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UserUID: e91b734c-e698-5336-b76f-88c8532f1a1f
-  autoAssignation: 0
-  isSpectator: 1
+  autoAssignation: 1
+  isSpectator: 0
   RoomNorthOffset: 208
 --- !u!114 &114574968423905178
 MonoBehaviour:
