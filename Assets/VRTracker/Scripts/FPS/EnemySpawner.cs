@@ -42,12 +42,13 @@ public class EnemySpawner : NetworkBehaviour
 
     public void SetSpawnRate(float newRate)
     {
+        Debug.Log("Spawn rate " + newRate);
         spawnRate = newRate;
     }
 
     private void Spawn(int currentWave = 0)
     {
-        if (this != null && !isServer)
+        if (this != null && isServer)
         {
             Debug.Log("enemylist " + enemyList.Count);
             
@@ -72,7 +73,6 @@ public class EnemySpawner : NetworkBehaviour
         }
     }
 
-    [Server]
     public void SpawnWave(int enemyNumber)
     {
         if (enemyNumber > 0)
@@ -95,7 +95,6 @@ public class EnemySpawner : NetworkBehaviour
         }
     }
 
-    [Server]
     private int DetermineSpawnPt()
     {
         int randomIndex = Random.Range(0, spawnPoints.Count);

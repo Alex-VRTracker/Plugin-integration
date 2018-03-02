@@ -78,7 +78,6 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
                     previousOffset = destinationOffset;
 
                     destinationOffset = Quaternion.Euler(newRotation);
-                    Debug.Log("Value of offsetY " + offsetY);
                     if(Mathf.Abs(offsetY) > minOffsetToBLink)
                     {
                         Debug.Log("Need blink " );

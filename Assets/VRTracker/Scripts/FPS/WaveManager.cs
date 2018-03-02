@@ -197,7 +197,7 @@ public class WaveManager : NetworkBehaviour
     /// </summary>
     private void StartWave()
     {
-        Debug.Log("Start wave" + currentWave);
+        Debug.Log("Start wave " + currentWave);
         if (currentWave == waveList.Count)
         {
             //restart game

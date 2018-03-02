@@ -12,6 +12,8 @@ public class VRTrackerScreenFader : MonoBehaviour
     public float fadeSpeed = 1.5f;
     public bool sceneStarting = true;
     public bool fading = false;
+    public float fadeDuration = 1f;
+    private float startTime;
 
     void Awake()
     {
@@ -39,7 +41,13 @@ public class VRTrackerScreenFader : MonoBehaviour
     void FadeToBlack()
     {
         // Lerp the colour of the image between itself and black.
-        imageFaded.color = Color.Lerp(imageFaded.color, Color.black, fadeSpeed * Time.deltaTime);
+        Debug.Log("Fading duration " +  Time.deltaTime);
+        Debug.Log("Fading a " + imageFaded.color.a);
+
+        //imageFaded.color = Color.Lerp(imageFaded.color, Color.black, fadeSpeed * Time.deltaTime);
+
+        Debug.Log("Fading after " + imageFaded.color.a);
+
     }
 
 
@@ -77,16 +85,18 @@ public class VRTrackerScreenFader : MonoBehaviour
                 SceneManager.LoadScene(SceneNumber);
                 yield break;
             }
-            else
+            /*else
             {
                 yield return null;
-            }
+            }*/
+            //yield return WaitForSeconds(0.1f);
         } while (true);
     }
 
     public void EndScene(int SceneNumber)
     {
         sceneStarting = false;
+        //startTime = Time.deltaTime;
         StartCoroutine("EndSceneRoutine", SceneNumber);
     }
 
@@ -99,9 +109,10 @@ public class VRTrackerScreenFader : MonoBehaviour
         {
             // Start fading towards black.
             FadeToBlack();
+            Debug.Log("Fading to black");
 
             // If the screen is almost black...
-            if (imageFaded.color.a >= 0.95f)
+            if (imageFaded.color.a >= 0.95f && startTime < fadeDuration)
             {
                 yield break;
             }
@@ -115,6 +126,7 @@ public class VRTrackerScreenFader : MonoBehaviour
     public void FadeRotation()
     {
         sceneStarting = false;
+        startTime = Time.deltaTime;
         StartCoroutine("RotationFadeRoutine");
     }
 

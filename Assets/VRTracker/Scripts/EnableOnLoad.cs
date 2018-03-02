@@ -17,7 +17,7 @@ public class EnableOnLoad : MonoBehaviour
     protected virtual void Start()
     {
 
-        if (transform.parent.GetComponent<NetworkIdentity>() != null && !transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+        if (transform.GetComponent<NetworkIdentity>() != null && !transform.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
             Debug.Log("Disable Cam");
             Camera[] cams = GetComponentsInChildren<Camera>();
@@ -44,7 +44,7 @@ public class EnableOnLoad : MonoBehaviour
         else
         {
             Debug.Log("Enable Cam");
-            transform.eulerAngles.Set(transform.eulerAngles.x, 0, transform.eulerAngles.z);
+            //transform.eulerAngles.Set(transform.eulerAngles.x, 0, transform.eulerAngles.z);
 
             Camera[] cams = GetComponentsInChildren<Camera>();
             foreach (Camera cam in cams)
@@ -67,7 +67,7 @@ public class EnableOnLoad : MonoBehaviour
 
             }
 
-            NetworkIdentity nId = transform.parent.GetComponent<NetworkIdentity>();
+            NetworkIdentity nId = transform.GetComponent<NetworkIdentity>();
             if (nId != null && nId.isServer)
             {
                 Debug.LogWarning("Adding " + nId.connectionToClient.address);
@@ -80,7 +80,7 @@ public class EnableOnLoad : MonoBehaviour
         //Disable mesh
         if (controllerMesh)
         {
-            NetworkIdentity netId = transform.GetComponentInParent<NetworkIdentity>();
+            NetworkIdentity netId = transform.GetComponent<NetworkIdentity>();
             if ((netId != null && netId.isLocalPlayer) || netId == null)
             {
                 controllerMesh.enabled = false;
@@ -102,7 +102,7 @@ public class EnableOnLoad : MonoBehaviour
 
     private void DisableUI()
     {
-        if (transform.parent.GetComponent<NetworkIdentity>() != null && !transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+        if (transform.GetComponent<NetworkIdentity>() != null && !transform.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
             foreach (Transform trans in gameObject.GetComponentsInChildren<Transform>())
             {

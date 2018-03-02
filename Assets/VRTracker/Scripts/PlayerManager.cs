@@ -54,7 +54,6 @@ public class PlayerManager : NetworkBehaviour
 
     }
 
-    [Server]
     public void SetPlayerReady(string ip)
     {
         //arePlayersReady = true;
@@ -69,7 +68,6 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [Server]
     public void RestartGame()
     {
         startGame = false;
@@ -78,7 +76,6 @@ public class PlayerManager : NetworkBehaviour
         target.ResetTarget();
     }
 
-    [Server]
     public void AddPlayer(string ip)
     {
         Debug.LogWarning("Adding player " + ip);
@@ -88,7 +85,6 @@ public class PlayerManager : NetworkBehaviour
         alivePlayer++;
     }
 
-    [Server]
     public void AddPlayerScore(GameObject player)
     {
         NetworkIdentity nId = player.GetComponent<NetworkIdentity>();
@@ -102,7 +98,6 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [Server]
     public void RemovePlayer(string ip)
     {
         if (playerReadyState[ip])
@@ -117,7 +112,6 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [Server]
     public void UpdateGameState()
     {
         Debug.LogWarning("Updating ready game " + playersReady + "/" + playerNumber);
@@ -134,7 +128,6 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [Server]
     public void RespawnPlayer()
     {
         Debug.LogWarning("Respawming a player " + alivePlayer + "/" + playerNumber);
@@ -142,7 +135,6 @@ public class PlayerManager : NetworkBehaviour
 
     }
 
-    [Server]
     public void DeadPlayer()
     {
         Debug.LogWarning("Dead player " + alivePlayer + "/" + playerNumber);
@@ -153,7 +145,6 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [Server]
     public void UpdatePlayerScore(NetworkInstanceId nId, int score)
     {
         Debug.Log("Udpdating player score " + score);
