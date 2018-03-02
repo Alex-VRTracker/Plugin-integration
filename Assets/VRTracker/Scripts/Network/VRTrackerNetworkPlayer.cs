@@ -19,10 +19,7 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        for (int i = 0; i < ntc.Length; i++)
-        {
-            Debug.Log("Target " + ntc[i].target + "," + ntc[i].targetSyncPosition + ", " + ntc[i].target.transform.position);
-        }
+
 	}
 
     public override void OnStartLocalPlayer()

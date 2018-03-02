@@ -30,6 +30,7 @@ public class VRTrackerFollowTag : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Debug.LogWarning("Position ");
 
         NetIdent = GetComponentsInParent<NetworkIdentity>()[0];
         if (NetIdent != null && !NetIdent.isLocalPlayer)
