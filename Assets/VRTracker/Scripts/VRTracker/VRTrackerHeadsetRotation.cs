@@ -176,6 +176,8 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
                 yield return null;
             }
         }*/
+        yield return null;
+
     }
-    
+
 }
