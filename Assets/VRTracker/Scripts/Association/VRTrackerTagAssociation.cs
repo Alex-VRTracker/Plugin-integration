@@ -279,13 +279,16 @@ public class VRTrackerTagAssociation : MonoBehaviour {
     // Try to assign the Tag UID from the Player file
     public bool TryAutoAssignTag()
     {
-
+        Debug.LogWarning("Hello");
+        Debug.Log("Number of tracked element " + VRTracker.instance.tags.Count);
         Dictionary<VRTrackerTag, string> tagToAssign = new Dictionary<VRTrackerTag, string>();
         bool allTagAreInJSONList = true;
 
         // Check if the Tags to assign are all in the JSON file
         foreach (VRTrackerTag tag in VRTracker.instance.tags)
         {
+            Debug.LogWarning("Tag type : " + tag.GetType());
+
             if (!tag.IDisAssigned)
             {
 
@@ -296,6 +299,7 @@ public class VRTrackerTagAssociation : MonoBehaviour {
                     if (playerAssociation.KeyAtIndex(i) == tag.tagType.ToString())
                     {
                         tagToAssign.Add(tag, playerAssociation[playerAssociation.KeyAtIndex(i)]);
+                        Debug.LogWarning("Tag to assign : " + tag);
                         tagFoundinJson = true;
                     }
                 }
