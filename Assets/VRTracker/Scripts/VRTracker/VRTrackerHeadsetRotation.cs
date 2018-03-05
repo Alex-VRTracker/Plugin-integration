@@ -153,6 +153,7 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
     
     IEnumerator FadeImage(bool fadeAway)
     {
+        /*
         // fade from opaque to transparent
         if (fadeAway)
         {
@@ -174,7 +175,7 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
                 img.color = new Color(1, 1, 1, i);
                 yield return null;
             }
-        }
+        }*/
     }
     
 }

@@ -23,8 +23,10 @@ public class VRTrackerBoundariesProximity : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!player.Equals(null)) {
-			render.sharedMaterial.SetVector ("_PlayerPosition", player.position);
-            render.sharedMaterial.SetVector ("_ControllerPosition", controller.position);
+            if (player != null)
+                render.sharedMaterial.SetVector("_PlayerPosition", player.position);
+            if (controller != null)
+                render.sharedMaterial.SetVector("_ControllerPosition", controller.position);
         }
     }
 }
