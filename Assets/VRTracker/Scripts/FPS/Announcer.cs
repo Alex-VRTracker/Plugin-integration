@@ -35,9 +35,10 @@ public class Announcer : NetworkBehaviour
         //cam = Camera.main.gameObject
         if(this != null)
         {
-            if (!VRTracker.instance.isSpectator)
-                currentText = VRTracker.instance.GetLocalPlayer().transform.Find("Player").GetComponentInChildren<Text>();
 
+            Debug.Log("Player " + VRTracker.instance.GetLocalPlayer().transform.GetComponentInChildren<Camera>().GetComponentInChildren<Text>());
+            if (!VRTracker.instance.isSpectator)
+                currentText = VRTracker.instance.GetLocalPlayer().transform.GetComponentInChildren<Camera>().GetComponentInChildren<Text>();
         }
 
     }
@@ -66,7 +67,8 @@ public class Announcer : NetworkBehaviour
         if (!VRTracker.instance.isSpectator)
         {
             messageList[0] = message;
-            currentText.text = message;
+            if(currentText != null)
+                currentText.text = message;
         }
     }
 
@@ -83,7 +85,8 @@ public class Announcer : NetworkBehaviour
         if (!VRTracker.instance.isSpectator)
         {
             messageList.Remove(messageList[0]);
-            currentText.text = "";
+            if (currentText != null)
+                currentText.text = "";
             if (messageList.Count == 0)
             {
                 hasMessage = false;

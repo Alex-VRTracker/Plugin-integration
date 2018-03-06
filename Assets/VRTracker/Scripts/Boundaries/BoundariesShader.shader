@@ -51,7 +51,9 @@ Shader "Custom/Bondaries" {
              vertexOutput output; 
              output.pos =  UnityObjectToClipPos(input.vertex);
              output.position_in_world_space = mul(unity_ObjectToWorld, input.vertex);
-             output.tex = input.texcoord;
+             //output.tex = input.texcoord;
+			 //TODO see why we need to multiple texcoord by 3 
+			 output.tex = input.texcoord * 3;
              return output;
           }
   

@@ -108,7 +108,6 @@ public class VRTrackerTag : MonoBehaviour {
         orientationSpeeds = new Vector3[2];
         orientations = new Queue<KeyValuePair<long, Vector3>>();
 
-        VRTracker.instance.AddTag(this);
 
     }
 
@@ -138,10 +137,11 @@ public class VRTrackerTag : MonoBehaviour {
 		orientationSpeeds = new Vector3[2];
 		orientations = new Queue<KeyValuePair<long, Vector3>>();
 
-		//Try to assign automatically the tag
-		//tryAssignToPrefab ();
+        //Try to assign automatically the tag
+        //tryAssignToPrefab ();
+        VRTracker.instance.AddTag(this);
 
-		if(UID != "Enter Your Tag UID")
+        if (UID != "Enter Your Tag UID")
 		{
 			IDisAssigned = true;
 		}
