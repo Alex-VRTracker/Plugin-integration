@@ -176,7 +176,10 @@ public class WaveManager : NetworkBehaviour
         {
             //when the countdown is over, start the enmy wave
             if(currentWave < waveList.Count)
+            {
+                announcer.AddMessage("Wave " + (currentWave + 1) + " starting !");
                 StartWave();
+            }
         }
     }
 
