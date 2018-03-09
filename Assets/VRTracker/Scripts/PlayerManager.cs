@@ -41,7 +41,7 @@ public class PlayerManager : NetworkBehaviour
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && !startGame)
         {
             Debug.Log("Starting Game");
             if(playerNumber > 0)
