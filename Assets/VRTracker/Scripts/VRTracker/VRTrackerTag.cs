@@ -6,9 +6,12 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 
 public class VRTrackerTag : MonoBehaviour {
-
+    /* VR Tracker
+     * This script handle all the interaction with a tag
+     * You need to add this component to a child object of VR Tracker depending on the number of tracked object you want
+     */
     [Tooltip("Set the type of Tag to access it later. Each type must only be used once.")]
-    public VRTracker.TagType tagType;
+    public VRTracker.TagType tagType; // The tag type is used to get the tag association across multiple scene and player avatar
 
     // Button value saved here for VRTK
     [System.NonSerialized] public bool triggerPressed = false;
@@ -39,8 +42,6 @@ public class VRTrackerTag : MonoBehaviour {
 
 	protected Vector3 tagRotation;
 
-	//public Vector3 orientationOffset; // Offset to apply
-	//public Vector3 EyeTagOffset; // Difference between tag and eye position in real world
 	public bool orientationEnabled = true;
 	public string status;   
 	public int battery;
@@ -95,10 +96,7 @@ public class VRTrackerTag : MonoBehaviour {
 	private Vector3 lastFrameOrientationReceived;
     public Vector3 offset;
 	private NetworkIdentity netId;
-    private int aPCount = 0;
-    private bool isAP = false;
-    private int aPLCount = 0;
-    private bool isAPL = false;
+  
 
     protected void Awake()
     {
@@ -107,29 +105,19 @@ public class VRTrackerTag : MonoBehaviour {
 
         orientationSpeeds = new Vector3[2];
         orientations = new Queue<KeyValuePair<long, Vector3>>();
-
-
     }
 
     // Use this for initialization
     protected virtual void Start () {
-		//Debug.Log ("TAG " + UID + "  " + tagType.ToString ());
-		//onTagData("cmd=specialdata&s=30&x=376.43&y=481&z=36&st=1&s=10&ox=190.19&oy=-49.17&oz=-22.71&ax=21.27&ay=0.78&az=-15.79");
-
-		netId = transform.GetComponentInParent<NetworkIdentity> ();
+        //Check if local player in UNET
+        netId = transform.GetComponentInParent<NetworkIdentity> ();
 		if (netId != null && !netId.isLocalPlayer) {
             Debug.Log("TAG " + UID + " Not local player");
-
             return;
-		} else {
-            //VRTracker.instance.SetLocalPlayer(transform.parent.gameObject);
-            Debug.Log("TAG " + UID + " IS local player");
-        }
+		}
 
         startTimestamp = System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
 		lastLateUpateTimestamp = startTimestamp;
-
-		//enablePrediction = true;
 
 		positionSpeeds = new Vector3[2];
 		positions = new Queue<KeyValuePair<long, Vector3>>();
@@ -137,11 +125,9 @@ public class VRTrackerTag : MonoBehaviour {
 		orientationSpeeds = new Vector3[2];
 		orientations = new Queue<KeyValuePair<long, Vector3>>();
 
-        //Try to assign automatically the tag
-        //tryAssignToPrefab ();
-        VRTracker.instance.AddTag(this);
-
-        if (UID != "Enter Your Tag UID")
+        VRTracker.instance.AddTag (this);
+	
+		if(UID != "Enter Your Tag UID")
 		{
 			IDisAssigned = true;
 		}
@@ -150,6 +136,7 @@ public class VRTrackerTag : MonoBehaviour {
 	}
 
 	protected virtual void LateUpdate(){
+        //UNET Check
 		if (netId != null && !netId.isLocalPlayer) {
 			return;
 		}
@@ -213,10 +200,6 @@ public class VRTrackerTag : MonoBehaviour {
 		if (IDisAssigned) {
 			if (counter == 30) {
 				if (UID != "Enter Your Tag UID") {
-					if (displayLog)
-					{
-						Debug.LogWarning("Tag " + UID + " asks for orientation");
-					}
 					VRTracker.instance.TagOrientation (UID, true);
 				}
 				counter++;
@@ -228,10 +211,8 @@ public class VRTrackerTag : MonoBehaviour {
 		Vector3 calcOffset = offset; // Position offset due to distance between eyes and tag position
 
         // Setting Orientation for Tag
-        //tagRotation = orientation_ + orientationOffset - orientationBegin;
-        tagRotation = orientation_;// - orientationBegin;
+        tagRotation = orientation_;
 		tagRotation.y -= VRTracker.instance.RoomNorthOffset;
-		//Debug.Log (VRTracker.instance.RoomNorthOffset);
 
 		// SMOOTH ORIENTATION
 
@@ -273,9 +254,6 @@ public class VRTrackerTag : MonoBehaviour {
 				orientationsOffset0.z = orientationsOffset0.z > 250 ? orientationsOffset0.z - 360 : orientationsOffset0.z;
 				orientationsOffset0.z = orientationsOffset0.z < -250 ? orientationsOffset0.z + 360 : orientationsOffset0.z;
 
-				//Debug.Log ("orientationsOffset0 " + orientationsOffset0.ToString ());
-				//Debug.Log ("orientationsOffset1 " + orientationsOffset1.ToString ());
-
 				orientationSpeeds[1] = 1000 * ((orientationsOffset1) / (orientationsArray[orientationsArray.Length - 4].Key - orientationsArray[orientationsArray.Length - 7].Key));
 				orientationSpeeds[0] = 1000 * ((orientationsOffset0) / (orientationsArray[orientationsArray.Length - 1].Key - orientationsArray[orientationsArray.Length - 4].Key));
 				orientationAcceleration = 2 * 1000 * ((orientationSpeeds[0] - orientationSpeeds[1]) / (orientationsArray[orientationsArray.Length - 1].Key - orientationsArray[orientationsArray.Length - 7].Key));
@@ -297,11 +275,8 @@ public class VRTrackerTag : MonoBehaviour {
 				float accOperator = (float)(0.5 * (deltaTimeLateUpdateSinceLastOrientation + DeadReckogningDelayMs) * (deltaTimeLateUpdateSinceLastOrientation + DeadReckogningDelayMs) / 1000000);
 				float accOperatorLastUpdate = (float)(0.5 * deltaTimeSinceLastFrame * deltaTimeSinceLastFrame / 1000000);
 
-				// Here is where the magic happens, we calculate the futur orientation based on Last Late Update orientation, and futur orientation based on last message reception
 				Vector3 predictionFromLastUpdate = predictedOrientation + accOperatorLastUpdate * accelerationDropedOverTime + speedDropedOverTime * deltaTimeSinceLastFrame / 1000;
 				Vector3 predictedOrientationFromLastReception = orientationsArray [orientationsArray.Length - 1].Value + accOperator * accelerationDropedOverTime + speedDropedOverTime * (deltaTimeLateUpdateSinceLastOrientation+ DeadReckogningDelayMs) / 1000; 
-				// And we give much more importance to the futur orientation based on last update, this avoids the shakes in the orientation
-
 
 				predictionFromLastUpdate.x = ((predictionFromLastUpdate.x+180)%360)-180;
 				predictionFromLastUpdate.y = ((predictionFromLastUpdate.y+180)%360)-180;
@@ -315,9 +290,6 @@ public class VRTrackerTag : MonoBehaviour {
 				predictionFromLastUpdate.z = predictionFromLastUpdate.z - predictedOrientationFromLastReception.z < -250 ? predictionFromLastUpdate.z + 360 : predictionFromLastUpdate.z;
 
 				predictedOrientation = Vector3.Lerp (predictedOrientationFromLastReception, predictionFromLastUpdate, Mathf.Clamp(smoothingIntensity, 0.0f, 0.95f));
-
-
-				// Debug.Log ("predictedOrientation : " + predictedOrientation.ToString() + "predictionFromLastUpdate  : " + predictionFromLastUpdate.ToString () + "   predictedOrientationFromLastReception   : " + predictedOrientationFromLastReception.ToString ());
 			} 
 			else {
 				float accOperatorLastUpdate = (float)(0.5 * deltaTimeSinceLastFrame * deltaTimeSinceLastFrame / 1000000);
@@ -332,20 +304,18 @@ public class VRTrackerTag : MonoBehaviour {
 			//Apply uniformely the rotation
 			if (enableOrientationSmoothing) {
 				this.transform.rotation = Quaternion.Euler (predictedOrientation);
-			//	Debug.Log (predictedOrientation.ToString());
 			}
 			else {
 				this.transform.rotation = Quaternion.Euler (tagRotation);
 			}
 		}
 
-		if (enablePositionSmoothing && positions.Count == 7) {
+		if (enablePositionSmoothing && positions.Count == 7)
 			this.transform.position = this.predictedPosition + calcOffset;
-//			Debug.Log (predictedPosition.ToString());
-		}
 		else
 			this.transform.position = this.positionReceived+calcOffset;
 		
+        //Treating the different special messages received from the tag
 		if (commandReceived) {
 			commandReceived = false;
             if (command.Contains("triggeron"))
@@ -354,7 +324,6 @@ public class VRTrackerTag : MonoBehaviour {
                 triggerPressed = true;
                 triggerDown = true; 
 				triggerUp = false;
-
             }
             else if (command.Contains("triggeroff"))
             {
@@ -367,10 +336,6 @@ public class VRTrackerTag : MonoBehaviour {
                 buttonPressed = true;
                 buttonDown = true;
 				buttonUp = false;
-                if (displayLog)
-                {
-                    Debug.Log("Update orentiation begin to : " + orientationBegin.y);
-                }
 				if(transform.GetComponentInChildren<Camera>())
 	                ResetOrientation();
             }
@@ -486,7 +451,6 @@ public class VRTrackerTag : MonoBehaviour {
 	}
 
 	public void OnTagData(string data){
-		//Debug.Log ("TAG: " + data);
 		string[] sensors = data.Split(new string[] {"&s="}, System.StringSplitOptions.RemoveEmptyEntries);
 		for (int i = 1; i < sensors.Length; i++) {
 			string[] parameters = sensors[i].Split ('&');
@@ -539,7 +503,6 @@ public class VRTrackerTag : MonoBehaviour {
 				trackpadXY.x = -(b - (Mathf.Abs(trackpadMaxUp - trackpadMaxDown)/2))/Mathf.Abs(trackpadMaxUp - trackpadMaxDown);
 				if (a == 0.0f && b == 0.0f)
 					trackpadXY = Vector2.zero;
-				//  Debug.Log ("Trackpad " + trackpadXY.x + "  " + trackpadXY.y);
 			}
 		}
 	}
@@ -586,28 +549,4 @@ public class VRTrackerTag : MonoBehaviour {
 		VRTracker.instance.AssignTag(tagID);
 	}
 
-	public void TryAssignToPrefab(){
-		//Add tag to the singleton VR Tracker
-		GameObject parent = transform.parent.gameObject;
-		if (parent != null) {
-			NetworkIdentity netId = parent.GetComponent<NetworkIdentity> ();
-			if (netId != null) {
-				//If it's local identity, we assign the id
-				if (netId.isLocalPlayer) {
-					if(VRTrackerTagAssociation.instance != null){
-						string tagID = VRTrackerTagAssociation.instance.getAssociatedTagID (gameObject.name);
-						if (tagID != "") {
-							AssignTag (tagID);
-						}
-						else {
-							Debug.LogError ("ID not valid : " + tagID);
-						}
-					}
-				}
-			}
-		}
-	}
-
-
 }
-//			Debug.LogWarning("Position Length != 0 : " + positions.Count.ToString());

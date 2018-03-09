@@ -39,7 +39,7 @@ public class VRTrackerFollowTag : MonoBehaviour
         originalRotation = transform.rotation.eulerAngles;
 
         if (VRTracker.instance != null)
-            tagToFollow = VRTracker.instance.getTag(tagTypeToFollow);
+            tagToFollow = VRTracker.instance.GetTag(tagTypeToFollow);
         else
             Debug.LogError("No VR Tracker script found in current Scene. Import VRTrackeV2 prefab");
     }
@@ -51,7 +51,7 @@ public class VRTrackerFollowTag : MonoBehaviour
             return;
 
         if (tagToFollow == null && VRTracker.instance != null)
-            tagToFollow = VRTracker.instance.getTag(tagTypeToFollow);
+            tagToFollow = VRTracker.instance.GetTag(tagTypeToFollow);
         else if (tagToFollow != null)
         {
             if (followPositionX || followPositionY || followPositionZ)

@@ -6,8 +6,12 @@ using System.Text.RegularExpressions;
 using UnityEngine.Networking;
 
 public class VRTracker : MonoBehaviour {
+    /* VR Tracker
+     * This script is the main component of VR Tracker
+     * It holds the websocket, and handle the communication and the treatment of the messages from the gateway
+     */
 
-	public static VRTracker instance;
+    public static VRTracker instance;
 
 	private WebSocket myws;
 	private Vector3 position;
@@ -135,11 +139,9 @@ public class VRTracker : MonoBehaviour {
                     // Orientation
                     else if (datasplit [0] == "ox") {
 						orientationUpdated = true;
-						//orientation.x = float.Parse(datasplit[1]);
 						orientation.y = -float.Parse (datasplit [1]);
 						orientation_quat.x = -orientation.y;
 					} else if (datasplit [0] == "oy") {
-						//orientation.y = float.Parse(datasplit[1]);
 						orientation.x = -float.Parse (datasplit [1]);
 						orientation_quat.y = -orientation.x;
 					} else if (datasplit [0] == "oz") {
@@ -192,7 +194,6 @@ public class VRTracker : MonoBehaviour {
 		} else if (e.Data.Contains ("cmd=tag")) { // Tag V2 data 
 			string[] datas = e.Data.Split ('&');
 			string uid = null;
-			string command = null;
 			foreach (string data in datas) {
 				string[] datasplit = data.Split ('=');
 
@@ -249,7 +250,7 @@ public class VRTracker : MonoBehaviour {
 				}
 			}
 		} else if (e.Data.Contains ("function=needaddress")) {
-			receiveAskServerIP ();
+			ReceiveAskServerIP ();
 		}
 		//if the message gives us an IP address, try to connect as a client to it
 		else if (e.Data.Contains ("function=address")) {
@@ -258,7 +259,7 @@ public class VRTracker : MonoBehaviour {
 			foreach (string data in datas) {
 				string[] infos = data.Split ('=');
 				if (infos [0] == "ip") {
-					receiveServerIP (infos [1]);
+					ReceiveServerIP (infos [1]);
 				}
 			}
 		} else if (e.Data.Contains ("cmd=availabletag")) {
@@ -270,7 +271,7 @@ public class VRTracker : MonoBehaviour {
 			foreach (string data in datas) {
 				string[] datasplit = data.Split ('=');
 				if (datasplit [0].Contains ("tag")) {
-					VRTrackerTagAssociation.instance.AddAvailableTag (datasplit [1]);
+					VRTrackerTagAssignment.instance.AddAvailableTag (datasplit [1]);
 				}
 			}
 		} else if (e.Data.Contains ("cmd=reoriente")) {
@@ -292,7 +293,6 @@ public class VRTracker : MonoBehaviour {
 			}
 		} else if (e.Data.Contains ("cmd=offset")) {
 			Debug.LogWarning (e.Data);
-			string offset = null;
 			string[] datas = e.Data.Split ('&');
 
 			foreach (string data in datas) {
@@ -332,6 +332,8 @@ public class VRTracker : MonoBehaviour {
                    ymax = float.Parse(datasplit[1]);
                 }
             }
+
+            //Handle boundaries
             OnUpdateBoundaries();
         }
 
@@ -370,7 +372,7 @@ public class VRTracker : MonoBehaviour {
 	/*
 	 * Close the ebsocket connection to the Gateway
 	 */
-	private void closeWebsocket(){
+	private void CloseWebsocket(){
 		connected = false;
 		Debug.Log("VR Tracker : closing websocket connection");
 
@@ -384,7 +386,7 @@ public class VRTracker : MonoBehaviour {
 	 * to identify you over the network. It is necessary on multi-gateway
 	 * configuration 
 	 */
-	private void sendMyUID(string uid){
+	private void SendMyUID(string uid){
 		myws.SendAsync (uid, OnSendComplete);
 
 	}
@@ -481,33 +483,27 @@ public class VRTracker : MonoBehaviour {
 
 	// For Multiplayer, we ask all other user if the know the Server IP
 	public void AskServerIP(){
-		Debug.Log ("Is WS connected " + connected.ToString ());
         myws.SendAsync("cmd=specialdata&function=needaddress", OnSendComplete);
 
 	}
 
-	public void sendServerIP(string ip){
-		//Debug.Log ("cmd=specialdata&function=address&ip=" + ip);
+	public void SendServerIP(string ip){
 		myws.SendAsync("cmd=specialdata&function=address&ip=" + ip, OnSendComplete);
 	}
 
 	// The server IP was sent to us by another user (typically the server)
-	private void receiveServerIP(string ip){
-		//Debug.Log ("Server IP received: " + ip);
-
+	private void ReceiveServerIP(string ip){
 		if(!serverIpReceived){
-			//Debug.Log ("Receiving first IP: " + ip);
 			serverIp = ip;
 			serverIpReceived = true;
 		}
 	}
 
 	// Another user is looking for the Server and asks if we know the IP
-	private void receiveAskServerIP(){
+	private void ReceiveAskServerIP(){
 		if (serverIp != "") {
-			sendServerIP (serverIp);
+			SendServerIP (serverIp);
 		}
-		//VRTrackerNetwork.instance.receiveAskServerIP ();
 	}
 
 	public void SendMessageToGateway(string message)
@@ -549,7 +545,6 @@ public class VRTracker : MonoBehaviour {
 			foreach (VRTrackerTag tag in tags) {
 				tag.OnSpecialCommandToAll (TagID, data);
 			}
-			//onAssociation (TagID, data);
 		}
 		
 	}
@@ -577,7 +572,7 @@ public class VRTracker : MonoBehaviour {
 	/*
 	 * Executed on reception of  tag informations
 	 */
-	public void receiveTagInformations(string TagID, string status, int battery){
+	public void ReceiveTagInformations(string TagID, string status, int battery){
 		// TODO: You can do whatever you wants with the Tag informations
 	}
 
@@ -585,7 +580,7 @@ public class VRTracker : MonoBehaviour {
 	 * Ensure the Websocket is correctly closed on application quit
 	 */
 	void OnApplicationQuit() {
-		closeWebsocket ();
+		CloseWebsocket ();
         if (Network.connections.Length == 1)
         {
             //Disconnection to the server
@@ -614,7 +609,7 @@ public class VRTracker : MonoBehaviour {
             OnAddTag();
 	}
 
-    public VRTrackerTag getTag(TagType type)
+    public VRTrackerTag GetTag(TagType type)
     {
         foreach (VRTrackerTag tag in tags)
             if (tag.tagType == type)
@@ -623,28 +618,34 @@ public class VRTracker : MonoBehaviour {
         return null;
     }
 
-    public VRTrackerTag getHeadsetTag(){
-		foreach (VRTrackerTag tag in tags)
-			if (tag.tagType == TagType.Head)
-				return tag;
-		return null;
-	}
+    public VRTrackerTag GetHeadsetTag()
+    {
+        foreach (VRTrackerTag tag in tags)
+            if (tag.tagType == VRTracker.TagType.Head)
+                return tag;
+        Debug.LogWarning("Could not find a VR Tracker Tag with type " + VRTracker.TagType.Head.ToString() + " in current Scene");
+        return null;
+    }
 
-	public VRTrackerTag getLeftControllerTag(){
-		foreach (VRTrackerTag tag in tags)
-			if (tag.tagType == TagType.LeftController)
-				return tag;
-		return null;
-	}
+    public VRTrackerTag GetLeftControllerTag()
+    {
+        foreach (VRTrackerTag tag in tags)
+            if (tag.tagType == VRTracker.TagType.LeftController)
+                return tag;
+        Debug.LogWarning("Could not find a VR Tracker Tag with type " + VRTracker.TagType.LeftController.ToString() + " in current Scene");
+        return null;
+    }
 
-	public VRTrackerTag getRightControllerTag(){
-		foreach (VRTrackerTag tag in tags)
-			if (tag.tagType == TagType.RightController)
-				return tag;
-		return null;
-	}
+    public VRTrackerTag GetRightControllerTag()
+    {
+        foreach (VRTrackerTag tag in tags)
+            if (tag.tagType == VRTracker.TagType.RightController)
+                return tag;
+        Debug.LogWarning("Could not find a VR Tracker Tag with type " + VRTracker.TagType.RightController.ToString() + " in current Scene");
+        return null;
+    }
 
-	public void RemoveTag(VRTrackerTag tag)
+    public void RemoveTag(VRTrackerTag tag)
 	{
 		tags.Remove(tag);
 	}
@@ -661,50 +662,6 @@ public class VRTracker : MonoBehaviour {
 		return null;
 	}
 
-
-
-	public void AssignDirectlyTags()
-	{
-		//Assign tags from file
-
-		if (VRTrackerTagAssociation.instance.isAllTagAvailable())
-		{
-			//If tags are on, we associate them to the user
-			foreach (KeyValuePair<string, VRTrackerAssociation> playerAssociation in VRTrackerTagAssociation.instance.prefabAssociation)
-			{
-				//TODO fix this part when partial assignation
-				if (!AssignTagToUser(playerAssociation.Key, VRTrackerTagAssociation.instance.userTagUID[playerAssociation.Key]))
-				{
-					assignationComplete = false;
-					break;
-				}
-			}
-
-			if (VRTrackerTagAssociation.instance.userTagUID.Count > 0) {
-				assignationComplete = true;
-			}
-		}else
-		{
-			Debug.LogWarning("Some tag not available");
-		}
-	}
-
-	public bool AssignTagToUser(string prefabName, string tagUID)
-	{
-		Dictionary<string, string>.KeyCollection keyTag = VRTrackerTagAssociation.instance.userTagUID.Keys;
-		foreach (string mac in keyTag)
-		{
-			VRTrackerAssociation tagAssociation;
-			if (VRTrackerTagAssociation.instance.prefabAssociation.TryGetValue(prefabName, out tagAssociation))
-			{
-				tagAssociation.tagID = tagUID;
-                //AssignTag(tagUID);
-                return true;
-			}
-		}
-		return false;
-	}
-
 	public bool IsAssigned()
 	{
 		return assignationComplete;
@@ -713,7 +670,7 @@ public class VRTracker : MonoBehaviour {
 	// Save the association between the Tag and each object for this user in a file on the PC/Phone
 	public void SaveAssociationTagUser()
 	{
-		VRTrackerTagAssociation.instance.SaveAssociation ();
+		VRTrackerTagAssignment.instance.SaveAssociation ();
 	}
 
 	public void AskForServer(){
@@ -723,21 +680,6 @@ public class VRTracker : MonoBehaviour {
 	// Ask the gateway for the rotation offset between true magnetic North and room forward axis (Y in VR Tracker coordinates, Z in Unity coordinates)
 	public void getMagneticOffset(){
 		myws.SendAsync("cmd=getoffset", OnSendComplete);
-	}
-
-	public void onAssociation(string tagID, string data){
-		if (data.Contains ("buttonon")){
-            //Update the assignation
-
-            /*foreach (KeyValuePair<string, VRTrackerAssociation> kvp in VRTrackerTagAssociation.instance.prefabAssociation) {
-                if (kvp.Value.isWaitingForAssignation) {
-                    kvp.Value.assign (tagID);
-                    //Ask for the tag assignation
-                    //AssignTag(tagID);
-					VRTrackerTagAssociation.instance.isWaitingForAssociation = false;
-				}
-			}*/
-		}
 	}
 		
 	public void SetLocalPlayer(GameObject player){

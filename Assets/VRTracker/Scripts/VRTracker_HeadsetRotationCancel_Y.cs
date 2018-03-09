@@ -69,7 +69,7 @@ public class VRTracker_HeadsetRotationCancel_Y : MonoBehaviour
         while (true)
         {
             if (tag == null)
-                tag = VRTracker.instance.getHeadsetTag();
+                tag = VRTracker.instance.GetHeadsetTag();
             if (tag != null)
             {
                 Vector3 tagRotation = tag.getOrientation();

@@ -5,9 +5,11 @@ using UnityEngine;
 
 
 public class CameraManager : MonoBehaviour {
-
+    /* VR Tracker
+     * The Camera Manager, is used for the spectator mode, and handle all the different cameras in its child component
+     * You need to add a camera in the camera prefab to be able to use it in the spectator mode
+     */
     public static CameraManager instance;
-
     public List<Camera> cameras;
     private int index = 0;
     

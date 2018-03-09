@@ -28,151 +28,49 @@ namespace VRStandardAssets.Intro
 		private IEnumerator Start ()
 		{
 			m_Reticle.Show ();
-			//m_Radial.Hide ();
 
 			DontDestroyOnLoad (VRTracker.instance);
-			Debug.Log("Instance is spectator :  " + VRTracker.instance.isSpectator);
             bool assignationSuccess = false;
 
             if (VRTracker.instance.autoAssignation)
             {
-                /*
-                Debug.Log("Loading association");
-                VRTrackerTagAssociation.instance.LoadAssociation();*/
-                Debug.Log("Loading association");
-                if (VRTrackerTagAssociation.instance.LoadAssociation())
+                if (VRTrackerTagAssignment.instance.LoadAssociation())
                 {
-
-                    /*for (int i = 0; i < 3 && !VRTracker.instance.assignationComplete; i++)
-                    {
-                        if (VRTrackerTagAssociation.instance.TryAutoAssignTag())
-                        {
-                            assignationSuccess = true;
-                            break;
-                        }
-
-                        yield return new WaitForSeconds(1);
-                    }*/
-                    assignationSuccess = VRTrackerTagAssociation.instance.TryAutoAssignTag();
+                    assignationSuccess = VRTrackerTagAssignment.instance.TryAutoAssignTag();
                     if (!assignationSuccess)
                     {
                         m_SliderCroup.hideSkipAssignationSlider();
                     }
-                    else
-                    {
-                        //TODO: Load next level directly
-                        Debug.Log("Tags where associated from file successfully");
-                        //LevelLoader.instance.LoadLevel(1);
-                    }
                 }
             }
 
-            /*
-            if (!VRTrackerTagAssociation.instance.isAssociationLoaded)
-            {
-                Debug.LogWarning("hide auto assingation");
-                m_SliderCroup.hideSkipAssignationSlider();
-            }
-
-
-            //Retrieve the player prefab from the network manager
-            GameObject pPrefab = null;
-            if (VRTrackerNetwork.instance.playerPrefab != null)
-            {
-                pPrefab = VRTrackerNetwork.instance.playerPrefab;
-            }
-            else
-            {
-                Debug.Log("Player prefab is null");
-            }
-            //Create and prepare the different prefab for assignation in the next scene
-            if (pPrefab != null) {
-				VRTrackerTag[] playerObject = pPrefab.GetComponentsInChildren<VRTrackerTag>();
-				for (int i = 0; i < playerObject.Length; i++) {
-					//Store the different player prefab name for association
-					VRTrackerAssociation newAsso = new VRTrackerAssociation();
-                    VRTrackerTagAssociation.instance.AddPrefabAssociation(playerObject[i].gameObject.name, newAsso);
-				}
-            }
-            else
-            {
-                Debug.LogError("No player prefab set !");
-            }
-
-			if (VRTracker.instance.autoAssignation)
-			{
-                yield return new WaitForSeconds(1);
-				VRTracker.instance.AssignDirectlyTags();
-                if (!VRTracker.instance.assignationComplete)
-                {
-                    m_SliderCroup.hideSkipAssignationSlider();
-                }
-            }
-            */
+            //Disable by default the spectator mode on mobile device
 			#if (UNITY_IOS || UNITY_ANDROID) && !UNITY_EDITOR
 				VRTracker.instance.isSpectator = false;
-				Debug.Log("Setting spectator mode to  :  " + VRTracker.instance.isSpectator);
-		
 			#endif
             
             if (!VRTracker.instance.isSpectator)
 			{
 				m_SliderCroup.hideSpectatorMode();
-                Debug.Log("Setting spectator mode to  :  " + VRTracker.instance.isSpectator);
-
             }
-            else
-            {
-				//VRTracker.instance.assignationComplete = true;
-			}
-			Debug.Log("Instance is spectator :  " + VRTracker.instance.isSpectator);
-
 
             // In order, fade in the UI on confirming the use of sliders, wait for the slider to be filled, then fade out the UI.
             if (!assignationSuccess)
             {
                 yield return StartCoroutine(m_HowToUseConfirmFader.InteruptAndFadeIn());
-                //yield return StartCoroutine(m_SliderCroup.WaitForBarsToFill());
                 yield return StartCoroutine(m_SliderCroup.WaitForBarsToFill());
                 yield return StartCoroutine(m_HowToUseConfirmFader.InteruptAndFadeOut());
             }
 
-
             // Assign a Tag to each Prefab instance containing a Tag in VR Tracker
             if (!assignationSuccess && !VRTracker.instance.isSpectator)
 			{
-				Debug.Log("Manual assignement ");
 				//Assignement step
 				foreach (VRTrackerTag tag in VRTracker.instance.tags)
-				//foreach (KeyValuePair<string, VRTrackerAssociation> prefab in VRTrackerTagAssociation.instance.prefabAssociation)
 				{
-
-					Debug.Log("Assigning Tag to " + tag);
-
-					bool associationFailed = true;
+        			bool associationFailed = true;
 					while (associationFailed)
 					{
-
-                        // Edit shown title to the Prefab name
-                        /*m_AssociationFader.transform.Find("CalibrationInstructions/Title").GetComponentInChildren<Text>().text = "Assign" + prefab.Key;
-
-
-                        // Start assignation
-                        yield return StartCoroutine(ShowMenu(m_AssociationFader, prefab.Value));
-
-						// Check if timed out and throw an error
-						if (!prefab.Value.isIDAssigned)
-						{
-							associationFailed = true;
-							yield return StartCoroutine(ShowMenu(m_FailedCalibrationFader, m_FailedCalibrationSlider));
-						}
-						else
-						{
-							associationFailed = false;
-
-						}
-                        */
-
                         // Edit shown title to the Prefab name
                         m_AssociationFader.transform.Find("CalibrationInstructions/Title").GetComponentInChildren<Text>().text = "Assign " + tag.tagType.ToString();
 
@@ -202,34 +100,24 @@ namespace VRStandardAssets.Intro
 			}
 			// Load the next Level (the Game !)
 			yield return StartCoroutine(m_LoadingFader.InteruptAndFadeIn());
-            //LevelLoader.instance.LoadLevel(1);
-            Debug.Log("Network Address : " + Network.player.ipAddress);
 			if (VRTracker.instance.serverIp == "" || VRTracker.instance.serverIp == Network.player.ipAddress) {
 				VRTracker.instance.serverIp = Network.player.ipAddress;
-				VRTracker.instance.sendServerIP (VRTracker.instance.serverIp);
+				VRTracker.instance.SendServerIP (VRTracker.instance.serverIp);
                 VRTrackerNetwork.instance.serverBindAddress = VRTracker.instance.serverIp;
 
                 if (VRTracker.instance.isSpectator)
                 {
-                    Debug.Log("Starting as Server");
                     VRTrackerNetwork.instance.StartServer();
                 }
                 else
                 {
-                    Debug.Log("Starting as Host");
                     VRTrackerNetwork.instance.StartHost();
                 }
             } else {
-                Debug.Log("Starting client");
-                //VRTrackerNetwork.instance.networkAddress = VRTracker.instance.serverIp;
-				//VRTrackerNetwork.instance.StartClient ();
-
+      
                 VRTrackerNetwork.instance.serverBindAddress = VRTracker.instance.serverIp;
                 VRTrackerNetwork.instance.serverBindToIP = true;
                 VRTrackerNetwork.instance.networkAddress = VRTracker.instance.serverIp;
-
-                Debug.Log("Server Ip " + VRTrackerNetwork.instance.serverBindAddress);
-                Debug.Log("Server Port " + VRTrackerNetwork.instance.networkPort);
                 //after binding address, start server
                 VRTrackerNetwork.instance.StartClient();
 
@@ -248,16 +136,6 @@ namespace VRStandardAssets.Intro
 			yield return StartCoroutine(fader.InteruptAndFadeIn());
 			yield return StartCoroutine(tag.WaitForAssignation());
 			if (tag.IDisAssigned)
-				transform.GetComponent<AudioSource> ().Play();
-			yield return StartCoroutine(fader.InteruptAndFadeOut());
-		}
-
-		private IEnumerator ShowMenu(UIFader fader, VRTrackerAssociation prefab)
-		{
-			yield return StartCoroutine(fader.InteruptAndFadeIn());
-            prefab.WaitForAssignation();
-            yield return StartCoroutine(VRTrackerTagAssociation.instance.WaitForAssignation ());
-			if (prefab.isIDAssigned)
 				transform.GetComponent<AudioSource> ().Play();
 			yield return StartCoroutine(fader.InteruptAndFadeOut());
 		}

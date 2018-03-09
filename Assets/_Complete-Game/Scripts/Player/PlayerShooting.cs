@@ -33,14 +33,9 @@ namespace CompleteProject
             gunLight = GetComponent<Light> ();
             //faceLight = GetComponentInChildren<Light> ();
 
-            if(VRTracker.instance != null && VRTracker.instance.getTag(VRTracker.TagType.Gun))
-                vrGun = VRTracker.instance.getTag(VRTracker.TagType.Gun);
-            // Callback for Local layer, not server
-            /*if (vrGun)
-            {
-                vrGun.OnDown += Shoot;
-                //vrGun.OnUp += ;
-            }*/
+            //Get the tag on the gun
+            if(VRTracker.instance != null && VRTracker.instance.GetTag(VRTracker.TagType.Gun))
+                vrGun = VRTracker.instance.GetTag(VRTracker.TagType.Gun);
         }
 
 
@@ -87,23 +82,8 @@ namespace CompleteProject
             Debug.Log("Shooting");
             Debug.Log(origin);
             // Reset the timer.
-            /*timer = 0f;
-
-            // Play the gun shot audioclip.
-            gunAudio.Play ();
-
-            // Enable the lights.
-            gunLight.enabled = true;
-			faceLight.enabled = true;
-
-            // Stop the particles from playing if they were, then start the particles.
-            gunParticles.Stop ();
-            gunParticles.Play ();
-
-            // Enable the line renderer and set it's first position to be the end of the gun.
-            gunLine.enabled = true;
-            gunLine.SetPosition (0, origin);
-            */
+            //timer = 0f;
+            
             // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
             shootRay.origin = origin;
             shootRay.direction = direction;

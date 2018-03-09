@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 /* VR Tracker
  * This script is to be set on a Gameobject between the Camera and the Object to which the Headset Tag position is applied
@@ -23,8 +22,7 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
     private float timeToReachTarget = 5.0f;
 
     [Tooltip("The minimum offset in degrees to blink instead of rotating.")]
-    public float minOffsetToBLink = 20.0f;
-    Image img;
+    public float minOffsetToBLink = 30.0f;
 
     /*[Tooltip("The VRTK Headset Fade script to use when fading the headset. If this is left blank then the script will need to be applied to the same GameObject.")]
     public VRTK.VRTK_HeadsetFade headsetFade;
@@ -33,17 +31,6 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
     {
         newRotation = Vector3.zero;
 
-        //headsetFade = (headsetFade != null ? headsetFade : FindObjectOfType<VRTK.VRTK_HeadsetFade>());
-        /*if (headsetFade == null)
-        {
-            //VRTK.VRTK_Logger.Error(VRTK.VRTK_Logger.GetCommonMessage(VRTK.VRTK_Logger.CommonMessageKeys.REQUIRED_COMPONENT_MISSING_FROM_GAMEOBJECT, "VRTK_HeadsetCollisionFade", "VRTK_HeadsetFade", "the same or child"));
-            return;
-        }
-        else
-        {
-            //headsetFade.HeadsetFadeComplete += HeadsetFadeCompleteHandler;
-        }*/
-        img = camera.GetComponent<Image>();
         StartCoroutine(FixOffset());
         previousOffset = Quaternion.Euler(Vector3.zero);
         destinationOffset = Quaternion.Euler(Vector3.zero);
@@ -64,7 +51,7 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
             if (VRTracker.instance != null)
             {
                 if (tag == null)
-                    tag = VRTracker.instance.getHeadsetTag();
+                    tag = VRTracker.instance.GetHeadsetTag();
                 if (tag != null)
                 {
                     Vector3 tagRotation = UnmultiplyQuaternion(Quaternion.Euler(tag.getOrientation()));
@@ -78,16 +65,10 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
                     previousOffset = destinationOffset;
 
                     destinationOffset = Quaternion.Euler(newRotation);
-                    if(offsetY > minOffsetToBLink)
-                    {
+                    if (Mathf.Abs(offsetY) > minOffsetToBLink)
                         t = timeToReachTarget;
-                        StartCoroutine(FadeImage(true));
-                        StartCoroutine(FadeImage(false));
-                    }
                     else
-                    {
                         t = 0;
-                    }
                 }
                 yield return new WaitForSeconds(5);
             }
@@ -97,13 +78,6 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
             }
         }
     }
-
-    /*public void HeadsetFadeCompleteHandler(object sender, VRTK.HeadsetFadeEventArgs e)
-    {
-        previousOffset = destinationOffset;
-        destinationOffset = Quaternion.Euler(newRotation);
-        t = timeToReachTarget;
-    }*/
 
     private Vector3 UnmultiplyQuaternion(Quaternion quaternion)
     {
@@ -144,40 +118,6 @@ public class VRTrackerHeadsetRotation : MonoBehaviour
 
         ret = ret * 180 / Mathf.PI;
         return ret;
-    }
-
-    public void Blink()
-    {
-
-    }
-    
-    IEnumerator FadeImage(bool fadeAway)
-    {
-        /*
-        // fade from opaque to transparent
-        if (fadeAway)
-        {
-            // loop over 1 second backwards
-            for (float i = 0.15f; i >= 0; i -= Time.deltaTime)
-            {
-                // set color with i as alpha
-                img.color = new Color(1, 1, 1, i);
-                yield return null;
-            }
-        }
-        // fade from transparent to opaque
-        else
-        {
-            // loop over 1 second
-            for (float i = 0.15f; i <= 1; i += Time.deltaTime)
-            {
-                // set color with i as alpha
-                img.color = new Color(1, 1, 1, i);
-                yield return null;
-            }
-        }*/
-        yield return null;
-
     }
 
 }
