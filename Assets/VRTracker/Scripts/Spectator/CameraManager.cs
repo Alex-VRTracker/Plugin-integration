@@ -23,6 +23,7 @@ public class CameraManager : MonoBehaviour {
         else
         {
             instance = this;
+            //Retrieve all cameras on the gameobject
             Camera[] cams = GetComponentsInChildren<Camera>();
             foreach (Camera cam in cams)
             {

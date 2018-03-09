@@ -17,6 +17,9 @@ public class Wave
     //public bool[] openDoors = new bool[5];          //Which doors should be opened during this wave
 }
 
+/// <summary>
+/// Network manager will handle all the different waves and set the enemy spawner
+/// </summary>
 public class WaveManager : NetworkBehaviour
 {
 
@@ -29,9 +32,6 @@ public class WaveManager : NetworkBehaviour
     private int currentWave;                        //The index of the current wave
     private EnemySpawner ESpawner;                 //The Zombie Spawner in charge of spawning the zombies
     private Announcer announcer;                    //The announcer in charge of showing messages to the player
-    //private MusicManager musicManager;              //The music manager in charge of the game music
-    //private AudioManager audioManager;              //The audio manager in charge of game sounds
-    //private DoorManager doorManager;                //The door manager in charge of opening and closing doors
     private DoOnMainThread mainThread;              //Calls functions on the main thread
 
     public float time = 0;                              //The current time shown by the timer
@@ -51,14 +51,12 @@ public class WaveManager : NetworkBehaviour
         }
     }
 
-    public void Start () {
-        //Adds itself to the observers list of the VRTracker instance
-        //base.Start();
+    public void Start ()
+    {
 
         ESpawner = GetComponent<EnemySpawner>();
         announcer = GetComponent<Announcer>();
         currentWave = 0;
-        //NextWave();
 
     }
 
@@ -86,21 +84,6 @@ public class WaveManager : NetworkBehaviour
     /// </summary>
     private void ManageEndOfWave()
     {
-        //PLay the bell sound
-        //audioManager.playSound("Bell");
-
-        //Stop the game timer
-        //StopTimer();
-
-        //Disable all the spawn points
-        //ESpawner.DisableSpawnPoints();
-
-        //Make the respawn point apear for dead players
-        //TagsManager.instance.EnableSpawn();
-
-        //Try to make a healthpack appear
-        //PickupSpawner.instance.TryHealthSpawn();
-        //waveInProgress = false;
 
         Stop();
         //Start the next wave
@@ -275,21 +258,6 @@ public class WaveManager : NetworkBehaviour
         NextWave();
     }
 
-    /// <summary>
-    /// Opens the doors of the wave
-    /// </summary>
-    /*private void OpenDoors()
-    {
-        for(int i = 0; i< waveList[currentWave].openDoors.Length; i++)
-        {
-            if (waveList[currentWave].openDoors[i])
-            {
-                //doorManager.SetOpenDoor(i);
-                ESpawner.EnableSpawnPoint(i);
-            }
-        }
-    }*/
-
     public void Restart()
     {
         currentWave = 0;
@@ -298,9 +266,6 @@ public class WaveManager : NetworkBehaviour
 
     public void Stop()
     {
-        //audioManager.playSound("Bell");
-        //doorManager.CloseAllDoors();
-        //ESpawner.DisableSpawnPoints();
         StopTimer();
         ESpawner.ClearEnemies();
         waveInProgress = false;

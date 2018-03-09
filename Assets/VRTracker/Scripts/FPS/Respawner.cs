@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Respawner handle the respawn point 
+/// Update player health once on the respawn point
+/// </summary>
 public class Respawner : MonoBehaviour {
-
 
     private GameObject respawnPoint;
     private Transform myHead;

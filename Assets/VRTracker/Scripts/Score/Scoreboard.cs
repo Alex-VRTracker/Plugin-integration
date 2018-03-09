@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+/// <summary>
+/// Scoreboard display the score of each player
+/// </summary>
 public class Scoreboard : NetworkBehaviour
-{
-
+{ 
     [SerializeField]
     GameObject playerScoreItem;
     [SerializeField]

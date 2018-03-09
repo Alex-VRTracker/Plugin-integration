@@ -25,18 +25,13 @@ public class VRTrackerNetworkPlayer : NetworkBehaviour
         Debug.LogWarning("On start local player client ");
         VRTracker.instance.SetLocalPlayer(gameObject);
         Debug.Log("Setting local player " + gameObject);
-        //VRTrackerBoundaries.instance.localPlayer = gameObject;
-        //VRTrackerBoundaries.instance.LookForLocalPlayer();
+        //Activate the local player gun HUD
         GameObject hud = transform.Find("PlayerGunV2/HUD").gameObject;
         if(hud != null)
         {
             hud.SetActive(true);
         }
-        /*GameObject damageHud = transform.Find("DamageHUD").gameObject;
-        if (damageHud != null)
-        {
-            damageHud.SetActive(true);
-        }*/
+
     }
 
 }
