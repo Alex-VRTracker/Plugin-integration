@@ -282,30 +282,25 @@ MonoBehaviour:
   - quantity: 1
     duration: 30
     spawnRate: 5
-    openDoors: 0100000000
   - quantity: 3
     duration: 40
     spawnRate: 5
-    openDoors: 0100000101
   - quantity: 8
     duration: 50
     spawnRate: 3
-    openDoors: 0100000101
   - quantity: 12
     duration: 60
     spawnRate: 1
-    openDoors: 0001010000
   - quantity: 18
     duration: 60
     spawnRate: 1
-    openDoors: 0000000101
   - quantity: 27
     duration: 60
     spawnRate: 0.75
-    openDoors: 0101010000
   - quantity: 40
     duration: 60
     spawnRate: 0.5
-    openDoors: 0101010101
   countdownTime: 5
   intermissionTime: 10
+  time: 0
+  enemyKilled: 0

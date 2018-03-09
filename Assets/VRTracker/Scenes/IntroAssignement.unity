@@ -4039,6 +4039,27 @@ Prefab:
       propertyPath: m_TagString
       value: MainCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 114847854518493938, guid: 5ee49c0c1547cf041add9b6207a0b0f7,
+        type: 2}
+      propertyPath: followOrientationY
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1375391885902256, guid: 5ee49c0c1547cf041add9b6207a0b0f7, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364854819170572, guid: 5ee49c0c1547cf041add9b6207a0b0f7, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364854819170572, guid: 5ee49c0c1547cf041add9b6207a0b0f7, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364854819170572, guid: 5ee49c0c1547cf041add9b6207a0b0f7, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ee49c0c1547cf041add9b6207a0b0f7, type: 2}
   m_IsPrefabParent: 0
