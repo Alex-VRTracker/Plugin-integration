@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+///
 public class VRTrackerBoundariesProximity : MonoBehaviour {
 
 	public Transform player;
@@ -11,18 +12,13 @@ public class VRTrackerBoundariesProximity : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		/*if (VRTracker.instance.tags.Count > 0) {
-			Debug.LogWarning ("Setting " + VRTracker.instance.tags [0]);
-			player = VRTracker.instance.tags [0].transform;
-		} else {
-			Debug.LogWarning("Player is null");
-		}*/
 		render = gameObject.GetComponent<Renderer> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (!player.Equals(null)) {
+            //Update the player position and its controller position if exist
             if (player != null)
                 render.sharedMaterial.SetVector("_PlayerPosition", player.position);
             if (controller != null)

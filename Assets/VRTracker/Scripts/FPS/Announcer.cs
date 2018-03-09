@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+/// <summary>
+/// Announcer is used to handle the Text on the User HUD
+/// In this projet it will display the informatino in the Player view
+/// </summary>
 public class Announcer : NetworkBehaviour
 {
 
@@ -12,9 +16,9 @@ public class Announcer : NetworkBehaviour
     public GameObject textTemplate;
     public bool hasMessage = false;
 
-    private Text currentText;
-    private List<string> messageList;
-    private GameObject cam;
+    private Text currentText; //Text element 
+    private List<string> messageList; // list containing the different messages
+    private GameObject cam; //Associated camera on which to display
     private bool isWaiting = false;
 
     private void Awake()
@@ -32,10 +36,9 @@ public class Announcer : NetworkBehaviour
 
     private void Start()
     {
-        //cam = Camera.main.gameObject
         if(this != null)
         {
-
+            //Retrieve local player camera
             Debug.Log("Player " + VRTracker.instance.GetLocalPlayer().transform.GetComponentInChildren<Camera>().GetComponentInChildren<Text>());
             if (!VRTracker.instance.isSpectator)
                 currentText = VRTracker.instance.GetLocalPlayer().transform.GetComponentInChildren<Camera>().GetComponentInChildren<Text>();
@@ -45,6 +48,7 @@ public class Announcer : NetworkBehaviour
 
     private void Update()
     {
+        //Display message if some in the list
         if (messageList.Count > 0 && !isWaiting)
         {
             ShowMessage(messageList[0]);
@@ -53,6 +57,10 @@ public class Announcer : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Addd the message into the list
+    /// </summary>
+    /// <param name="message">new message to display</param>
     public void AddMessage(string message)
     {
         if (!VRTracker.instance.isSpectator)
@@ -62,6 +70,10 @@ public class Announcer : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Update the UI text with the next message on the list
+    /// </summary>
+    /// <param name="message">new message to display</param>
     public void UpdateMessage(string message)
     {
         if (!VRTracker.instance.isSpectator)
@@ -72,6 +84,10 @@ public class Announcer : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Show the the UI Text with the corresponding message
+    /// </summary>
+    /// <param name="message">new message to display</param>
     private void ShowMessage(string message)
     {
         if (!VRTracker.instance.isSpectator && currentText != null)
@@ -80,6 +96,9 @@ public class Announcer : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Remove message once it has been displayed
+    /// </summary>
     private void RemoveMessage()
     {
         if (!VRTracker.instance.isSpectator)
@@ -94,6 +113,10 @@ public class Announcer : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Enumerator to be used in coroutine to automatically destroy message after 5 seconds
+    /// </summary>
+    /// <returns></returns>
     IEnumerator WaitForText()
     {
         yield return new WaitForSeconds(5f);

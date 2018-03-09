@@ -92,7 +92,9 @@ public class VRTrackerBoundaries : MonoBehaviour {
 
     }
 
-    // Check if Boundaries is saved in a file
+    /// <summary>
+    /// Check if Boundaries is saved in a file and loaded them if exist
+    /// </summary>    
     public void LoadBoundaries()
     {
         // Path.Combine combines strings into a file path

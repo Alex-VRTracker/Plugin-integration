@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Grascale Effect is used on the HUD to display the death effect
+/// </summary>
 [ExecuteInEditMode]
 [AddComponentMenu("Image Effects/Grayscale")]
 public class GrayscaleEffect : ImageEffectBase
