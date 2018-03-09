@@ -16,44 +16,72 @@ public class Respawner : MonoBehaviour {
     void Start()
     {
         respawnPoint = GameObject.FindGameObjectsWithTag("SpawnPoint")[0];
-        myHead = transform.Find("Player");
-        playerHealth = GetComponent<CompleteProject.PlayerHealth>();
+        myHead = VRTracker.instance.GetHeadsetTag().transform;
+        if (VRTracker.instance.GetLocalPlayer())
+        {
+            playerHealth = VRTracker.instance.GetLocalPlayer().GetComponent<CompleteProject.PlayerHealth>();
+
+        }
+        else
+        {
+            Debug.Log("Null player object");
+            VRTracker.instance.OnNewLocalPlayer += RetrievePlayerHealth;
+        }
     }
 
     void Update()
     {
-        if (VerifyPosition() && !respawnPoint.GetComponent<Objective>().reached && playerHealth.isDead)
+        if(playerHealth != null)
         {
-            respawnPoint.GetComponent<Objective>().ActivateObjective();
-            Debug.Log("Respawing");
-            playerHealth.CmdRespawn();
+            if (playerHealth.isDead && VerifyPosition() && !respawnPoint.GetComponent<Objective>().reached)
+            {
+                respawnPoint.GetComponent<Objective>().ActivateObjective();
+                Debug.Log("Respawing");
+                playerHealth.CmdRespawn();
+            }
         }
+        
     }
 
     private bool VerifyPosition()
     {
-        if (respawnPoint != null && respawnPoint.activeSelf)
+        if (myHead != null)
         {
-            if (Mathf.Abs(myHead.position.x - respawnPoint.transform.position.x) > 0.4)
+            if (respawnPoint != null && respawnPoint.activeSelf)
             {
-                return false;
+                if (Mathf.Abs(myHead.position.x - respawnPoint.transform.position.x) > 0.4)
+                {
+                    return false;
+                }
+                else if (Mathf.Abs(myHead.position.z - respawnPoint.transform.position.z) > 0.4)
+                {
+                    return false;
+                }
+                return true;
             }
-            else if (Mathf.Abs(myHead.position.z - respawnPoint.transform.position.z) > 0.4)
-            {
-                return false;
-            }
-            return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
+        
     }
 
     public void SetActiveSpawnPoint(bool isActive)
     {
         respawnPoint.SetActive(isActive);
         respawnPoint.GetComponentInChildren<Objective>().EnableSpawnPoint();
+    }
+
+    public void RetrievePlayerHealth()
+    {
+        if(VRTracker.instance.GetLocalPlayer())
+        {
+            playerHealth = VRTracker.instance.GetLocalPlayer().GetComponent<CompleteProject.PlayerHealth>();
+            Debug.Log("Player health set");
+
+        }
+        else
+        {
+            Debug.Log("still null player object");
+        }
     }
 
 }

@@ -37,6 +37,8 @@ public class VRTracker : MonoBehaviour {
 
     public event Action OnAddTag;  // Called when a player is added with a tagtype head
     public event Action OnNewBoundaries;  // Called when new boundaries are set from dashboard
+    public event Action OnNewLocalPlayer;  // Called the local player is set
+
     [System.NonSerialized]
     public float xmin, xmax, ymin, ymax;
 
@@ -684,6 +686,8 @@ public class VRTracker : MonoBehaviour {
 		
 	public void SetLocalPlayer(GameObject player){
 		LocalPlayerReference = player;
+        if (OnNewLocalPlayer != null)
+            OnNewLocalPlayer();
     }
 
 	public GameObject GetLocalPlayer(){
